@@ -16,7 +16,7 @@ Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : mari
 - **Table à rouler** (`roll_table`, 1 bloc, 3 planches de chêne noir + 4 bâtons + 1 papier en établi) : clic droit avec une pile de **feuilles de cannabis** ou de **papier** pour les déposer ; elle roule 2 joints toutes les 4 s (3 feuilles + 1 papier, réglage `secondesParLot`), à récupérer à main nue (accroupi, main vide : tout reprendre). Plateau de roulage, broyeur, paquet de feuilles et machine à rouler en 3D.
 - **Laboratoire de chimie** (`lab`, multibloc 2 de large × 1 de profondeur × 2 de haut, face tournée vers le joueur) : clic droit pour y poser les ingrédients un à un ; la fabrication démarre quand la recette est complète, le produit se récupère à main nue (accroupi, main vide : reprendre les ingrédients).
   - Poudre de cocaïne : 4 feuilles de coca + 1 produit chimique, 30 s, 6 unités.
-  - Cristaux de méthamphétamine : 3 éphédra + 1 produit chimique + 1 redstone, 45 s, 6 unités.
+  - Cristaux de méthamphétamine : 3 éphédra + 1 produit chimique + 1 **essence** (`minenorth_harvest:gasoline`, du charbon si le mod Récolte est absent), 45 s, 6 unités.
 - **Table d'ensachage** (`pack_table`, 1 bloc, 4 planches + 4 lingots de fer en établi) : clic droit avec une pile de poudre, de cristaux ou de sachets vides pour les déposer ; elle fait un sachet toutes les 3 s (3 unités + 1 sachet vide), à récupérer à main nue (accroupi, main vide : tout reprendre). Réglage : `secondesParSachet`.
 - **Emballage à la main** (établi, sans table) : sachet vide = 2 papiers + 1 ficelle (4 sachets) ; 3 poudres de cocaïne + 1 sachet vide = **Sachet de cocaïne** ; 3 cristaux de meth + 1 sachet vide = **Sachet de méthamphétamine**. Ce sont les sachets que l'on consomme.
 

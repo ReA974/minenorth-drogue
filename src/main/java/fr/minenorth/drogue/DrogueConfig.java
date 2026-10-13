@@ -41,7 +41,7 @@ public final class DrogueConfig {
         b.comment("Méthamphétamine").push("meth");
         METH_EFFECTS = b.defineList("effets", List.of("minecraft:speed;45;1", "minecraft:haste;45;1", "minecraft:resistance;45;0"), o -> o instanceof String);
         METH_COOLDOWN = b.defineInRange("delaiSecondes", 360, 0, 36000);
-        METH_LAB_SECONDS = b.comment("Durée de fabrication au laboratoire (3 éphédra + 1 produit chimique + 1 redstone)").defineInRange("laboSecondes", 45, 1, 3600);
+        METH_LAB_SECONDS = b.comment("Durée de fabrication au laboratoire (3 éphédra + 1 produit chimique + 1 essence)").defineInRange("laboSecondes", 45, 1, 3600);
         METH_YIELD = b.comment("Unités de cristaux produites par fabrication (3 unités + 1 sachet vide = 1 sachet)").defineInRange("rendement", 6, 1, 64);
         b.pop();
         SPEC = b.build();

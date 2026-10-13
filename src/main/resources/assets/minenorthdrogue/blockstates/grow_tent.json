@@ -7,29 +7,7 @@
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_solid"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "false",
-    "corner": "0",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_mesh"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "false",
-    "corner": "0",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_cloth"
+    "model": "minenorthdrogue:block/tent_b_NW_solid"
    }
   },
   {
@@ -39,29 +17,7 @@
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_solid"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "true",
-    "corner": "0",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_mesh"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "true",
-    "corner": "0",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_cloth"
+    "model": "minenorthdrogue:block/tent_t_NW_solid"
    }
   },
   {
@@ -72,7 +28,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_corner"
+    "model": "minenorthdrogue:block/tent_lamp_NW"
    }
   },
   {
@@ -82,32 +38,7 @@
     "corner": "1"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_solid",
-    "y": 90
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "false",
-    "corner": "1",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_mesh",
-    "y": 90
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "false",
-    "corner": "1",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_cloth",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_b_NE_solid"
    }
   },
   {
@@ -117,32 +48,7 @@
     "corner": "1"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_solid",
-    "y": 90
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "true",
-    "corner": "1",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_mesh",
-    "y": 90
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "true",
-    "corner": "1",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_cloth",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_t_NE_solid"
    }
   },
   {
@@ -153,8 +59,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_corner",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_lamp_NE"
    }
   },
   {
@@ -164,8 +69,7 @@
     "corner": "2"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_solid",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_b_SW_solid"
    }
   },
   {
@@ -176,8 +80,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_mesh",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_b_SW_open"
    }
   },
   {
@@ -188,8 +91,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_cloth",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_b_SW_closed"
    }
   },
   {
@@ -199,8 +101,7 @@
     "corner": "2"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_solid",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_t_SW_solid"
    }
   },
   {
@@ -211,8 +112,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_mesh",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_t_SW_open"
    }
   },
   {
@@ -223,8 +123,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_cloth",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_t_SW_closed"
    }
   },
   {
@@ -235,8 +134,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_corner",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_lamp_SW"
    }
   },
   {
@@ -246,8 +144,7 @@
     "corner": "3"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_solid",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_b_SE_solid"
    }
   },
   {
@@ -258,8 +155,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_mesh",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_b_SE_open"
    }
   },
   {
@@ -270,8 +166,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_corner_cloth",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_b_SE_closed"
    }
   },
   {
@@ -281,8 +176,7 @@
     "corner": "3"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_solid",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_t_SE_solid"
    }
   },
   {
@@ -293,8 +187,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_mesh",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_t_SE_open"
    }
   },
   {
@@ -305,8 +198,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_corner_cloth",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_t_SE_closed"
    }
   },
   {
@@ -317,8 +209,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_corner",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_lamp_SE"
    }
   },
   {
@@ -328,7 +219,7 @@
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_single_solid"
+    "model": "minenorthdrogue:block/tent_b_NSWE_solid"
    }
   },
   {
@@ -339,7 +230,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_single_mesh"
+    "model": "minenorthdrogue:block/tent_b_NSWE_open"
    }
   },
   {
@@ -350,7 +241,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_single_cloth"
+    "model": "minenorthdrogue:block/tent_b_NSWE_closed"
    }
   },
   {
@@ -360,7 +251,7 @@
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_single_solid"
+    "model": "minenorthdrogue:block/tent_t_NSWE_solid"
    }
   },
   {
@@ -371,7 +262,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_single_mesh"
+    "model": "minenorthdrogue:block/tent_t_NSWE_open"
    }
   },
   {
@@ -382,7 +273,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_single_cloth"
+    "model": "minenorthdrogue:block/tent_t_NSWE_closed"
    }
   },
   {
@@ -393,7 +284,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_single"
+    "model": "minenorthdrogue:block/tent_lamp_NSWE"
    }
   },
   {
@@ -404,31 +295,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_solid"
-   }
-  },
-  {
-   "when": {
-    "layout": "s12",
-    "top": "false",
-    "corner": "0",
-    "alongx": "false",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_mesh"
-   }
-  },
-  {
-   "when": {
-    "layout": "s12",
-    "top": "false",
-    "corner": "0",
-    "alongx": "false",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_cloth"
+    "model": "minenorthdrogue:block/tent_b_NWE_solid"
    }
   },
   {
@@ -439,31 +306,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_solid"
-   }
-  },
-  {
-   "when": {
-    "layout": "s12",
-    "top": "true",
-    "corner": "0",
-    "alongx": "false",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_mesh"
-   }
-  },
-  {
-   "when": {
-    "layout": "s12",
-    "top": "true",
-    "corner": "0",
-    "alongx": "false",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_cloth"
+    "model": "minenorthdrogue:block/tent_t_NWE_solid"
    }
   },
   {
@@ -475,7 +318,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_end"
+    "model": "minenorthdrogue:block/tent_lamp_NWE"
    }
   },
   {
@@ -486,8 +329,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_solid",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_b_SWE_solid"
    }
   },
   {
@@ -499,8 +341,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_mesh",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_b_SWE_open"
    }
   },
   {
@@ -512,8 +353,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_cloth",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_b_SWE_closed"
    }
   },
   {
@@ -524,8 +364,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_solid",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_t_SWE_solid"
    }
   },
   {
@@ -537,8 +376,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_mesh",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_t_SWE_open"
    }
   },
   {
@@ -550,8 +388,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_cloth",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_t_SWE_closed"
    }
   },
   {
@@ -563,8 +400,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_end",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_lamp_SWE"
    }
   },
   {
@@ -575,8 +411,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_solid",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_b_WNS_solid"
    }
   },
   {
@@ -588,8 +423,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_mesh",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_b_WNS_open"
    }
   },
   {
@@ -601,8 +435,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_cloth",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_b_WNS_closed"
    }
   },
   {
@@ -613,8 +446,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_solid",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_t_WNS_solid"
    }
   },
   {
@@ -626,8 +458,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_mesh",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_t_WNS_open"
    }
   },
   {
@@ -639,8 +470,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_cloth",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_t_WNS_closed"
    }
   },
   {
@@ -652,8 +482,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_end",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_lamp_WNS"
    }
   },
   {
@@ -664,8 +493,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_solid",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_b_ENS_solid"
    }
   },
   {
@@ -677,8 +505,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_mesh",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_b_ENS_open"
    }
   },
   {
@@ -690,8 +517,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_end_cloth",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_b_ENS_closed"
    }
   },
   {
@@ -702,8 +528,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_solid",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_t_ENS_solid"
    }
   },
   {
@@ -715,8 +540,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_mesh",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_t_ENS_open"
    }
   },
   {
@@ -728,8 +552,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_end_cloth",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_t_ENS_closed"
    }
   },
   {
@@ -741,8 +564,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_end",
-    "y": 90
+    "model": "minenorthdrogue:block/tent_lamp_ENS"
    }
   },
   {

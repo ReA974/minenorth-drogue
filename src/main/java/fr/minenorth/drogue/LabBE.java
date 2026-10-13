@@ -17,7 +17,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -39,10 +41,28 @@ public class LabBE extends BlockEntity {
         }
     }
 
+    /** Essence raffinée du mod Récolte (minenorth_harvest:gasoline) ; sans ce mod, du charbon. */
+    static Item gasoline() {
+        Item it = ForgeRegistries.ITEMS.getValue(new ResourceLocation("minenorth_harvest", "gasoline"));
+        return it == null || it == Items.AIR ? Items.COAL : it;
+    }
+
+    /** Essence raffinée du mod Récolte (minenorth_harvest:gasoline) ; sans ce mod, du charbon. */
+    static Item gasoline() {
+        Item it = ForgeRegistries.ITEMS.getValue(new ResourceLocation("minenorth_harvest", "gasoline"));
+        return it == null || it == Items.AIR ? Items.COAL : it;
+    }
+
+    /** Essence raffinée du mod Récolte (minenorth_harvest:gasoline) ; sans ce mod, du charbon. */
+    static Item gasoline() {
+        Item it = ForgeRegistries.ITEMS.getValue(new ResourceLocation("minenorth_harvest", "gasoline"));
+        return it == null || it == Items.AIR ? Items.COAL : it;
+    }
+
     public static final List<Recipe> RECIPES = List.of(
             new Recipe("cocaine", List.of(new Need(ModRegistry.COCA_LEAF, 4), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.COCAINE_POWDER,
                     () -> DrogueConfig.get(DrogueConfig.COCAINE_YIELD), () -> DrogueConfig.get(DrogueConfig.COCAINE_LAB_SECONDS)),
-            new Recipe("meth", List.of(new Need(ModRegistry.EPHEDRA, 3), new Need(ModRegistry.CHEMICAL, 1), new Need(() -> Items.REDSTONE, 1)), ModRegistry.METH_CRYSTALS,
+            new Recipe("meth", List.of(new Need(ModRegistry.EPHEDRA, 3), new Need(ModRegistry.CHEMICAL, 1), new Need(LabBE::gasoline, 1)), ModRegistry.METH_CRYSTALS,
                     () -> DrogueConfig.get(DrogueConfig.METH_YIELD), () -> DrogueConfig.get(DrogueConfig.METH_LAB_SECONDS)));
 
     private final Map<Item, Integer> contents = new LinkedHashMap<>();
@@ -83,7 +103,7 @@ public class LabBE extends BlockEntity {
                 setChanged();
                 p.displayClientMessage(Component.literal("§7Ingrédients repris."), true);
             } else {
-                p.displayClientMessage(Component.literal(contents.isEmpty() ? "§7Laboratoire vide. Cocaïne : 4 feuilles de coca + produit chimique. Meth : 3 éphédra + produit chimique + redstone."
+                p.displayClientMessage(Component.literal(contents.isEmpty() ? "§7Laboratoire vide. Cocaïne : 4 feuilles de coca + produit chimique. Meth : 3 éphédra + produit chimique + essence."
                         : "§7Contient : " + describe() + " (accroupi, main vide : tout reprendre)"), true);
             }
             return;
