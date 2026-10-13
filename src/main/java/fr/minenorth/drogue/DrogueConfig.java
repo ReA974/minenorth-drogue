@@ -17,12 +17,15 @@ public final class DrogueConfig {
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> JOINT_EFFECTS, COCAINE_EFFECTS, METH_EFFECTS;
     public static final ForgeConfigSpec.IntValue JOINT_COOLDOWN, COCAINE_COOLDOWN, METH_COOLDOWN;
-    public static final ForgeConfigSpec.IntValue PACK_SECONDS, COCAINE_LAB_SECONDS, METH_LAB_SECONDS, COCAINE_YIELD, METH_YIELD;
+    public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, COCAINE_LAB_SECONDS, METH_LAB_SECONDS, COCAINE_YIELD, METH_YIELD;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
         b.comment("Table d'ensachage").push("ensachage");
         PACK_SECONDS = b.comment("Secondes pour faire un sachet (3 unités + 1 sachet vide)").defineInRange("secondesParSachet", 3, 1, 600);
+        b.pop();
+        b.comment("Table à rouler").push("roulage");
+        ROLL_SECONDS = b.comment("Secondes pour rouler un lot (3 feuilles de cannabis + 1 papier = 2 joints)").defineInRange("secondesParLot", 4, 1, 600);
         b.pop();
         b.comment("Marijuana (joint)").push("marijuana");
         JOINT_EFFECTS = b.comment("Effets : effet;secondes;niveau (0 = niveau I)")

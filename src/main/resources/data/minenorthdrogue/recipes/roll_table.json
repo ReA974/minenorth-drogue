@@ -1,0 +1,22 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "PPP",
+  "SAS",
+  "S S"
+ ],
+ "key": {
+  "P": {
+   "item": "minecraft:dark_oak_planks"
+  },
+  "S": {
+   "item": "minecraft:stick"
+  },
+  "A": {
+   "item": "minecraft:paper"
+  }
+ },
+ "result": {
+  "item": "minenorthdrogue:roll_table"
+ }
+}

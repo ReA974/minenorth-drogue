@@ -10,6 +10,7 @@ Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : mari
   Les graines ne se craftent pas : le staff les donne (créatif / commande) ou les vend via le mod Boutiques.
 - **Produit chimique** (`chemical`) : poudre à canon + poudre d'os + fiole.
 - **Joint** : 3 feuilles de cannabis + papier → 2 joints (établi).
+- **Table à rouler** (`roll_table`, 1 bloc, 3 planches de chêne noir + 4 bâtons + 1 papier en établi) : clic droit avec une pile de **feuilles de cannabis** ou de **papier** pour les déposer ; elle roule 2 joints toutes les 4 s (3 feuilles + 1 papier, réglage `secondesParLot`), à récupérer à main nue (accroupi, main vide : tout reprendre). Plateau de roulage, broyeur, paquet de feuilles et machine à rouler en 3D.
 - **Laboratoire de chimie** (`lab`, multibloc 2 de large × 1 de profondeur × 2 de haut, face tournée vers le joueur) : clic droit pour y poser les ingrédients un à un ; la fabrication démarre quand la recette est complète, le produit se récupère à main nue (accroupi, main vide : reprendre les ingrédients).
   - Poudre de cocaïne : 4 feuilles de coca + 1 produit chimique, 30 s, 6 unités.
   - Cristaux de méthamphétamine : 3 éphédra + 1 produit chimique + 1 redstone, 45 s, 6 unités.
@@ -30,6 +31,8 @@ Chaque prise est notée dans les données du joueur (`minenorthpolice_drogues`, 
 
 ## Compiler
 Java 17 (Gradle 8.8 ne tourne pas sur un JDK trop récent : `JAVA_HOME` sur un JDK 17 à 21), puis `./gradlew build`.
+
+Objets refaits en 3D plus détaillés : **sachet de cocaïne** (sachet zip transparent, poudre tassée, étiquette), **poudre de cocaïne** (tas sur papier avec cristaux et carte), **joint** (filtre carton, cône de papier, torsade, braise), sachet de meth, cristaux de meth, sachet vide (palette `palette2.png`).
 
 Tous les objets et blocs sont des modèles 3D (modèles JSON à base de boîtes, palette de couleurs `textures/block/palette.png`).
 

@@ -53,12 +53,9 @@ public final class ModRegistry {
     public static final RegistryObject<BlockEntityType<LabBE>> LAB_BE = BLOCK_ENTITIES.register("lab",
             () -> BlockEntityType.Builder.of(LabBE::new, LAB.get()).build(null));
 
-    /** Onglet créatif « Drogue » : tous les objets du mod. */
-    public static final RegistryObject<CreativeModeTab> TAB = TABS.register("drogue", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.minenorthdrogue"))
-            .icon(() -> new ItemStack(JOINT.get()))
-            .displayItems((params, out) -> ITEMS.getEntries().forEach(i -> out.accept(i.get())))
-            .build());
+    /** Objets du mod dans l'onglet créatif commun « MineNorth » (voir SharedTab). */
+    public static final net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator TAB_ITEMS =
+            (params, out) -> ITEMS.getEntries().forEach(i -> out.accept(i.get()));
 
     // ---- table d'ensachage
     public static final RegistryObject<Block> PACK = BLOCKS.register("pack_table", PackBlock::new);
@@ -66,8 +63,13 @@ public final class ModRegistry {
     public static final RegistryObject<BlockEntityType<PackBE>> PACK_BE = BLOCK_ENTITIES.register("pack_table",
             () -> BlockEntityType.Builder.of(PackBE::new, PACK.get()).build(null));
 
+    // ---- table à rouler
+    public static final RegistryObject<Block> ROLL = BLOCKS.register("roll_table", RollBlock::new);
+    public static final RegistryObject<Item> ROLL_ITEM = ITEMS.register("roll_table", () -> new BlockItem(ROLL.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<RollBE>> ROLL_BE = BLOCK_ENTITIES.register("roll_table",
+            () -> BlockEntityType.Builder.of(RollBE::new, ROLL.get()).build(null));
+
     public static void register(IEventBus bus) {
-        TABS.register(bus);
         BLOCKS.register(bus);
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
