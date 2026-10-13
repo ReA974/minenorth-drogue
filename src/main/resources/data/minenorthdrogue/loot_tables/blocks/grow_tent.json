@@ -14,6 +14,47 @@
      "condition": "minecraft:block_state_property",
      "block": "minenorthdrogue:grow_tent",
      "properties": {
+      "layout": "s22",
+      "top": "false",
+      "corner": "0"
+     }
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minenorthdrogue:grow_tent_small"
+    }
+   ],
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "minenorthdrogue:grow_tent",
+     "properties": {
+      "layout": "s11",
+      "top": "false",
+      "corner": "0"
+     }
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minenorthdrogue:grow_tent_long"
+    }
+   ],
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "minenorthdrogue:grow_tent",
+     "properties": {
+      "layout": "s12",
       "top": "false",
       "corner": "0"
      }

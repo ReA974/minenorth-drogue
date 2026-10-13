@@ -1,0 +1,19 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "I  ",
+  "IWI",
+  " I "
+ ],
+ "key": {
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "W": {
+   "item": "minecraft:water_bucket"
+  }
+ },
+ "result": {
+  "item": "minenorthdrogue:watering_can"
+ }
+}

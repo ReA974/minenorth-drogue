@@ -27,11 +27,15 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.ItemHandlerHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
- * Tente de culture 2 × 2 × 2 (8 blocs identiques). Les 4 cases du bas portent chacune une plante (cannabis ou coca, graines posées en clic droit),
- * les 4 du haut portent la lampe UV (objet « lampe UV », clic droit) qui double la vitesse de pousse. Plante mûre : clic droit à main nue.
+ * Tente de culture, 2 blocs de haut, en trois tailles : 2 × 2 (4 plantes), 1 × 2 (2 plantes, dans le sens est-ouest ou nord-sud) et 1 × 1 (1 plante).
+ * Les cases du bas portent chacune une plante (cannabis ou coca, graines posées en clic droit, terre à arroser), les cases du haut portent la lampe UV
+ * (objet « lampe UV », clic droit) qui double la vitesse de pousse. La tente se ferme (toile noire opaque) et s'ouvre (filet transparent, on y accède)
+ * par un clic droit à main nue sur le haut. Plante mûre : clic droit à main nue sur la case du bas, tente ouverte.
  * Casser un bloc retire toute la tente (la case d'origine rend la tente, la lampe est rendue aussi).
  */
 public class TentBlock extends Block {
@@ -41,28 +45,70 @@ public class TentBlock extends Block {
         @Override public String getSerializedName() { return name().toLowerCase(Locale.ROOT); }
     }
 
+    /** Taille : S22 = 2 × 2, S11 = 1 × 1, S12 = 1 × 2 (sens nord-sud, ou est-ouest si ALONGX). */
+    public enum Layout implements StringRepresentable {
+        S22, S11, S12;
+
+        @Override public String getSerializedName() { return name().toLowerCase(Locale.ROOT); }
+    }
+
+    public static final EnumProperty<Layout> LAYOUT = EnumProperty.create("layout", Layout.class);
     public static final BooleanProperty TOP = BooleanProperty.create("top");
-    /** Case dans le carré 2 × 2 : 0 = nord-ouest, 1 = nord-est, 2 = sud-ouest, 3 = sud-est (c = x + 2 z). */
+    /** Case dans la tente : 2 × 2 : 0 = nord-ouest, 1 = nord-est, 2 = sud-ouest, 3 = sud-est (c = x + 2 z) ; 1 × 2 : 0 ou 1 le long de l'axe. */
     public static final IntegerProperty CORNER = IntegerProperty.create("corner", 0, 3);
+    /** Tente 1 × 2 posée dans le sens est-ouest. */
+    public static final BooleanProperty ALONGX = BooleanProperty.create("alongx");
     public static final EnumProperty<Plant> PLANT = EnumProperty.create("plant", Plant.class);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
     public static final BooleanProperty LAMP = BooleanProperty.create("lamp");
-    /** Eau de la terre (0 = sèche) : un stade de pousse consomme 1 ; seau d'eau = 3, bouteille d'eau = 1. */
+    /** Tente ouverte (filet transparent, accès aux plantes) ou fermée (toile opaque). */
+    public static final BooleanProperty OPEN = BooleanProperty.create("open");
+    /** Eau de la terre (0 = sèche) : un stade de pousse consomme 1 ; seau d'eau = 3, bouteille d'eau = 1, arrosoir = 3 pour toute la tente. */
     public static final IntegerProperty WATER = IntegerProperty.create("water", 0, 3);
 
     public TentBlock() {
         super(BlockBehaviour.Properties.of().strength(2.0f).sound(SoundType.WOOL).noOcclusion().randomTicks()
                 .lightLevel(s -> s.getValue(TOP) && s.getValue(LAMP) ? 12 : 0));
-        registerDefaultState(stateDefinition.any().setValue(TOP, false).setValue(CORNER, 0).setValue(PLANT, Plant.NONE).setValue(AGE, 0).setValue(LAMP, false).setValue(WATER, 0));
+        registerDefaultState(stateDefinition.any().setValue(LAYOUT, Layout.S22).setValue(TOP, false).setValue(CORNER, 0).setValue(ALONGX, false)
+                .setValue(PLANT, Plant.NONE).setValue(AGE, 0).setValue(LAMP, false).setValue(OPEN, false).setValue(WATER, 0));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(TOP, CORNER, PLANT, AGE, LAMP, WATER); }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(LAYOUT, TOP, CORNER, ALONGX, PLANT, AGE, LAMP, OPEN, WATER); }
 
-    /** Case d'origine (bas, nord-ouest) de la tente à laquelle appartient ce bloc. */
-    public static BlockPos origin(BlockPos pos, BlockState s) {
+    // ------------------------------------------------------------------ géométrie
+
+    /** Largeur (axe x) de la tente. */
+    public static int width(Layout l, boolean alongx) { return l == Layout.S22 ? 2 : l == Layout.S12 && alongx ? 2 : 1; }
+
+    /** Profondeur (axe z) de la tente. */
+    public static int depth(Layout l, boolean alongx) { return l == Layout.S22 ? 2 : l == Layout.S12 && !alongx ? 2 : 1; }
+
+    /** Numéro de case pour la position (i, j) dans la tente. */
+    public static int cornerOf(Layout l, boolean alongx, int i, int j) { return l == Layout.S22 ? i + 2 * j : l == Layout.S12 ? (alongx ? i : j) : 0; }
+
+    private static int cellX(BlockState s) {
         int c = s.getValue(CORNER);
-        return pos.offset(-(c % 2), s.getValue(TOP) ? -1 : 0, -(c / 2));
+        return switch (s.getValue(LAYOUT)) { case S22 -> c % 2; case S12 -> s.getValue(ALONGX) ? c : 0; default -> 0; };
+    }
+
+    private static int cellZ(BlockState s) {
+        int c = s.getValue(CORNER);
+        return switch (s.getValue(LAYOUT)) { case S22 -> c / 2; case S12 -> s.getValue(ALONGX) ? 0 : c; default -> 0; };
+    }
+
+    /** Case d'origine (bas, coin nord-ouest) de la tente à laquelle appartient ce bloc. */
+    public static BlockPos origin(BlockPos pos, BlockState s) {
+        return pos.offset(-cellX(s), s.getValue(TOP) ? -1 : 0, -cellZ(s));
+    }
+
+    /** Toutes les cases (bas et haut) de la tente. */
+    private static List<BlockPos> cells(BlockPos origin, BlockState s) {
+        Layout l = s.getValue(LAYOUT);
+        boolean ax = s.getValue(ALONGX);
+        List<BlockPos> out = new ArrayList<>();
+        for (int i = 0; i < width(l, ax); i++) for (int y = 0; y < 2; y++) for (int j = 0; j < depth(l, ax); j++) out.add(origin.offset(i, y, j));
+        return out;
     }
 
     // ------------------------------------------------------------------ pousse
@@ -86,24 +132,45 @@ public class TentBlock extends Block {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         ItemStack st = p.getMainHandItem();
         BlockPos o = origin(pos, s);
-        boolean lamp = level.getBlockState(o.above()).getBlock() == this && level.getBlockState(o.above()).getValue(LAMP);
+        BlockState topOfOrigin = level.getBlockState(o.above());
+        boolean lamp = topOfOrigin.getBlock() == this && topOfOrigin.getValue(LAMP);
+        boolean open = s.getValue(OPEN);
 
         if (st.is(ModRegistry.UV_LAMP.get())) {
             if (lamp) { msg(p, "§7Une lampe UV est déjà installée."); return InteractionResult.CONSUME; }
-            setLamp(level, o, true);
+            setLamp(level, o, s, true);
             st.shrink(1);
             level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.6f, 1.6f);
             msg(p, "§dLampe UV installée : les plantes poussent deux fois plus vite.");
             return InteractionResult.CONSUME;
         }
         if (st.isEmpty() && p.isShiftKeyDown() && lamp) {
-            setLamp(level, o, false);
+            setLamp(level, o, s, false);
             ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ModRegistry.UV_LAMP.get()));
             msg(p, "§7Lampe UV retirée.");
             return InteractionResult.CONSUME;
         }
         if (s.getValue(TOP)) {
-            msg(p, lamp ? "§dLampe UV allumée. Accroupi, main vide : la retirer." : "§7Pas de lampe UV (objet « Lampe UV », clic droit).");
+            if (st.isEmpty()) {          // ouvrir / fermer la tente
+                setOpen(level, o, s, !open);
+                level.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.9f, open ? 0.8f : 1.3f);
+                msg(p, open ? "§7Tente fermée." : "§aTente ouverte : plantez, arrosez, récoltez (clic droit sur le bas).");
+            } else {
+                msg(p, lamp ? "§dLampe UV allumée. Main vide : ouvrir / fermer ; accroupi : retirer la lampe." : "§7Main vide : ouvrir / fermer la tente. Objet « Lampe UV » : l'installer.");
+            }
+            return InteractionResult.CONSUME;
+        }
+        if (!open) { msg(p, "§7Tente fermée : clic droit à main nue sur le haut pour l'ouvrir."); return InteractionResult.CONSUME; }
+
+        // arrosoir infini : toute la tente d'un coup
+        if (st.is(ModRegistry.WATERING_CAN.get())) {
+            int count = 0;
+            for (BlockPos c : cells(o, s)) {
+                BlockState cs = level.getBlockState(c);
+                if (cs.getBlock() == this && !cs.getValue(TOP) && cs.getValue(WATER) < 3) { level.setBlock(c, cs.setValue(WATER, 3), 3); count++; }
+            }
+            if (count == 0) { msg(p, "§bLa terre est déjà bien humide."); return InteractionResult.CONSUME; }
+            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.7f, 1.4f);
             return InteractionResult.CONSUME;
         }
         // arrosage : seau d'eau (3 stades) ou bouteille d'eau (1 stade)
@@ -128,7 +195,7 @@ public class TentBlock extends Block {
         int age = s.getValue(AGE);
         if (age < 3) {
             int w = s.getValue(WATER);
-            msg(p, w == 0 ? "§cLa terre est sèche : arrosez (seau ou bouteille d'eau) pour que la plante pousse."
+            msg(p, w == 0 ? "§cLa terre est sèche : arrosez (arrosoir, seau ou bouteille d'eau) pour que la plante pousse."
                     : "§7Pousse en cours (" + (age + 1) + "/4), eau : " + w + "/3" + (lamp ? "" : " — plus lente sans lampe UV") + ".");
             return InteractionResult.CONSUME;
         }
@@ -143,14 +210,19 @@ public class TentBlock extends Block {
 
     private static void msg(Player p, String text) { p.displayClientMessage(Component.literal(text), true); }
 
-    /** Allume / éteint la lampe sur les 4 cases du haut. */
-    private void setLamp(Level level, BlockPos origin, boolean on) {
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                BlockPos p = origin.offset(i, 1, j);
-                BlockState t = level.getBlockState(p);
-                if (t.getBlock() == this) level.setBlock(p, t.setValue(LAMP, on), 3);
-            }
+    /** Allume / éteint la lampe sur les cases du haut. */
+    private void setLamp(Level level, BlockPos origin, BlockState any, boolean on) {
+        for (BlockPos p : cells(origin, any)) {
+            BlockState t = level.getBlockState(p);
+            if (t.getBlock() == this && t.getValue(TOP)) level.setBlock(p, t.setValue(LAMP, on), 3);
+        }
+    }
+
+    /** Ouvre / ferme toute la tente. */
+    private void setOpen(Level level, BlockPos origin, BlockState any, boolean open) {
+        for (BlockPos p : cells(origin, any)) {
+            BlockState t = level.getBlockState(p);
+            if (t.getBlock() == this) level.setBlock(p, t.setValue(OPEN, open), 3);
         }
     }
 
@@ -159,14 +231,8 @@ public class TentBlock extends Block {
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState s, Player player) {
         if (!level.isClientSide) {
-            BlockPos o = origin(pos, s);
-            for (int i = 0; i < 2; i++) {
-                for (int y = 0; y < 2; y++) {
-                    for (int j = 0; j < 2; j++) {
-                        BlockPos p = o.offset(i, y, j);
-                        if (!p.equals(pos) && level.getBlockState(p).getBlock() == this) level.destroyBlock(p, !player.isCreative());
-                    }
-                }
+            for (BlockPos p : cells(origin(pos, s), s)) {
+                if (!p.equals(pos) && level.getBlockState(p).getBlock() == this) level.destroyBlock(p, !player.isCreative());
             }
         }
         super.playerWillDestroy(level, pos, s, player);

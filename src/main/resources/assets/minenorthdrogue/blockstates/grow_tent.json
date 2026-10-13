@@ -2,206 +2,765 @@
  "multipart": [
   {
    "when": {
+    "layout": "s22",
     "top": "false",
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_base_solid",
-    "y": 0
+    "model": "minenorthdrogue:block/tent_b_corner_solid"
    }
   },
   {
    "when": {
+    "layout": "s22",
     "top": "false",
-    "corner": "0"
+    "corner": "0",
+    "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_base_mesh",
-    "y": 0
+    "model": "minenorthdrogue:block/tent_b_corner_mesh"
    }
   },
   {
    "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "0",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_cloth"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
     "top": "true",
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_top_solid",
-    "y": 0
+    "model": "minenorthdrogue:block/tent_t_corner_solid"
    }
   },
   {
    "when": {
+    "layout": "s22",
     "top": "true",
-    "corner": "0"
+    "corner": "0",
+    "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_top_mesh",
-    "y": 0
+    "model": "minenorthdrogue:block/tent_t_corner_mesh"
    }
   },
   {
    "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "0",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_cloth"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
     "top": "true",
     "corner": "0",
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp",
-    "y": 0
+    "model": "minenorthdrogue:block/tent_lamp_corner"
    }
   },
   {
    "when": {
+    "layout": "s22",
     "top": "false",
     "corner": "1"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_base_solid",
+    "model": "minenorthdrogue:block/tent_b_corner_solid",
     "y": 90
    }
   },
   {
    "when": {
+    "layout": "s22",
     "top": "false",
-    "corner": "1"
+    "corner": "1",
+    "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_base_mesh",
+    "model": "minenorthdrogue:block/tent_b_corner_mesh",
     "y": 90
    }
   },
   {
    "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "1",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_cloth",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
     "top": "true",
     "corner": "1"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_top_solid",
+    "model": "minenorthdrogue:block/tent_t_corner_solid",
     "y": 90
    }
   },
   {
    "when": {
+    "layout": "s22",
     "top": "true",
-    "corner": "1"
+    "corner": "1",
+    "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_top_mesh",
+    "model": "minenorthdrogue:block/tent_t_corner_mesh",
     "y": 90
    }
   },
   {
    "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "1",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_cloth",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
     "top": "true",
     "corner": "1",
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp",
+    "model": "minenorthdrogue:block/tent_lamp_corner",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_solid",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "2",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_mesh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "2",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_cloth",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_solid",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "2",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_mesh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "2",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_cloth",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "2",
+    "lamp": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_corner",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_solid",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "3",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_mesh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "3",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_corner_cloth",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_solid",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "3",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_mesh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "3",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_corner_cloth",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "3",
+    "lamp": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_corner",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "false",
+    "corner": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_single_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "false",
+    "corner": "0",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_single_mesh"
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "false",
+    "corner": "0",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_single_cloth"
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "true",
+    "corner": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_single_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "true",
+    "corner": "0",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_single_mesh"
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "true",
+    "corner": "0",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_single_cloth"
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "true",
+    "corner": "0",
+    "lamp": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_single"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "false",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_mesh"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "false",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_cloth"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "false",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_mesh"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "false",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_cloth"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "lamp": "true",
+    "alongx": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_end"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "1",
+    "alongx": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_solid",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "1",
+    "alongx": "false",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_mesh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "1",
+    "alongx": "false",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_cloth",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "alongx": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_solid",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "alongx": "false",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_mesh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "alongx": "false",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_cloth",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "lamp": "true",
+    "alongx": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_end",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_solid",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "true",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_mesh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "true",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_cloth",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_solid",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "true",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_mesh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "true",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_cloth",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "lamp": "true",
+    "alongx": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_end",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "1",
+    "alongx": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_solid",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "1",
+    "alongx": "true",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_mesh",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "1",
+    "alongx": "true",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_end_cloth",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "alongx": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_solid",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "alongx": "true",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_mesh",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "alongx": "true",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_end_cloth",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "lamp": "true",
+    "alongx": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_end",
     "y": 90
    }
   },
   {
    "when": {
     "top": "false",
-    "corner": "2"
+    "water": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_base_solid",
-    "y": 270
+    "model": "minenorthdrogue:block/tent_soil_dry"
    }
   },
   {
    "when": {
     "top": "false",
-    "corner": "2"
+    "water": "1|2|3"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_base_mesh",
-    "y": 270
-   }
-  },
-  {
-   "when": {
-    "top": "true",
-    "corner": "2"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_top_solid",
-    "y": 270
-   }
-  },
-  {
-   "when": {
-    "top": "true",
-    "corner": "2"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_top_mesh",
-    "y": 270
-   }
-  },
-  {
-   "when": {
-    "top": "true",
-    "corner": "2",
-    "lamp": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_lamp",
-    "y": 270
-   }
-  },
-  {
-   "when": {
-    "top": "false",
-    "corner": "3"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_base_solid",
-    "y": 180
-   }
-  },
-  {
-   "when": {
-    "top": "false",
-    "corner": "3"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_base_mesh",
-    "y": 180
-   }
-  },
-  {
-   "when": {
-    "top": "true",
-    "corner": "3"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_top_solid",
-    "y": 180
-   }
-  },
-  {
-   "when": {
-    "top": "true",
-    "corner": "3"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_top_mesh",
-    "y": 180
-   }
-  },
-  {
-   "when": {
-    "top": "true",
-    "corner": "3",
-    "lamp": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_lamp",
-    "y": 180
+    "model": "minenorthdrogue:block/tent_soil_wet"
    }
   },
   {
@@ -282,24 +841,6 @@
    },
    "apply": {
     "model": "minenorthdrogue:block/plant_coca_3"
-   }
-  },
-  {
-   "when": {
-    "top": "false",
-    "water": "0"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_soil_dry"
-   }
-  },
-  {
-   "when": {
-    "top": "false",
-    "water": "1|2|3"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_soil_wet"
    }
   }
  ]
