@@ -32,23 +32,25 @@ public final class DrugClient implements IClientItemExtensions {
         p.zRot = 0f;
     });
 
-    private final DrugItem.Kind kind;
+    /** Une seule instance : Forge appelle initializeClient dans le constructeur de l'objet, avant que son type de prise soit connu ; on le lit donc dans l'objet au moment de l'animation. */
+    public static final DrugClient INSTANCE = new DrugClient();
 
-    private DrugClient(DrugItem.Kind kind) { this.kind = kind; }
+    private DrugClient() {}
 
-    public static DrugClient of(DrugItem.Kind kind) { return new DrugClient(kind); }
+    private static DrugItem.Kind kindOf(ItemStack stack) { return stack.getItem() instanceof DrugItem d ? d.kind() : null; }
 
     private boolean using(LivingEntity e, ItemStack st) { return e.isUsingItem() && e.getUseItem().getItem() == st.getItem(); }
 
     @Override
     public HumanoidModel.ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack stack) {
-        if (using(entity, stack) && entity.getUsedItemHand() == hand) return kind == DrugItem.Kind.METH ? INJECT : MOUTH;
+        if (using(entity, stack) && entity.getUsedItemHand() == hand) return kindOf(stack) == DrugItem.Kind.METH ? INJECT : MOUTH;
         return null;
     }
 
     @Override
     public boolean applyForgeHandTransform(PoseStack ps, LocalPlayer player, HumanoidArm arm, ItemStack stack, float partialTick, float equipProcess, float swingProcess) {
-        if (!using(player, stack)) return false;
+        DrugItem.Kind kind = kindOf(stack);
+        if (kind == null || !using(player, stack)) return false;
         int side = arm == HumanoidArm.RIGHT ? 1 : -1;
         float used = player.getTicksUsingItem() + partialTick;
         float t = Math.min(1f, used / 8f);

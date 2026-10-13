@@ -74,7 +74,7 @@ public class DrugItem extends Item {
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(fr.minenorth.drogue.client.DrugClient.of(kind));
+        consumer.accept(fr.minenorth.drogue.client.DrugClient.INSTANCE);
     }
 
     /** Bruitages et fumée pendant la prise. */
