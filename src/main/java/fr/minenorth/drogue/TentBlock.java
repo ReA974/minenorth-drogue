@@ -40,7 +40,7 @@ import java.util.Locale;
  */
 public class TentBlock extends Block {
     public enum Plant implements StringRepresentable {
-        NONE, CANNABIS, COCA;
+        NONE, CANNABIS, COCA, EPHEDRA;
 
         @Override public String getSerializedName() { return name().toLowerCase(Locale.ROOT); }
     }
@@ -192,8 +192,9 @@ public class TentBlock extends Block {
         }
         Plant plant = s.getValue(PLANT);
         if (plant == Plant.NONE) {
-            Plant want = st.is(ModRegistry.CANNABIS_SEEDS.get()) ? Plant.CANNABIS : st.is(ModRegistry.COCA_SEEDS.get()) ? Plant.COCA : Plant.NONE;
-            if (want == Plant.NONE) { msg(p, "§7Emplacement libre : plantez des graines de cannabis ou de coca (et arrosez)."); return InteractionResult.CONSUME; }
+            Plant want = st.is(ModRegistry.CANNABIS_SEEDS.get()) ? Plant.CANNABIS : st.is(ModRegistry.COCA_SEEDS.get()) ? Plant.COCA
+                    : st.is(ModRegistry.EPHEDRA_SEEDS.get()) ? Plant.EPHEDRA : Plant.NONE;
+            if (want == Plant.NONE) { msg(p, "§7Emplacement libre : plantez des graines de cannabis, de coca ou d'éphédra (et arrosez)."); return InteractionResult.CONSUME; }
             st.shrink(1);
             level.setBlock(pos, s.setValue(PLANT, want).setValue(AGE, 0), 3);
             level.playSound(null, pos, SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1.0f, 1.0f);
@@ -207,9 +208,10 @@ public class TentBlock extends Block {
             return InteractionResult.CONSUME;
         }
         // récolte
-        boolean weed = plant == Plant.CANNABIS;
-        ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(weed ? ModRegistry.CANNABIS_LEAF.get() : ModRegistry.COCA_LEAF.get(), 2 + level.random.nextInt(3)));
-        if (level.random.nextInt(2) == 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(weed ? ModRegistry.CANNABIS_SEEDS.get() : ModRegistry.COCA_SEEDS.get()));
+        net.minecraft.world.item.Item crop = plant == Plant.CANNABIS ? ModRegistry.CANNABIS_LEAF.get() : plant == Plant.COCA ? ModRegistry.COCA_LEAF.get() : ModRegistry.EPHEDRA.get();
+        net.minecraft.world.item.Item seed = plant == Plant.CANNABIS ? ModRegistry.CANNABIS_SEEDS.get() : plant == Plant.COCA ? ModRegistry.COCA_SEEDS.get() : ModRegistry.EPHEDRA_SEEDS.get();
+        ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(crop, 2 + level.random.nextInt(3)));
+        if (level.random.nextInt(2) == 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(seed));
         level.setBlock(pos, s.setValue(PLANT, Plant.NONE).setValue(AGE, 0), 3);
         level.playSound(null, pos, SoundEvents.GRASS_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
         return InteractionResult.CONSUME;

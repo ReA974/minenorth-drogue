@@ -3,7 +3,7 @@
 Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : marijuana, cocaïne, méthamphétamine, avec production et lien avec le mod Police.
 
 ## Production
-- **Tentes de culture** (2 blocs de haut) : **2 × 2** (`grow_tent`, 4 plantes), **1 × 2** (`grow_tent_long`, 2 plantes, dans le sens où regarde le joueur) et **1 × 1** (`grow_tent_small`, 1 plante), posées vers le sud-est de la case visée. Cannabis et coca ne poussent que là.
+- **Tentes de culture** (2 blocs de haut) : **2 × 2** (`grow_tent`, 4 plantes), **1 × 2** (`grow_tent_long`, 2 plantes, dans le sens où regarde le joueur) et **1 × 1** (`grow_tent_small`, 1 plante), posées vers le sud-est de la case visée. Cannabis et coca ne poussent que là ; l'éphédra pousse aussi sous tente (en plus du plein champ).
   - **Ouvrir / fermer** : clic droit **à main nue sur le haut** de la tente. Fermée : toile noire opaque (on ne voit pas l'intérieur) ; ouverte : filet transparent, on accède aux plantes.
   - Tente ouverte, clic droit sur une case du bas avec des graines pour planter, à main nue sur une plante mûre pour récolter (feuilles + parfois une graine).
   - **Lampe UV** (`uv_lamp`, clic droit sur la tente) : la pousse est deux fois plus rapide ; accroupi, main vide : la retirer.

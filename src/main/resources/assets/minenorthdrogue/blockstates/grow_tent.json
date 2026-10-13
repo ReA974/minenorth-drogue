@@ -712,6 +712,46 @@
    "apply": {
     "model": "minenorthdrogue:block/plant_coca_3"
    }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "ephedra",
+    "age": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_ephedra_0"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "ephedra",
+    "age": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_ephedra_1"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "ephedra",
+    "age": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_ephedra_2"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "ephedra",
+    "age": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_ephedra_3"
+   }
   }
  ]
 }
