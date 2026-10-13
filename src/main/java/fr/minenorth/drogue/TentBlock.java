@@ -171,6 +171,13 @@ public class TentBlock extends Block {
             }
             if (count == 0) { msg(p, "§bLa terre est déjà bien humide."); return InteractionResult.CONSUME; }
             level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.7f, 1.4f);
+            WateringCanItem.pour(st, level);                         // l'arrosoir se penche (modèles inclinés côté client)
+            if (level instanceof ServerLevel sl) {
+                for (BlockPos c : cells(o, s)) {
+                    if (level.getBlockState(c).getBlock() == this && !level.getBlockState(c).getValue(TOP))
+                        sl.sendParticles(net.minecraft.core.particles.ParticleTypes.FALLING_WATER, c.getX() + 0.5, c.getY() + 1.4, c.getZ() + 0.5, 14, 0.22, 0.15, 0.22, 0.0);
+                }
+            }
             return InteractionResult.CONSUME;
         }
         // arrosage : seau d'eau (3 stades) ou bouteille d'eau (1 stade)

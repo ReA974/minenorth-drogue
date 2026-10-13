@@ -1975,5 +1975,25 @@
     1
    ]
   }
- }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "minenorthdrogue:pour": 0.25
+   },
+   "model": "minenorthdrogue:item/watering_can_pour1"
+  },
+  {
+   "predicate": {
+    "minenorthdrogue:pour": 0.55
+   },
+   "model": "minenorthdrogue:item/watering_can_pour2"
+  },
+  {
+   "predicate": {
+    "minenorthdrogue:pour": 0.85
+   },
+   "model": "minenorthdrogue:item/watering_can_pour3"
+  }
+ ]
 }

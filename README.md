@@ -7,7 +7,7 @@ Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : mari
   - **Ouvrir / fermer** : clic droit **à main nue sur le haut** de la tente. Fermée : toile noire opaque (on ne voit pas l'intérieur) ; ouverte : filet transparent, on accède aux plantes.
   - Tente ouverte, clic droit sur une case du bas avec des graines pour planter, à main nue sur une plante mûre pour récolter (feuilles + parfois une graine).
   - **Lampe UV** (`uv_lamp`, clic droit sur la tente) : la pousse est deux fois plus rapide ; accroupi, main vide : la retirer.
-- **Arrosoir infini** (`watering_can`, 4 lingots de fer + un seau d'eau) : un clic droit arrose toutes les plantes de la tente (ouverte) sans jamais se vider.
+- **Arrosoir infini** (`watering_can`, 4 lingots de fer + un seau d'eau) : un clic droit arrose toutes les plantes de la tente (ouverte) sans jamais se vider ; il se penche en versant (animation de ~1 s : 3 modèles inclinés choisis par le prédicat `minenorthdrogue:pour`) et de l'eau tombe sur les plantes.
 - **Arrosage** : la terre de la tente doit être humide pour que la plante pousse. Clic droit avec un **seau d'eau** (3 stades, rend le seau vide) ou une **bouteille d'eau** (1 stade, rend la bouteille vide) sur une case du bas ; chaque stade de pousse consomme 1 d'eau. La terre devient plus sombre quand elle est humide.
 - **Éphédra** (`ephedra_seeds`) : pousse en plein champ sur terre labourée (4 stades).
   Les graines ne se craftent pas : le staff les donne (créatif / commande) ou les vend via le mod Boutiques.
