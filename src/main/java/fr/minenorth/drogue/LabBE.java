@@ -47,18 +47,6 @@ public class LabBE extends BlockEntity {
         return it == null || it == Items.AIR ? Items.COAL : it;
     }
 
-    /** Essence raffinée du mod Récolte (minenorth_harvest:gasoline) ; sans ce mod, du charbon. */
-    static Item gasoline() {
-        Item it = ForgeRegistries.ITEMS.getValue(new ResourceLocation("minenorth_harvest", "gasoline"));
-        return it == null || it == Items.AIR ? Items.COAL : it;
-    }
-
-    /** Essence raffinée du mod Récolte (minenorth_harvest:gasoline) ; sans ce mod, du charbon. */
-    static Item gasoline() {
-        Item it = ForgeRegistries.ITEMS.getValue(new ResourceLocation("minenorth_harvest", "gasoline"));
-        return it == null || it == Items.AIR ? Items.COAL : it;
-    }
-
     public static final List<Recipe> RECIPES = List.of(
             new Recipe("cocaine", List.of(new Need(ModRegistry.COCA_LEAF, 4), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.COCAINE_POWDER,
                     () -> DrogueConfig.get(DrogueConfig.COCAINE_YIELD), () -> DrogueConfig.get(DrogueConfig.COCAINE_LAB_SECONDS)),
