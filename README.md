@@ -13,7 +13,8 @@ Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : mari
 - **Laboratoire de chimie** (`lab`, multibloc 2 de large × 1 de profondeur × 2 de haut, face tournée vers le joueur) : clic droit pour y poser les ingrédients un à un ; la fabrication démarre quand la recette est complète, le produit se récupère à main nue (accroupi, main vide : reprendre les ingrédients).
   - Poudre de cocaïne : 4 feuilles de coca + 1 produit chimique, 30 s, 6 unités.
   - Cristaux de méthamphétamine : 3 éphédra + 1 produit chimique + 1 redstone, 45 s, 6 unités.
-- **Emballage** (établi) : sachet vide = 2 papiers + 1 ficelle (4 sachets) ; 3 poudres de cocaïne + 1 sachet vide = **Sachet de cocaïne** ; 3 cristaux de meth + 1 sachet vide = **Sachet de méthamphétamine**. Ce sont les sachets que l'on consomme.
+- **Table d'ensachage** (`pack_table`, 1 bloc, 4 planches + 4 lingots de fer en établi) : clic droit avec une pile de poudre, de cristaux ou de sachets vides pour les déposer ; elle fait un sachet toutes les 3 s (3 unités + 1 sachet vide), à récupérer à main nue (accroupi, main vide : tout reprendre). Réglage : `secondesParSachet`.
+- **Emballage à la main** (établi, sans table) : sachet vide = 2 papiers + 1 ficelle (4 sachets) ; 3 poudres de cocaïne + 1 sachet vide = **Sachet de cocaïne** ; 3 cristaux de meth + 1 sachet vide = **Sachet de méthamphétamine**. Ce sont les sachets que l'on consomme.
 
 ## Effets (positifs, limités par un délai d'attente)
 | Substance | Effets par défaut | Délai avant la dose suivante |

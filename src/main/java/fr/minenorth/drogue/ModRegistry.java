@@ -2,6 +2,7 @@ package fr.minenorth.drogue;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
@@ -58,6 +59,12 @@ public final class ModRegistry {
             .icon(() -> new ItemStack(JOINT.get()))
             .displayItems((params, out) -> ITEMS.getEntries().forEach(i -> out.accept(i.get())))
             .build());
+
+    // ---- table d'ensachage
+    public static final RegistryObject<Block> PACK = BLOCKS.register("pack_table", PackBlock::new);
+    public static final RegistryObject<Item> PACK_ITEM = ITEMS.register("pack_table", () -> new BlockItem(PACK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<PackBE>> PACK_BE = BLOCK_ENTITIES.register("pack_table",
+            () -> BlockEntityType.Builder.of(PackBE::new, PACK.get()).build(null));
 
     public static void register(IEventBus bus) {
         TABS.register(bus);

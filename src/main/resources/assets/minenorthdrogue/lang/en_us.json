@@ -18,5 +18,7 @@
  "block.minenorthdrogue.grow_tent": "Tente de culture 2×2",
  "item.minenorthdrogue.lab": "Laboratoire de chimie",
  "block.minenorthdrogue.lab": "Laboratoire de chimie",
- "block.minenorthdrogue.ephedra_crop": "Éphédra"
+ "block.minenorthdrogue.ephedra_crop": "Éphédra",
+ "block.minenorthdrogue.pack_table": "Table d'ensachage",
+ "item.minenorthdrogue.pack_table": "Table d'ensachage"
 }
