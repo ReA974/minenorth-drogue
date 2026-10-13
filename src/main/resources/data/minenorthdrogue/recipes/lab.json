@@ -1,0 +1,25 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "GBG",
+  "ICI",
+  "III"
+ ],
+ "key": {
+  "G": {
+   "item": "minecraft:glass"
+  },
+  "B": {
+   "item": "minecraft:brewing_stand"
+  },
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "C": {
+   "item": "minecraft:cauldron"
+  }
+ },
+ "result": {
+  "item": "minenorthdrogue:lab"
+ }
+}

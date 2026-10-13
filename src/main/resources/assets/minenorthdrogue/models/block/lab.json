@@ -1,0 +1,140 @@
+{
+ "parent": "minecraft:block/block",
+ "textures": {
+  "particle": "minenorthdrogue:block/lab_side",
+  "side": "minenorthdrogue:block/lab_side",
+  "top": "minenorthdrogue:block/lab_top",
+  "flask": "minenorthdrogue:block/lab_flask",
+  "flask2": "minenorthdrogue:block/lab_flask2"
+ },
+ "elements": [
+  {
+   "from": [
+    1,
+    0,
+    1
+   ],
+   "to": [
+    15,
+    6,
+    15
+   ],
+   "faces": {
+    "north": {
+     "texture": "#side"
+    },
+    "south": {
+     "texture": "#side"
+    },
+    "east": {
+     "texture": "#side"
+    },
+    "west": {
+     "texture": "#side"
+    },
+    "up": {
+     "texture": "#top"
+    },
+    "down": {
+     "texture": "#top"
+    }
+   }
+  },
+  {
+   "from": [
+    3,
+    6,
+    3
+   ],
+   "to": [
+    7,
+    12,
+    7
+   ],
+   "faces": {
+    "north": {
+     "texture": "#flask"
+    },
+    "south": {
+     "texture": "#flask"
+    },
+    "east": {
+     "texture": "#flask"
+    },
+    "west": {
+     "texture": "#flask"
+    },
+    "up": {
+     "texture": "#flask"
+    },
+    "down": {
+     "texture": "#flask"
+    }
+   }
+  },
+  {
+   "from": [
+    9,
+    6,
+    9
+   ],
+   "to": [
+    13,
+    10,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#flask2"
+    },
+    "south": {
+     "texture": "#flask2"
+    },
+    "east": {
+     "texture": "#flask2"
+    },
+    "west": {
+     "texture": "#flask2"
+    },
+    "up": {
+     "texture": "#flask2"
+    },
+    "down": {
+     "texture": "#flask2"
+    }
+   }
+  },
+  {
+   "from": [
+    7.5,
+    6,
+    7.5
+   ],
+   "to": [
+    8.5,
+    14,
+    8.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#side"
+    },
+    "south": {
+     "texture": "#side"
+    },
+    "east": {
+     "texture": "#side"
+    },
+    "west": {
+     "texture": "#side"
+    },
+    "up": {
+     "texture": "#top"
+    },
+    "down": {
+     "texture": "#top"
+    }
+   }
+  }
+ ]
+}

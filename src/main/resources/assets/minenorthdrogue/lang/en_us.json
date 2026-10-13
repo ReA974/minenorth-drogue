@@ -1,0 +1,17 @@
+{
+ "item.minenorthdrogue.cannabis_seeds": "Cannabis seeds",
+ "item.minenorthdrogue.coca_seeds": "Coca seeds",
+ "item.minenorthdrogue.ephedra_seeds": "Ephedra seeds",
+ "item.minenorthdrogue.cannabis_leaf": "Cannabis leaf",
+ "item.minenorthdrogue.coca_leaf": "Coca leaf",
+ "item.minenorthdrogue.ephedra": "Ephedra",
+ "item.minenorthdrogue.joint": "Joint",
+ "item.minenorthdrogue.cocaine": "Cocaine",
+ "item.minenorthdrogue.meth": "Methamphetamine",
+ "item.minenorthdrogue.chemical": "Chemical",
+ "block.minenorthdrogue.lab": "Clandestine lab",
+ "item.minenorthdrogue.lab": "Clandestine lab",
+ "block.minenorthdrogue.cannabis_crop": "Cannabis",
+ "block.minenorthdrogue.coca_crop": "Coca",
+ "block.minenorthdrogue.ephedra_crop": "Ephedra"
+}

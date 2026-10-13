@@ -1,0 +1,17 @@
+{
+ "item.minenorthdrogue.cannabis_seeds": "Graines de cannabis",
+ "item.minenorthdrogue.coca_seeds": "Graines de coca",
+ "item.minenorthdrogue.ephedra_seeds": "Graines d'éphédra",
+ "item.minenorthdrogue.cannabis_leaf": "Feuille de cannabis",
+ "item.minenorthdrogue.coca_leaf": "Feuille de coca",
+ "item.minenorthdrogue.ephedra": "Éphédra",
+ "item.minenorthdrogue.joint": "Joint",
+ "item.minenorthdrogue.cocaine": "Cocaïne",
+ "item.minenorthdrogue.meth": "Méthamphétamine",
+ "item.minenorthdrogue.chemical": "Produit chimique",
+ "block.minenorthdrogue.lab": "Laboratoire clandestin",
+ "item.minenorthdrogue.lab": "Laboratoire clandestin",
+ "block.minenorthdrogue.cannabis_crop": "Cannabis",
+ "block.minenorthdrogue.coca_crop": "Coca",
+ "block.minenorthdrogue.ephedra_crop": "Éphédra"
+}

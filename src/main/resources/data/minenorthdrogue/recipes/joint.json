@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minenorthdrogue:cannabis_leaf"
+  },
+  {
+   "item": "minenorthdrogue:cannabis_leaf"
+  },
+  {
+   "item": "minenorthdrogue:cannabis_leaf"
+  },
+  {
+   "item": "minecraft:paper"
+  }
+ ],
+ "result": {
+  "item": "minenorthdrogue:joint",
+  "count": 2
+ }
+}
