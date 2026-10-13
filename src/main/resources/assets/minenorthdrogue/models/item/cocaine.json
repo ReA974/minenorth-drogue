@@ -782,5 +782,25 @@
     1
    ]
   }
- }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "minenorthdrogue:snort": 0.01
+   },
+   "model": "minenorthdrogue:item/cocaine_snort1"
+  },
+  {
+   "predicate": {
+    "minenorthdrogue:snort": 0.34
+   },
+   "model": "minenorthdrogue:item/cocaine_snort2"
+  },
+  {
+   "predicate": {
+    "minenorthdrogue:snort": 0.67
+   },
+   "model": "minenorthdrogue:item/cocaine_snort3"
+  }
+ ]
 }

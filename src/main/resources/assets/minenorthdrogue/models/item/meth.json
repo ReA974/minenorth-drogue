@@ -682,5 +682,25 @@
     1
    ]
   }
- }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "minenorthdrogue:inject": 0.01
+   },
+   "model": "minenorthdrogue:item/meth_inject1"
+  },
+  {
+   "predicate": {
+    "minenorthdrogue:inject": 0.34
+   },
+   "model": "minenorthdrogue:item/meth_inject2"
+  },
+  {
+   "predicate": {
+    "minenorthdrogue:inject": 0.67
+   },
+   "model": "minenorthdrogue:item/meth_inject3"
+  }
+ ]
 }

@@ -40,3 +40,9 @@ Objets refaits en 3D plus détaillés : **sachet de cocaïne** (sachet zip trans
 Tous les objets et blocs sont des modèles 3D (modèles JSON à base de boîtes, palette de couleurs `textures/block/palette.png`).
 
 Onglet créatif **Drogue** (icône : joint). Tous les textes sont en français (`fr_fr` et `en_us` identiques).
+
+## Animations de prise (13/10)
+- **Joint** : on le fume (le joint monte à la bouche, bras levé, fumée et crépitement, allumage au début).
+- **Sachet de cocaïne** : pendant la prise, l'objet devient un miroir avec deux lignes et un billet roulé ; le miroir se lève devant le visage et glisse le long des lignes, qui disparaissent une à une (bruits de reniflement, petit nuage de poudre).
+- **Sachet de méthamphétamine** : pendant la prise, l'objet devient une seringue qui part vers l'avant-bras ; le piston s'enfonce (petit bruit de piqûre).
+Poses et mouvements : `client/DrugClient.java` ; modèles changeants : prédicats `minenorthdrogue:snort` / `inject` (`ClientSetup`).
