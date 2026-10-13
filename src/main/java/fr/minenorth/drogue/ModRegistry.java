@@ -62,7 +62,7 @@ public final class ModRegistry {
 
     // ---- table d'ensachage
     public static final RegistryObject<Block> PACK = BLOCKS.register("pack_table", PackBlock::new);
-    public static final RegistryObject<Item> PACK_ITEM = ITEMS.register("pack_table", () -> new BlockItem(PACK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PACK_ITEM = ITEMS.register("pack_table", () -> new PackItem(PACK.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<PackBE>> PACK_BE = BLOCK_ENTITIES.register("pack_table",
             () -> BlockEntityType.Builder.of(PackBE::new, PACK.get()).build(null));
 
