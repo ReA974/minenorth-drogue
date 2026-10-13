@@ -11,6 +11,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -44,15 +47,17 @@ public class TentBlock extends Block {
     public static final EnumProperty<Plant> PLANT = EnumProperty.create("plant", Plant.class);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
     public static final BooleanProperty LAMP = BooleanProperty.create("lamp");
+    /** Eau de la terre (0 = sèche) : un stade de pousse consomme 1 ; seau d'eau = 3, bouteille d'eau = 1. */
+    public static final IntegerProperty WATER = IntegerProperty.create("water", 0, 3);
 
     public TentBlock() {
         super(BlockBehaviour.Properties.of().strength(2.0f).sound(SoundType.WOOL).noOcclusion().randomTicks()
                 .lightLevel(s -> s.getValue(TOP) && s.getValue(LAMP) ? 12 : 0));
-        registerDefaultState(stateDefinition.any().setValue(TOP, false).setValue(CORNER, 0).setValue(PLANT, Plant.NONE).setValue(AGE, 0).setValue(LAMP, false));
+        registerDefaultState(stateDefinition.any().setValue(TOP, false).setValue(CORNER, 0).setValue(PLANT, Plant.NONE).setValue(AGE, 0).setValue(LAMP, false).setValue(WATER, 0));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(TOP, CORNER, PLANT, AGE, LAMP); }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(TOP, CORNER, PLANT, AGE, LAMP, WATER); }
 
     /** Case d'origine (bas, nord-ouest) de la tente à laquelle appartient ce bloc. */
     public static BlockPos origin(BlockPos pos, BlockState s) {
@@ -63,14 +68,14 @@ public class TentBlock extends Block {
     // ------------------------------------------------------------------ pousse
 
     @Override @SuppressWarnings("deprecation")
-    public boolean isRandomlyTicking(BlockState s) { return !s.getValue(TOP) && s.getValue(PLANT) != Plant.NONE && s.getValue(AGE) < 3; }
+    public boolean isRandomlyTicking(BlockState s) { return !s.getValue(TOP) && s.getValue(PLANT) != Plant.NONE && s.getValue(AGE) < 3 && s.getValue(WATER) > 0; }
 
     @Override @SuppressWarnings("deprecation")
     public void randomTick(BlockState s, ServerLevel level, BlockPos pos, RandomSource rnd) {
         if (!isRandomlyTicking(s)) return;
         BlockState above = level.getBlockState(pos.above());
         boolean lamp = above.getBlock() == this && above.getValue(LAMP);
-        if (lamp || rnd.nextInt(2) == 0) level.setBlock(pos, s.setValue(AGE, s.getValue(AGE) + 1), 2);
+        if (lamp || rnd.nextInt(2) == 0) level.setBlock(pos, s.setValue(AGE, s.getValue(AGE) + 1).setValue(WATER, s.getValue(WATER) - 1), 2);
     }
 
     // ------------------------------------------------------------------ interaction
@@ -101,17 +106,32 @@ public class TentBlock extends Block {
             msg(p, lamp ? "§dLampe UV allumée. Accroupi, main vide : la retirer." : "§7Pas de lampe UV (objet « Lampe UV », clic droit).");
             return InteractionResult.CONSUME;
         }
+        // arrosage : seau d'eau (3 stades) ou bouteille d'eau (1 stade)
+        if (st.is(Items.WATER_BUCKET) || (st.is(Items.POTION) && PotionUtils.getPotion(st) == Potions.WATER)) {
+            boolean bucket = st.is(Items.WATER_BUCKET);
+            int now = s.getValue(WATER);
+            if (now >= 3) { msg(p, "§bLa terre est déjà bien humide."); return InteractionResult.CONSUME; }
+            level.setBlock(pos, s.setValue(WATER, bucket ? 3 : now + 1), 3);
+            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.8f, 1.2f);
+            if (!p.getAbilities().instabuild) p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(bucket ? Items.BUCKET : Items.GLASS_BOTTLE));
+            return InteractionResult.CONSUME;
+        }
         Plant plant = s.getValue(PLANT);
         if (plant == Plant.NONE) {
             Plant want = st.is(ModRegistry.CANNABIS_SEEDS.get()) ? Plant.CANNABIS : st.is(ModRegistry.COCA_SEEDS.get()) ? Plant.COCA : Plant.NONE;
-            if (want == Plant.NONE) { msg(p, "§7Emplacement libre : plantez des graines de cannabis ou de coca."); return InteractionResult.CONSUME; }
+            if (want == Plant.NONE) { msg(p, "§7Emplacement libre : plantez des graines de cannabis ou de coca (et arrosez)."); return InteractionResult.CONSUME; }
             st.shrink(1);
             level.setBlock(pos, s.setValue(PLANT, want).setValue(AGE, 0), 3);
             level.playSound(null, pos, SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1.0f, 1.0f);
             return InteractionResult.CONSUME;
         }
         int age = s.getValue(AGE);
-        if (age < 3) { msg(p, "§7Pousse en cours (" + (age + 1) + "/4)" + (lamp ? "" : " — plus lent sans lampe UV") + "."); return InteractionResult.CONSUME; }
+        if (age < 3) {
+            int w = s.getValue(WATER);
+            msg(p, w == 0 ? "§cLa terre est sèche : arrosez (seau ou bouteille d'eau) pour que la plante pousse."
+                    : "§7Pousse en cours (" + (age + 1) + "/4), eau : " + w + "/3" + (lamp ? "" : " — plus lente sans lampe UV") + ".");
+            return InteractionResult.CONSUME;
+        }
         // récolte
         boolean weed = plant == Plant.CANNABIS;
         ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(weed ? ModRegistry.CANNABIS_LEAF.get() : ModRegistry.COCA_LEAF.get(), 2 + level.random.nextInt(3)));

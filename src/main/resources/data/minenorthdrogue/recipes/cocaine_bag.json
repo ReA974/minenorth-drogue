@@ -1,0 +1,20 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minenorthdrogue:cocaine_powder"
+  },
+  {
+   "item": "minenorthdrogue:cocaine_powder"
+  },
+  {
+   "item": "minenorthdrogue:cocaine_powder"
+  },
+  {
+   "item": "minenorthdrogue:empty_bag"
+  }
+ ],
+ "result": {
+  "item": "minenorthdrogue:cocaine"
+ }
+}

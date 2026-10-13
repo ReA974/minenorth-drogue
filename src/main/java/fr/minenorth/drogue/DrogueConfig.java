@@ -30,13 +30,13 @@ public final class DrogueConfig {
         COCAINE_EFFECTS = b.defineList("effets", List.of("minecraft:speed;60;0", "minecraft:haste;60;0"), o -> o instanceof String);
         COCAINE_COOLDOWN = b.defineInRange("delaiSecondes", 240, 0, 36000);
         COCAINE_LAB_SECONDS = b.comment("Durée de fabrication au laboratoire (4 feuilles de coca + 1 produit chimique)").defineInRange("laboSecondes", 30, 1, 3600);
-        COCAINE_YIELD = b.comment("Doses produites par fabrication").defineInRange("rendement", 2, 1, 64);
+        COCAINE_YIELD = b.comment("Unités de poudre produites par fabrication (3 unités + 1 sachet vide = 1 sachet)").defineInRange("rendement", 6, 1, 64);
         b.pop();
         b.comment("Méthamphétamine").push("meth");
         METH_EFFECTS = b.defineList("effets", List.of("minecraft:speed;45;1", "minecraft:haste;45;1", "minecraft:resistance;45;0"), o -> o instanceof String);
         METH_COOLDOWN = b.defineInRange("delaiSecondes", 360, 0, 36000);
         METH_LAB_SECONDS = b.comment("Durée de fabrication au laboratoire (3 éphédra + 1 produit chimique + 1 redstone)").defineInRange("laboSecondes", 45, 1, 3600);
-        METH_YIELD = b.comment("Doses produites par fabrication").defineInRange("rendement", 2, 1, 64);
+        METH_YIELD = b.comment("Unités de cristaux produites par fabrication (3 unités + 1 sachet vide = 1 sachet)").defineInRange("rendement", 6, 1, 64);
         b.pop();
         SPEC = b.build();
     }

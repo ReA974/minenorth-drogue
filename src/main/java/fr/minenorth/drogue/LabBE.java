@@ -40,9 +40,9 @@ public class LabBE extends BlockEntity {
     }
 
     public static final List<Recipe> RECIPES = List.of(
-            new Recipe("cocaine", List.of(new Need(ModRegistry.COCA_LEAF, 4), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.COCAINE,
+            new Recipe("cocaine", List.of(new Need(ModRegistry.COCA_LEAF, 4), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.COCAINE_POWDER,
                     () -> DrogueConfig.get(DrogueConfig.COCAINE_YIELD), () -> DrogueConfig.get(DrogueConfig.COCAINE_LAB_SECONDS)),
-            new Recipe("meth", List.of(new Need(ModRegistry.EPHEDRA, 3), new Need(ModRegistry.CHEMICAL, 1), new Need(() -> Items.REDSTONE, 1)), ModRegistry.METH,
+            new Recipe("meth", List.of(new Need(ModRegistry.EPHEDRA, 3), new Need(ModRegistry.CHEMICAL, 1), new Need(() -> Items.REDSTONE, 1)), ModRegistry.METH_CRYSTALS,
                     () -> DrogueConfig.get(DrogueConfig.METH_YIELD), () -> DrogueConfig.get(DrogueConfig.METH_LAB_SECONDS)));
 
     private final Map<Item, Integer> contents = new LinkedHashMap<>();

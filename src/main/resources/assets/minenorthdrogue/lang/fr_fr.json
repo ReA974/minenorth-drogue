@@ -1,4 +1,5 @@
 {
+ "itemGroup.minenorthdrogue": "Drogue",
  "item.minenorthdrogue.cannabis_seeds": "Graines de cannabis",
  "item.minenorthdrogue.coca_seeds": "Graines de coca",
  "item.minenorthdrogue.ephedra_seeds": "Graines d'éphédra",
@@ -6,13 +7,16 @@
  "item.minenorthdrogue.coca_leaf": "Feuille de coca",
  "item.minenorthdrogue.ephedra": "Éphédra",
  "item.minenorthdrogue.joint": "Joint",
- "item.minenorthdrogue.cocaine": "Cocaïne",
- "item.minenorthdrogue.meth": "Méthamphétamine",
+ "item.minenorthdrogue.cocaine": "Sachet de cocaïne",
+ "item.minenorthdrogue.meth": "Sachet de méthamphétamine",
+ "item.minenorthdrogue.cocaine_powder": "Cocaïne (poudre)",
+ "item.minenorthdrogue.meth_crystals": "Méthamphétamine (cristaux)",
+ "item.minenorthdrogue.empty_bag": "Sachet vide",
  "item.minenorthdrogue.chemical": "Produit chimique",
- "block.minenorthdrogue.lab": "Laboratoire clandestin",
- "item.minenorthdrogue.lab": "Laboratoire clandestin",
- "block.minenorthdrogue.ephedra_crop": "Éphédra",
- "block.minenorthdrogue.grow_tent": "Tente de culture 2×2",
+ "item.minenorthdrogue.uv_lamp": "Lampe UV",
  "item.minenorthdrogue.grow_tent": "Tente de culture 2×2",
- "item.minenorthdrogue.uv_lamp": "Lampe UV"
+ "block.minenorthdrogue.grow_tent": "Tente de culture 2×2",
+ "item.minenorthdrogue.lab": "Laboratoire de chimie",
+ "block.minenorthdrogue.lab": "Laboratoire de chimie",
+ "block.minenorthdrogue.ephedra_crop": "Éphédra"
 }

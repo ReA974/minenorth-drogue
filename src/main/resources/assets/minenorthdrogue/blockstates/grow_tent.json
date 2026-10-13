@@ -283,6 +283,24 @@
    "apply": {
     "model": "minenorthdrogue:block/plant_coca_3"
    }
+  },
+  {
+   "when": {
+    "top": "false",
+    "water": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_soil_dry"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "water": "1|2|3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_soil_wet"
+   }
   }
  ]
 }

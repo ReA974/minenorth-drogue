@@ -1,0 +1,20 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minenorthdrogue:meth_crystals"
+  },
+  {
+   "item": "minenorthdrogue:meth_crystals"
+  },
+  {
+   "item": "minenorthdrogue:meth_crystals"
+  },
+  {
+   "item": "minenorthdrogue:empty_bag"
+  }
+ ],
+ "result": {
+  "item": "minenorthdrogue:meth"
+ }
+}

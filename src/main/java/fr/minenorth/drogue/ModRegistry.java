@@ -1,6 +1,9 @@
 package fr.minenorth.drogue;
 
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
@@ -18,11 +21,16 @@ public final class ModRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MineNorthDrogue.MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MineNorthDrogue.MOD_ID);
 
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MineNorthDrogue.MOD_ID);
+
     // ---- objets (déclarés avant les blocs : les cultures y lisent leurs graines)
     public static final RegistryObject<Item> CANNABIS_LEAF = ITEMS.register("cannabis_leaf", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COCA_LEAF = ITEMS.register("coca_leaf", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> EPHEDRA = ITEMS.register("ephedra", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CHEMICAL = ITEMS.register("chemical", () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> EMPTY_BAG = ITEMS.register("empty_bag", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> COCAINE_POWDER = ITEMS.register("cocaine_powder", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> METH_CRYSTALS = ITEMS.register("meth_crystals", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> JOINT = ITEMS.register("joint", DrugItem::joint);
     public static final RegistryObject<Item> COCAINE = ITEMS.register("cocaine", DrugItem::cocaine);
     public static final RegistryObject<Item> METH = ITEMS.register("meth", DrugItem::meth);
@@ -40,11 +48,19 @@ public final class ModRegistry {
 
     // ---- laboratoire
     public static final RegistryObject<Block> LAB = BLOCKS.register("lab", LabBlock::new);
-    public static final RegistryObject<Item> LAB_ITEM = ITEMS.register("lab", () -> new BlockItem(LAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> LAB_ITEM = ITEMS.register("lab", () -> new LabItem(LAB.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<LabBE>> LAB_BE = BLOCK_ENTITIES.register("lab",
             () -> BlockEntityType.Builder.of(LabBE::new, LAB.get()).build(null));
 
+    /** Onglet créatif « Drogue » : tous les objets du mod. */
+    public static final RegistryObject<CreativeModeTab> TAB = TABS.register("drogue", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.minenorthdrogue"))
+            .icon(() -> new ItemStack(JOINT.get()))
+            .displayItems((params, out) -> ITEMS.getEntries().forEach(i -> out.accept(i.get())))
+            .build());
+
     public static void register(IEventBus bus) {
+        TABS.register(bus);
         BLOCKS.register(bus);
         ITEMS.register(bus);
         BLOCK_ENTITIES.register(bus);
