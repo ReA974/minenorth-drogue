@@ -1,0 +1,288 @@
+{
+ "multipart": [
+  {
+   "when": {
+    "top": "false",
+    "corner": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_solid",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "corner": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_mesh",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_solid",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_mesh",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "0",
+    "lamp": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp",
+    "y": 0
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "corner": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_solid",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "corner": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_mesh",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_solid",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_mesh",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "1",
+    "lamp": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "corner": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_solid",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "corner": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_mesh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_solid",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_mesh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "2",
+    "lamp": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "corner": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_solid",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "corner": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_base_mesh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_solid",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_top_mesh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "top": "true",
+    "corner": "3",
+    "lamp": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "cannabis",
+    "age": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_cannabis_0"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "cannabis",
+    "age": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_cannabis_1"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "cannabis",
+    "age": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_cannabis_2"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "cannabis",
+    "age": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_cannabis_3"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "coca",
+    "age": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_coca_0"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "coca",
+    "age": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_coca_1"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "coca",
+    "age": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_coca_2"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "coca",
+    "age": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_coca_3"
+   }
+  }
+ ]
+}

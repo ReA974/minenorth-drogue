@@ -1,7 +1,107 @@
 {
- "parent": "minecraft:block/crop",
- "render_type": "minecraft:cutout",
  "textures": {
-  "crop": "minenorthdrogue:block/ephedra_3"
- }
+  "particle": "minenorthdrogue:block/ephedra_3",
+  "c": "minenorthdrogue:block/ephedra_3"
+ },
+ "render_type": "minecraft:cutout",
+ "elements": [
+  {
+   "from": [
+    1,
+    2,
+    8
+   ],
+   "to": [
+    15,
+    16,
+    8
+   ],
+   "faces": {
+    "north": {
+     "texture": "#c"
+    },
+    "south": {
+     "texture": "#c"
+    }
+   }
+  },
+  {
+   "from": [
+    8,
+    2,
+    1
+   ],
+   "to": [
+    8,
+    16,
+    15
+   ],
+   "faces": {
+    "east": {
+     "texture": "#c"
+    },
+    "west": {
+     "texture": "#c"
+    }
+   }
+  },
+  {
+   "from": [
+    1,
+    2,
+    8
+   ],
+   "to": [
+    15,
+    16,
+    8
+   ],
+   "faces": {
+    "north": {
+     "texture": "#c"
+    },
+    "south": {
+     "texture": "#c"
+    }
+   },
+   "rotation": {
+    "origin": [
+     8,
+     2,
+     8
+    ],
+    "axis": "y",
+    "angle": 45
+   }
+  },
+  {
+   "from": [
+    1,
+    2,
+    8
+   ],
+   "to": [
+    15,
+    16,
+    8
+   ],
+   "faces": {
+    "north": {
+     "texture": "#c"
+    },
+    "south": {
+     "texture": "#c"
+    }
+   },
+   "rotation": {
+    "origin": [
+     8,
+     2,
+     8
+    ],
+    "axis": "y",
+    "angle": -45
+   }
+  }
+ ]
 }

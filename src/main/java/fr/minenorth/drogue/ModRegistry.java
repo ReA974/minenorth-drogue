@@ -27,13 +27,16 @@ public final class ModRegistry {
     public static final RegistryObject<Item> COCAINE = ITEMS.register("cocaine", DrugItem::cocaine);
     public static final RegistryObject<Item> METH = ITEMS.register("meth", DrugItem::meth);
 
-    // ---- cultures
-    public static final RegistryObject<Block> CANNABIS_CROP = BLOCKS.register("cannabis_crop", () -> new DrugCropBlock(() -> ModRegistry.CANNABIS_SEEDS.get()));
-    public static final RegistryObject<Block> COCA_CROP = BLOCKS.register("coca_crop", () -> new DrugCropBlock(() -> ModRegistry.COCA_SEEDS.get()));
+    // ---- cultures : cannabis et coca ne poussent que sous tente ; l'éphédra pousse en plein champ
+    public static final RegistryObject<Item> CANNABIS_SEEDS = ITEMS.register("cannabis_seeds", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> COCA_SEEDS = ITEMS.register("coca_seeds", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Block> EPHEDRA_CROP = BLOCKS.register("ephedra_crop", () -> new DrugCropBlock(() -> ModRegistry.EPHEDRA_SEEDS.get()));
-    public static final RegistryObject<Item> CANNABIS_SEEDS = ITEMS.register("cannabis_seeds", () -> new ItemNameBlockItem(CANNABIS_CROP.get(), new Item.Properties()));
-    public static final RegistryObject<Item> COCA_SEEDS = ITEMS.register("coca_seeds", () -> new ItemNameBlockItem(COCA_CROP.get(), new Item.Properties()));
     public static final RegistryObject<Item> EPHEDRA_SEEDS = ITEMS.register("ephedra_seeds", () -> new ItemNameBlockItem(EPHEDRA_CROP.get(), new Item.Properties()));
+
+    // ---- tente de culture 2 x 2 et lampe UV
+    public static final RegistryObject<Block> TENT = BLOCKS.register("grow_tent", TentBlock::new);
+    public static final RegistryObject<Item> GROW_TENT = ITEMS.register("grow_tent", () -> new TentItem(TENT.get(), new Item.Properties().stacksTo(8)));
+    public static final RegistryObject<Item> UV_LAMP = ITEMS.register("uv_lamp", () -> new Item(new Item.Properties().stacksTo(8)));
 
     // ---- laboratoire
     public static final RegistryObject<Block> LAB = BLOCKS.register("lab", LabBlock::new);

@@ -3,7 +3,9 @@
 Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : marijuana, cocaïne, méthamphétamine, avec production et lien avec le mod Police.
 
 ## Production
-- **Cultures** (graines plantées sur terre labourée, 4 stades, récolte au stade 3 : feuilles + graines) : `cannabis_seeds` → feuille de cannabis, `coca_seeds` → feuille de coca, `ephedra_seeds` → éphédra.
+- **Tente de culture 2 × 2** (`grow_tent`, 2 de haut, posée vers le sud-est de la case visée) : cannabis et coca ne poussent que là. Clic droit sur une case du bas avec des graines pour planter,
+  à main nue sur une plante mûre pour récolter (feuilles + parfois une graine). **Lampe UV** (`uv_lamp`, clic droit sur la tente) : la pousse est deux fois plus rapide ; accroupi, main vide : la retirer.
+- **Éphédra** (`ephedra_seeds`) : pousse en plein champ sur terre labourée (4 stades).
   Les graines ne se craftent pas : le staff les donne (créatif / commande) ou les vend via le mod Boutiques.
 - **Produit chimique** (`chemical`) : poudre à canon + poudre d'os + fiole.
 - **Joint** : 3 feuilles de cannabis + papier → 2 joints (établi).
@@ -25,3 +27,5 @@ Chaque prise est notée dans les données du joueur (`minenorthpolice_drogues`, 
 
 ## Compiler
 Java 17 (Gradle 8.8 ne tourne pas sur un JDK trop récent : `JAVA_HOME` sur un JDK 17 à 21), puis `./gradlew build`.
+
+Tous les objets et blocs sont des modèles 3D (modèles JSON à base de boîtes, palette de couleurs `textures/block/palette.png`).

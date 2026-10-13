@@ -11,7 +11,8 @@
  "item.minenorthdrogue.chemical": "Chemical",
  "block.minenorthdrogue.lab": "Clandestine lab",
  "item.minenorthdrogue.lab": "Clandestine lab",
- "block.minenorthdrogue.cannabis_crop": "Cannabis",
- "block.minenorthdrogue.coca_crop": "Coca",
- "block.minenorthdrogue.ephedra_crop": "Ephedra"
+ "block.minenorthdrogue.ephedra_crop": "Ephedra",
+ "block.minenorthdrogue.grow_tent": "Grow tent 2x2",
+ "item.minenorthdrogue.grow_tent": "Grow tent 2x2",
+ "item.minenorthdrogue.uv_lamp": "UV lamp"
 }

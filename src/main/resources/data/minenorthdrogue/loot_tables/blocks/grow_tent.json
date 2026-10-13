@@ -1,0 +1,44 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minenorthdrogue:grow_tent"
+    }
+   ],
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "minenorthdrogue:grow_tent",
+     "properties": {
+      "top": "false",
+      "corner": "0"
+     }
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minenorthdrogue:uv_lamp"
+    }
+   ],
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "minenorthdrogue:grow_tent",
+     "properties": {
+      "top": "true",
+      "corner": "0",
+      "lamp": "true"
+     }
+    }
+   ]
+  }
+ ]
+}
