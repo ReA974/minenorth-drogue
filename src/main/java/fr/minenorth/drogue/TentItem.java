@@ -25,6 +25,10 @@ public class TentItem extends BlockItem {
         this.layout = layout;
     }
 
+    /** Chaque taille a son propre nom (la clé du bloc est commune aux trois tentes). */
+    @Override
+    public String getDescriptionId() { return getOrCreateDescriptionId(); }
+
     @Override
     public InteractionResult place(BlockPlaceContext ctx) {
         Level level = ctx.getLevel();

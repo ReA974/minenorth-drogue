@@ -38,7 +38,29 @@
     "corner": "1"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_NE_solid"
+    "model": "minenorthdrogue:block/tent_b_N_E_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "1",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_N_E_open"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "false",
+    "corner": "1",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_N_E_closed"
    }
   },
   {
@@ -48,7 +70,29 @@
     "corner": "1"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_NE_solid"
+    "model": "minenorthdrogue:block/tent_t_N_E_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "1",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_N_E_open"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "1",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_N_E_closed"
    }
   },
   {
@@ -59,7 +103,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_NE"
+    "model": "minenorthdrogue:block/tent_lamp_N_E"
    }
   },
   {
@@ -75,55 +119,11 @@
   {
    "when": {
     "layout": "s22",
-    "top": "false",
-    "corner": "2",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_SW_open"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "false",
-    "corner": "2",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_b_SW_closed"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
     "top": "true",
     "corner": "2"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_t_SW_solid"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "true",
-    "corner": "2",
-    "open": "true"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_SW_open"
-   }
-  },
-  {
-   "when": {
-    "layout": "s22",
-    "top": "true",
-    "corner": "2",
-    "open": "false"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_t_SW_closed"
    }
   },
   {
@@ -144,7 +144,7 @@
     "corner": "3"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_SE_solid"
+    "model": "minenorthdrogue:block/tent_b_S_E_solid"
    }
   },
   {
@@ -155,7 +155,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_SE_open"
+    "model": "minenorthdrogue:block/tent_b_S_E_open"
    }
   },
   {
@@ -166,7 +166,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_SE_closed"
+    "model": "minenorthdrogue:block/tent_b_S_E_closed"
    }
   },
   {
@@ -176,7 +176,7 @@
     "corner": "3"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_SE_solid"
+    "model": "minenorthdrogue:block/tent_t_S_E_solid"
    }
   },
   {
@@ -187,7 +187,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_SE_open"
+    "model": "minenorthdrogue:block/tent_t_S_E_open"
    }
   },
   {
@@ -198,7 +198,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_SE_closed"
+    "model": "minenorthdrogue:block/tent_t_S_E_closed"
    }
   },
   {
@@ -209,7 +209,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_SE"
+    "model": "minenorthdrogue:block/tent_lamp_S_E"
    }
   },
   {
@@ -219,7 +219,7 @@
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_NSWE_solid"
+    "model": "minenorthdrogue:block/tent_b_NWE_S_solid"
    }
   },
   {
@@ -230,7 +230,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_NSWE_open"
+    "model": "minenorthdrogue:block/tent_b_NWE_S_open"
    }
   },
   {
@@ -241,7 +241,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_NSWE_closed"
+    "model": "minenorthdrogue:block/tent_b_NWE_S_closed"
    }
   },
   {
@@ -251,7 +251,7 @@
     "corner": "0"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_NSWE_solid"
+    "model": "minenorthdrogue:block/tent_t_NWE_S_solid"
    }
   },
   {
@@ -262,7 +262,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_NSWE_open"
+    "model": "minenorthdrogue:block/tent_t_NWE_S_open"
    }
   },
   {
@@ -273,7 +273,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_NSWE_closed"
+    "model": "minenorthdrogue:block/tent_t_NWE_S_closed"
    }
   },
   {
@@ -284,7 +284,7 @@
     "lamp": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_NSWE"
+    "model": "minenorthdrogue:block/tent_lamp_NWE_S"
    }
   },
   {
@@ -295,7 +295,31 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_NWE_solid"
+    "model": "minenorthdrogue:block/tent_b_NW_E_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "false",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_NW_E_open"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "false",
+    "corner": "0",
+    "alongx": "false",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_b_NW_E_closed"
    }
   },
   {
@@ -306,7 +330,31 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_NWE_solid"
+    "model": "minenorthdrogue:block/tent_t_NW_E_solid"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "false",
+    "open": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_NW_E_open"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "alongx": "false",
+    "open": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_t_NW_E_closed"
    }
   },
   {
@@ -318,7 +366,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_NWE"
+    "model": "minenorthdrogue:block/tent_lamp_NW_E"
    }
   },
   {
@@ -329,7 +377,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_SWE_solid"
+    "model": "minenorthdrogue:block/tent_b_SW_E_solid"
    }
   },
   {
@@ -341,7 +389,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_SWE_open"
+    "model": "minenorthdrogue:block/tent_b_SW_E_open"
    }
   },
   {
@@ -353,7 +401,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_SWE_closed"
+    "model": "minenorthdrogue:block/tent_b_SW_E_closed"
    }
   },
   {
@@ -364,7 +412,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_SWE_solid"
+    "model": "minenorthdrogue:block/tent_t_SW_E_solid"
    }
   },
   {
@@ -376,7 +424,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_SWE_open"
+    "model": "minenorthdrogue:block/tent_t_SW_E_open"
    }
   },
   {
@@ -388,7 +436,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_SWE_closed"
+    "model": "minenorthdrogue:block/tent_t_SW_E_closed"
    }
   },
   {
@@ -400,7 +448,7 @@
     "alongx": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_SWE"
+    "model": "minenorthdrogue:block/tent_lamp_SW_E"
    }
   },
   {
@@ -411,7 +459,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_WNS_solid"
+    "model": "minenorthdrogue:block/tent_b_NW_S_solid"
    }
   },
   {
@@ -423,7 +471,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_WNS_open"
+    "model": "minenorthdrogue:block/tent_b_NW_S_open"
    }
   },
   {
@@ -435,7 +483,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_WNS_closed"
+    "model": "minenorthdrogue:block/tent_b_NW_S_closed"
    }
   },
   {
@@ -446,7 +494,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_WNS_solid"
+    "model": "minenorthdrogue:block/tent_t_NW_S_solid"
    }
   },
   {
@@ -458,7 +506,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_WNS_open"
+    "model": "minenorthdrogue:block/tent_t_NW_S_open"
    }
   },
   {
@@ -470,7 +518,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_WNS_closed"
+    "model": "minenorthdrogue:block/tent_t_NW_S_closed"
    }
   },
   {
@@ -482,7 +530,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_WNS"
+    "model": "minenorthdrogue:block/tent_lamp_NW_S"
    }
   },
   {
@@ -493,7 +541,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_ENS_solid"
+    "model": "minenorthdrogue:block/tent_b_NE_S_solid"
    }
   },
   {
@@ -505,7 +553,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_ENS_open"
+    "model": "minenorthdrogue:block/tent_b_NE_S_open"
    }
   },
   {
@@ -517,7 +565,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_b_ENS_closed"
+    "model": "minenorthdrogue:block/tent_b_NE_S_closed"
    }
   },
   {
@@ -528,7 +576,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_ENS_solid"
+    "model": "minenorthdrogue:block/tent_t_NE_S_solid"
    }
   },
   {
@@ -540,7 +588,7 @@
     "open": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_ENS_open"
+    "model": "minenorthdrogue:block/tent_t_NE_S_open"
    }
   },
   {
@@ -552,7 +600,7 @@
     "open": "false"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_t_ENS_closed"
+    "model": "minenorthdrogue:block/tent_t_NE_S_closed"
    }
   },
   {
@@ -564,7 +612,7 @@
     "alongx": "true"
    },
    "apply": {
-    "model": "minenorthdrogue:block/tent_lamp_ENS"
+    "model": "minenorthdrogue:block/tent_lamp_NE_S"
    }
   },
   {
