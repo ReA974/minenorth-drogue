@@ -3,7 +3,7 @@ package fr.minenorth.drogue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
@@ -17,20 +17,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 /**
- * Contenu de la table à rouler : feuilles de cannabis et papier. Toutes les quelques secondes, 3 feuilles et 1 papier deviennent 2 joints
- * (comme à l'établi), qui attendent d'être récupérés à main nue.
+ * Contenu de la table à rouler : feuilles de cannabis et papier. Les joints se roulent par un mini-jeu de timing (voir MiniGame) : à chaque manche réussie,
+ * 3 feuilles et 1 papier font 2 joints ; une manche ratée donne un joint mal roulé (1 joint). Toutes les manches réussies = un joint en bonus.
  */
 public class RollBE extends BlockEntity {
-    private static final int LEAVES_PER_LOT = 3, JOINTS_PER_LOT = 2, OUT_MAX = 64;
+    private static final int LEAVES_PER_LOT = 3, JOINTS_PER_LOT = 2, OUT_MAX = 64, ROUNDS_MAX = 6;
 
-    private int leaves, papers, progress;
+    private int leaves, papers;
     private ItemStack output = ItemStack.EMPTY;
 
     public RollBE(BlockPos pos, BlockState state) {
         super(ModRegistry.ROLL_BE.get(), pos, state);
     }
 
-    public void interact(Player p) {
+    public void interact(Player pl) {
+        if (!(pl instanceof ServerPlayer p)) return;
+        if (MiniGame.active(p.getUUID())) { MiniGame.stop(p); return; }
         ItemStack hand = p.getMainHandItem();
         Item it = hand.getItem();
         if (!hand.isEmpty() && (it == ModRegistry.CANNABIS_LEAF.get() || it == Items.PAPER)) {
@@ -39,7 +41,7 @@ public class RollBE extends BlockEntity {
             hand.shrink(n);
             setChanged();
             level.playSound(null, worldPosition, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 0.8f, 1.1f);
-            p.displayClientMessage(Component.literal("§7" + status()), true);
+            p.displayClientMessage(Component.literal("§7" + status() + " — main vide : rouler"), true);
             return;
         }
         if (!output.isEmpty()) {
@@ -52,36 +54,57 @@ public class RollBE extends BlockEntity {
         if (hand.isEmpty() && p.isShiftKeyDown()) {
             if (leaves > 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ModRegistry.CANNABIS_LEAF.get(), leaves));
             if (papers > 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(Items.PAPER, papers));
-            leaves = papers = progress = 0;
+            leaves = papers = 0;
             setChanged();
             p.displayClientMessage(Component.literal("§7Table vidée."), true);
             return;
         }
-        p.displayClientMessage(Component.literal("§7" + status() + " — déposez feuilles de cannabis et papier (accroupi, main vide : tout reprendre)."), true);
+        if (hand.isEmpty() && !startGame(p)) {
+            p.displayClientMessage(Component.literal("§7" + status() + " — " + (papers < 1 ? "il manque du papier" : "il faut " + LEAVES_PER_LOT + " feuilles de cannabis par lot")
+                    + " (accroupi, main vide : tout reprendre)"), true);
+        }
     }
 
     private String status() {
         return "Table : " + leaves + " feuille(s), " + papers + " papier(s)";
     }
 
-    private boolean canRoll() {
-        if (leaves < LEAVES_PER_LOT || papers < 1) return false;
-        return output.isEmpty() || (output.getItem() == ModRegistry.JOINT.get() && output.getCount() + JOINTS_PER_LOT <= OUT_MAX);
+    private int possibleRounds() { return Math.min(ROUNDS_MAX, Math.min(papers, leaves / LEAVES_PER_LOT)); }
+
+    private boolean startGame(ServerPlayer p) {
+        int rounds = possibleRounds();
+        if (rounds < 1) return false;
+        int[] made = {0};
+        MiniGame.start(p, worldPosition, rounds, new MiniGame.Handler() {
+            @Override
+            public boolean round(ServerPlayer pl, boolean success, int index) {
+                if (isRemoved()) return false;
+                papers--;
+                leaves -= LEAVES_PER_LOT;
+                int n = success ? JOINTS_PER_LOT : 1;
+                add(n);
+                made[0] += n;
+                pl.level().playSound(null, worldPosition, SoundEvents.LEASH_KNOT_PLACE, SoundSource.BLOCKS, 0.7f, 1.4f);
+                return papers >= 1 && leaves >= LEAVES_PER_LOT && (output.isEmpty() || output.getCount() + JOINTS_PER_LOT <= OUT_MAX);
+            }
+
+            @Override
+            public void end(ServerPlayer pl, int ok, int total) {
+                if (!isRemoved() && total >= 3 && ok == total) {
+                    add(1);
+                    made[0]++;
+                    pl.displayClientMessage(Component.literal("§6Roulage parfait : un joint en bonus ! §f(" + made[0] + " joints)"), true);
+                } else {
+                    pl.displayClientMessage(Component.literal("§7Roulage terminé : §f" + made[0] + " joint(s)§7 (" + ok + " bien roulé(s) sur " + total + "). Récupérez-les à main nue."), true);
+                }
+            }
+        });
+        return true;
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, RollBE be) {
-        if (!(level instanceof ServerLevel sl)) return;
-        if (!be.canRoll()) { be.progress = 0; return; }
-        be.progress++;
-        if (be.progress % 20 == 0) sl.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 0.5f, 1.5f);
-        if (be.progress >= Math.max(1, DrogueConfig.get(DrogueConfig.ROLL_SECONDS)) * 20) {
-            be.progress = 0;
-            be.leaves -= LEAVES_PER_LOT;
-            be.papers--;
-            if (be.output.isEmpty()) be.output = new ItemStack(ModRegistry.JOINT.get(), JOINTS_PER_LOT); else be.output.grow(JOINTS_PER_LOT);
-            sl.playSound(null, pos, SoundEvents.LEASH_KNOT_PLACE, SoundSource.BLOCKS, 0.7f, 1.4f);
-            be.setChanged();
-        }
+    private void add(int n) {
+        if (output.isEmpty()) output = new ItemStack(ModRegistry.JOINT.get(), n); else output.grow(n);
+        setChanged();
     }
 
     public void dropAll(Level level, BlockPos pos) {
@@ -97,7 +120,6 @@ public class RollBE extends BlockEntity {
         super.saveAdditional(tag);
         tag.putInt("leaves", leaves);
         tag.putInt("papers", papers);
-        tag.putInt("progress", progress);
         tag.put("output", output.save(new CompoundTag()));
     }
 
@@ -106,7 +128,6 @@ public class RollBE extends BlockEntity {
         super.load(tag);
         leaves = tag.getInt("leaves");
         papers = tag.getInt("papers");
-        progress = tag.getInt("progress");
         output = ItemStack.of(tag.getCompound("output"));
     }
 }

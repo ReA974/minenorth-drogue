@@ -67,7 +67,7 @@ public final class ModRegistry {
 
     // ---- table à rouler
     public static final RegistryObject<Block> ROLL = BLOCKS.register("roll_table", RollBlock::new);
-    public static final RegistryObject<Item> ROLL_ITEM = ITEMS.register("roll_table", () -> new BlockItem(ROLL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ROLL_ITEM = ITEMS.register("roll_table", () -> new RollItem(ROLL.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<RollBE>> ROLL_BE = BLOCK_ENTITIES.register("roll_table",
             () -> BlockEntityType.Builder.of(RollBE::new, ROLL.get()).build(null));
 

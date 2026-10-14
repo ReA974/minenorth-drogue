@@ -52,12 +52,6 @@ public class PackBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new PackBE(pos, state); }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide || state.getValue(PART) != 0 ? null : createTickerHelper(type, ModRegistry.PACK_BE.get(), PackBE::serverTick);
-    }
-
     @Override @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;

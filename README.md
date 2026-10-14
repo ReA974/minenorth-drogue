@@ -46,3 +46,11 @@ Onglet créatif **Drogue** (icône : joint). Tous les textes sont en français (
 - **Sachet de cocaïne** : pendant la prise, l'objet devient un miroir avec deux lignes et un billet roulé ; le miroir se lève devant le visage et glisse le long des lignes, qui disparaissent une à une (bruits de reniflement, petit nuage de poudre).
 - **Sachet de méthamphétamine** : pendant la prise, l'objet devient une seringue qui part vers l'avant-bras ; le piston s'enfonce (petit bruit de piqûre).
 Poses et mouvements : `client/DrugClient.java` ; modèles changeants : prédicats `minenorthdrogue:snort` / `inject` (`ClientSetup`).
+
+## Mini-jeux, lots du labo, récolte (14/10)
+- **Mini-jeu de timing** (ensachage et roulage) : sur la table, main vide = lancer ; une barre apparaît au-dessus de la barre d'objets avec une **zone verte** et un curseur qui va et vient ; clic droit sur la table pour l'arrêter. Dans la zone = manche réussie. Jusqu'à 5 manches (ensachage) ou 6 (roulage), de plus en plus rapides, zone plus étroite à partir de la 3e.
+  - Ensachage : manche réussie = 1 sachet (3 poudres / cristaux + 1 sachet vide) ; ratée = sachet déchiré (on perd le sachet vide et 1 unité). Toutes les manches réussies (3 ou plus) = 1 sachet en bonus.
+  - Roulage : réussie = 2 joints (3 feuilles + 1 papier) ; ratée = 1 joint mal roulé. Toutes réussies = 1 joint en bonus.
+- **Table à rouler 1 × 2** (comme la table d'ensachage : 2 blocs côte à côte, face vers le joueur).
+- **Labo : plusieurs lots d'un coup** : on y dépose les ingrédients en plus grande quantité (jusqu'à `lotsMax` lots, 4 par défaut), puis **main vide** pour lancer. Produit multiplié par le nombre de lots, durée +50 % par lot en plus.
+- **Récolte** : une plante mûre sous tente donne `feuillesMin` à `feuillesMax` feuilles (6 à 10 par défaut) ; l'éphédra de plein champ en donne 4 à 8.

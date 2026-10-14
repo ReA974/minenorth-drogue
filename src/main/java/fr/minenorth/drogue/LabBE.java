@@ -56,7 +56,7 @@ public class LabBE extends BlockEntity {
     private final Map<Item, Integer> contents = new LinkedHashMap<>();
     private ItemStack output = ItemStack.EMPTY;
     private String activeId = "";
-    private int progress;
+    private int progress, activeLots = 1;
 
     public LabBE(BlockPos pos, BlockState state) {
         super(ModRegistry.LAB_BE.get(), pos, state);
@@ -72,8 +72,8 @@ public class LabBE extends BlockEntity {
     public void interact(Player p) {
         if (!activeId.isEmpty()) {
             Recipe r = byId(activeId);
-            int total = r == null ? 1 : Math.max(1, r.seconds().get() * 20);
-            p.displayClientMessage(Component.literal("§7Fabrication en cours… " + Math.min(99, progress * 100 / total) + " %"), true);
+            int total = r == null ? 1 : totalTicks(r, activeLots);
+            p.displayClientMessage(Component.literal("§7Fabrication en cours (" + activeLots + " lot(s))… " + Math.min(99, progress * 100 / total) + " %"), true);
             return;
         }
         if (!output.isEmpty()) {
@@ -90,9 +90,11 @@ public class LabBE extends BlockEntity {
                 contents.clear();
                 setChanged();
                 p.displayClientMessage(Component.literal("§7Ingrédients repris."), true);
+            } else if (contents.isEmpty()) {
+                p.displayClientMessage(Component.literal("§7Laboratoire vide. Un lot : cocaïne = 4 feuilles de coca + produit chimique ; meth = 3 éphédra + produit chimique + essence. Jusqu'à "
+                        + lotMax() + " lots d'un coup (ajoutez les ingrédients en plus grande quantité, puis main vide pour lancer)."), true);
             } else {
-                p.displayClientMessage(Component.literal(contents.isEmpty() ? "§7Laboratoire vide. Cocaïne : 4 feuilles de coca + produit chimique. Meth : 3 éphédra + produit chimique + essence."
-                        : "§7Contient : " + describe() + " (accroupi, main vide : tout reprendre)"), true);
+                startBatch(p);
             }
             return;
         }
@@ -102,7 +104,7 @@ public class LabBE extends BlockEntity {
         Recipe match = null;
         for (Recipe r : RECIPES) {
             boolean fits = true;
-            for (Map.Entry<Item, Integer> e : next.entrySet()) if (r.needed(e.getKey()) < e.getValue()) { fits = false; break; }
+            for (Map.Entry<Item, Integer> e : next.entrySet()) if (r.needed(e.getKey()) * lotMax() < e.getValue()) { fits = false; break; }
             if (fits) { match = r; break; }
         }
         if (match == null) {
@@ -112,18 +114,43 @@ public class LabBE extends BlockEntity {
         hand.shrink(1);
         contents.clear();
         contents.putAll(next);
-        boolean complete = true;
-        for (Need n : match.needs()) if (contents.getOrDefault(n.item().get(), 0) < n.count()) { complete = false; break; }
-        if (complete) {
-            activeId = match.id();
-            progress = 0;
-            contents.clear();
-            p.displayClientMessage(Component.literal("§aLa fabrication démarre."), true);
-            level.playSound(null, worldPosition, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0f, 0.8f);
-        } else {
-            p.displayClientMessage(Component.literal("§7Ajouté : " + describe()), true);
-        }
+        int lots = lotsReady(match);
+        p.displayClientMessage(Component.literal("§7Ajouté : " + describe() + (lots > 0 ? " — §a" + lots + " lot(s) prêt(s)§7 : main vide pour lancer" : "")), true);
         setChanged();
+    }
+
+    private static int lotMax() { return Math.max(1, DrogueConfig.get(DrogueConfig.LAB_LOT_MAX)); }
+
+    private static int totalTicks(Recipe r, int lots) {
+        return (int) (Math.max(1, r.seconds().get()) * 20 * (1 + 0.5 * (lots - 1)));
+    }
+
+    /** Nombre de lots complets que permet le contenu pour cette recette (0 s'il manque un ingrédient). */
+    private int lotsReady(Recipe r) {
+        int lots = lotMax();
+        for (Need n : r.needs()) lots = Math.min(lots, contents.getOrDefault(n.item().get(), 0) / n.count());
+        return lots;
+    }
+
+    /** Lance la fabrication avec tous les lots complets : plus de lots = plus de produit, mais plus long (+50 % de temps par lot en plus). */
+    private void startBatch(Player p) {
+        for (Recipe r : RECIPES) {
+            boolean only = true;
+            for (Map.Entry<Item, Integer> e : contents.entrySet()) if (r.needed(e.getKey()) == 0) { only = false; break; }
+            if (!only) continue;
+            int lots = lotsReady(r);
+            if (lots < 1) continue;
+            for (Need n : r.needs()) contents.merge(n.item().get(), -n.count() * lots, Integer::sum);
+            contents.values().removeIf(v -> v <= 0);
+            activeId = r.id();
+            activeLots = lots;
+            progress = 0;
+            p.displayClientMessage(Component.literal("§aLa fabrication démarre : " + lots + " lot(s)."), true);
+            level.playSound(null, worldPosition, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0f, 0.8f);
+            setChanged();
+            return;
+        }
+        p.displayClientMessage(Component.literal("§7Contient : " + describe() + " — il manque des ingrédients pour un lot (accroupi, main vide : tout reprendre)."), true);
     }
 
     private String describe() {
@@ -141,8 +168,8 @@ public class LabBE extends BlockEntity {
         be.progress++;
         if (be.progress % 10 == 0) sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 2, 0.15, 0.05, 0.15, 0.01);
         if (be.progress % 40 == 0) sl.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.5f, 1.0f);
-        if (be.progress >= Math.max(1, r.seconds().get() * 20)) {
-            be.output = new ItemStack(r.result().get(), Math.max(1, r.yield().get()));
+        if (be.progress >= totalTicks(r, be.activeLots)) {
+            be.output = new ItemStack(r.result().get(), Math.max(1, r.yield().get()) * be.activeLots);
             be.activeId = "";
             be.progress = 0;
             sl.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.6f, 1.4f);
@@ -173,6 +200,7 @@ public class LabBE extends BlockEntity {
         tag.put("output", output.save(new CompoundTag()));
         tag.putString("active", activeId);
         tag.putInt("progress", progress);
+        tag.putInt("lots", activeLots);
     }
 
     @Override
@@ -187,5 +215,6 @@ public class LabBE extends BlockEntity {
         output = ItemStack.of(tag.getCompound("output"));
         activeId = tag.getString("active");
         progress = tag.getInt("progress");
+        activeLots = Math.max(1, tag.getInt("lots"));
     }
 }

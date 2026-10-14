@@ -3,7 +3,7 @@ package fr.minenorth.drogue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
@@ -16,20 +16,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 /**
- * Contenu de la table d'ensachage : poudre de cocaïne, cristaux de meth et sachets vides. Toutes les quelques secondes, 3 unités de produit
- * et 1 sachet vide deviennent 1 sachet à consommer, qui attend d'être récupéré à main nue.
+ * Contenu de la table d'ensachage : poudre de cocaïne, cristaux de meth et sachets vides. Les sachets se font par un mini-jeu de timing (voir MiniGame) :
+ * à chaque manche réussie, 3 unités de produit et 1 sachet vide deviennent 1 sachet ; une manche ratée déchire le sachet (on perd le sachet vide et 1 unité).
+ * Toutes les manches réussies = un sachet en bonus.
  */
 public class PackBE extends BlockEntity {
-    private static final int PER_BAG = 3, OUT_MAX = 64;
+    private static final int PER_BAG = 3, OUT_MAX = 64, ROUNDS_MAX = 5;
 
-    private int powder, crystals, bags, progress;
+    private int powder, crystals, bags;
     private ItemStack output = ItemStack.EMPTY;
 
     public PackBE(BlockPos pos, BlockState state) {
         super(ModRegistry.PACK_BE.get(), pos, state);
     }
 
-    public void interact(Player p) {
+    public void interact(Player pl) {
+        if (!(pl instanceof ServerPlayer p)) return;
+        if (MiniGame.active(p.getUUID())) { MiniGame.stop(p); return; }
         ItemStack hand = p.getMainHandItem();
         Item it = hand.getItem();
         if (!hand.isEmpty() && (it == ModRegistry.COCAINE_POWDER.get() || it == ModRegistry.METH_CRYSTALS.get() || it == ModRegistry.EMPTY_BAG.get())) {
@@ -40,7 +43,7 @@ public class PackBE extends BlockEntity {
             hand.shrink(n);
             setChanged();
             level.playSound(null, worldPosition, SoundEvents.BUNDLE_INSERT, SoundSource.BLOCKS, 0.8f, 1.1f);
-            p.displayClientMessage(Component.literal("§7" + status()), true);
+            p.displayClientMessage(Component.literal("§7" + status() + " — main vide : lancer l'ensachage"), true);
             return;
         }
         if (!output.isEmpty()) {
@@ -54,55 +57,69 @@ public class PackBE extends BlockEntity {
             if (powder > 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ModRegistry.COCAINE_POWDER.get(), powder));
             if (crystals > 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ModRegistry.METH_CRYSTALS.get(), crystals));
             if (bags > 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ModRegistry.EMPTY_BAG.get(), bags));
-            powder = crystals = bags = progress = 0;
+            powder = crystals = bags = 0;
             setChanged();
             p.displayClientMessage(Component.literal("§7Table vidée."), true);
             return;
         }
-        p.displayClientMessage(Component.literal("§7" + status() + " (accroupi, main vide : tout reprendre)"), true);
+        if (hand.isEmpty() && !startGame(p)) {
+            p.displayClientMessage(Component.literal("§7" + status() + " — " + (bags < 1 ? "il manque des sachets vides" : "il faut " + PER_BAG + " poudres (ou " + PER_BAG + " cristaux) par sachet")
+                    + " (accroupi, main vide : tout reprendre)"), true);
+        }
     }
 
     private String status() {
-        return "Table : " + powder + " poudre, " + crystals + " cristaux, " + bags + " sachets vides" + (output.isEmpty() ? "" : ", " + output.getCount() + " sachet(s) prêt(s)") + " — " + progressText();
+        return "Table : " + powder + " poudre, " + crystals + " cristaux, " + bags + " sachets vides";
     }
 
-    /** Où en est l'ensachage (ou pourquoi il ne démarre pas). */
-    private String progressText() {
-        Item n = next();
-        if (n != null) {
-            int total = Math.max(1, DrogueConfig.get(DrogueConfig.PACK_SECONDS)) * 20;
-            return "ensachage en cours : " + Math.min(99, progress * 100 / total) + " %";
-        }
-        if (!output.isEmpty() && (powder >= PER_BAG || crystals >= PER_BAG) && bags >= 1) return "récupérez d'abord les sachets prêts (clic à main nue)";
-        if (bags < 1) return "il manque des sachets vides";
-        return "il faut " + PER_BAG + " poudres (ou " + PER_BAG + " cristaux) par sachet";
+    private boolean useCocaine() { return powder >= PER_BAG; }
+
+    /** Nombre de manches possibles avec ce qu'il y a sur la table. */
+    private int possibleRounds() {
+        int raw = useCocaine() ? powder : crystals;
+        return Math.min(ROUNDS_MAX, Math.min(bags, raw / PER_BAG));
     }
 
-    /** Produit à ensacher maintenant, ou null. */
-    private Item next() {
-        if (bags < 1) return null;
-        if (powder >= PER_BAG && canOutput(ModRegistry.COCAINE.get())) return ModRegistry.COCAINE.get();
-        if (crystals >= PER_BAG && canOutput(ModRegistry.METH.get())) return ModRegistry.METH.get();
-        return null;
+    private boolean startGame(ServerPlayer p) {
+        int rounds = possibleRounds();
+        if (rounds < 1) return false;
+        boolean coke = useCocaine();
+        Item product = coke ? ModRegistry.COCAINE.get() : ModRegistry.METH.get();
+        int[] made = {0};
+        MiniGame.start(p, worldPosition, rounds, new MiniGame.Handler() {
+            @Override
+            public boolean round(ServerPlayer pl, boolean success, int index) {
+                if (isRemoved()) return false;
+                bags--;
+                if (success) {
+                    if (coke) powder -= PER_BAG; else crystals -= PER_BAG;
+                    add(product, 1);
+                    made[0]++;
+                } else {
+                    if (coke) powder -= 1; else crystals -= 1;           // sachet déchiré
+                }
+                setChanged();
+                return bags >= 1 && (coke ? powder : crystals) >= PER_BAG && (output.isEmpty() || output.getCount() < OUT_MAX);
+            }
+
+            @Override
+            public void end(ServerPlayer pl, int ok, int total) {
+                if (!isRemoved() && total >= 3 && ok == total) {
+                    add(product, 1);
+                    made[0]++;
+                    pl.displayClientMessage(Component.literal("§6Ensachage parfait : un sachet en bonus ! §f(" + made[0] + " sachets)"), true);
+                } else {
+                    pl.displayClientMessage(Component.literal("§7Ensachage terminé : §f" + made[0] + " sachet(s)§7 (" + ok + " réussi(s) sur " + total + "). Récupérez-les à main nue."), true);
+                }
+            }
+        });
+        return true;
     }
 
-    private boolean canOutput(Item it) {
-        return output.isEmpty() || (output.getItem() == it && output.getCount() < OUT_MAX);
-    }
-
-    public static void serverTick(Level level, BlockPos pos, BlockState state, PackBE be) {
-        if (!(level instanceof ServerLevel sl)) return;
-        Item next = be.next();
-        if (next == null) { be.progress = 0; return; }
-        be.progress++;
-        if (be.progress % 20 == 0) sl.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.6f, 1.3f);
-        if (be.progress >= Math.max(1, DrogueConfig.get(DrogueConfig.PACK_SECONDS)) * 20) {
-            be.progress = 0;
-            be.bags--;
-            if (next == ModRegistry.COCAINE.get()) be.powder -= PER_BAG; else be.crystals -= PER_BAG;
-            if (be.output.isEmpty()) be.output = new ItemStack(next); else be.output.grow(1);
-            be.setChanged();
-        }
+    private void add(Item it, int n) {
+        if (output.isEmpty()) output = new ItemStack(it, n);
+        else if (output.getItem() == it) output.grow(n);
+        setChanged();
     }
 
     public void dropAll(Level level, BlockPos pos) {
@@ -120,7 +137,6 @@ public class PackBE extends BlockEntity {
         tag.putInt("powder", powder);
         tag.putInt("crystals", crystals);
         tag.putInt("bags", bags);
-        tag.putInt("progress", progress);
         tag.put("output", output.save(new CompoundTag()));
     }
 
@@ -130,7 +146,6 @@ public class PackBE extends BlockEntity {
         powder = tag.getInt("powder");
         crystals = tag.getInt("crystals");
         bags = tag.getInt("bags");
-        progress = tag.getInt("progress");
         output = ItemStack.of(tag.getCompound("output"));
     }
 }

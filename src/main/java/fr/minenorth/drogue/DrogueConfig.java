@@ -17,10 +17,17 @@ public final class DrogueConfig {
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> JOINT_EFFECTS, COCAINE_EFFECTS, METH_EFFECTS;
     public static final ForgeConfigSpec.IntValue JOINT_COOLDOWN, COCAINE_COOLDOWN, METH_COOLDOWN;
-    public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, COCAINE_LAB_SECONDS, METH_LAB_SECONDS, COCAINE_YIELD, METH_YIELD;
+    public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, LAB_LOT_MAX, HARVEST_MIN, HARVEST_MAX, COCAINE_LAB_SECONDS, METH_LAB_SECONDS, COCAINE_YIELD, METH_YIELD;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
+        b.comment("Récolte").push("recolte");
+        HARVEST_MIN = b.comment("Feuilles minimum par plante mûre (tentes)").defineInRange("feuillesMin", 6, 1, 64);
+        HARVEST_MAX = b.comment("Feuilles maximum par plante mûre (tentes)").defineInRange("feuillesMax", 10, 1, 64);
+        b.pop();
+        b.comment("Laboratoire").push("labo");
+        LAB_LOT_MAX = b.comment("Nombre maximum de lots fabriqués d'un coup (chaque lot en plus ajoute 50 % de temps)").defineInRange("lotsMax", 4, 1, 16);
+        b.pop();
         b.comment("Table d'ensachage").push("ensachage");
         PACK_SECONDS = b.comment("Secondes pour faire un sachet (3 unités + 1 sachet vide)").defineInRange("secondesParSachet", 3, 1, 600);
         b.pop();

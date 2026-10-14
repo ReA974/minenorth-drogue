@@ -210,11 +210,17 @@ public class TentBlock extends Block {
         // récolte
         net.minecraft.world.item.Item crop = plant == Plant.CANNABIS ? ModRegistry.CANNABIS_LEAF.get() : plant == Plant.COCA ? ModRegistry.COCA_LEAF.get() : ModRegistry.EPHEDRA.get();
         net.minecraft.world.item.Item seed = plant == Plant.CANNABIS ? ModRegistry.CANNABIS_SEEDS.get() : plant == Plant.COCA ? ModRegistry.COCA_SEEDS.get() : ModRegistry.EPHEDRA_SEEDS.get();
-        ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(crop, 2 + level.random.nextInt(3)));
+        ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(crop, leafCount(level.random)));
         if (level.random.nextInt(2) == 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(seed));
         level.setBlock(pos, s.setValue(PLANT, Plant.NONE).setValue(AGE, 0), 3);
         level.playSound(null, pos, SoundEvents.GRASS_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
         return InteractionResult.CONSUME;
+    }
+
+    /** Feuilles récoltées sur une plante mûre (config : feuillesMin / feuillesMax). */
+    private static int leafCount(net.minecraft.util.RandomSource rnd) {
+        int min = Math.max(1, DrogueConfig.get(DrogueConfig.HARVEST_MIN)), max = Math.max(min, DrogueConfig.get(DrogueConfig.HARVEST_MAX));
+        return min + rnd.nextInt(max - min + 1);
     }
 
     private static void msg(Player p, String text) { p.displayClientMessage(Component.literal(text), true); }
