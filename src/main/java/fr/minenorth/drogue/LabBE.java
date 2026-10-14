@@ -87,8 +87,9 @@ public class LabBE extends BlockEntity {
                 setChanged();
                 p.displayClientMessage(Component.literal("§7Ingrédients repris."), true);
             } else if (contents.isEmpty()) {
-                p.displayClientMessage(Component.literal("§7Laboratoire vide. Meth : 3 éphédra + 1 produit chimique. Pâte de coca : 4 feuilles de coca + 1 produit chimique. Jusqu'à "
-                        + lotMax() + " lots d'un coup (ajoutez les ingrédients en plus grande quantité, puis main vide pour lancer)."), true);
+                p.displayClientMessage(Component.literal("§7Laboratoire vide : voir le chat."), true);
+                chat(p, "§6Laboratoire", "§7Meth : §f3 éphédra + 1 produit chimique", "§7Pâte de coca : §f4 feuilles de coca + 1 produit chimique",
+                        "§7Jusqu'à §f" + lotMax() + " lots§7 d'un coup : ajoutez plus d'ingrédients,", "§7puis main vide pour lancer.");
             } else {
                 startBatch(p);
             }
@@ -111,7 +112,8 @@ public class LabBE extends BlockEntity {
         contents.clear();
         contents.putAll(next);
         int lots = lotsReady(match);
-        p.displayClientMessage(Component.literal("§7Ajouté : " + describe() + (lots > 0 ? " — §a" + lots + " lot(s) prêt(s)§7 : main vide pour lancer" : "")), true);
+        p.displayClientMessage(Component.literal("§7Ajouté : " + describe() + (lots > 0 ? " §8| §a" + lots + " lot(s) prêt(s)" : "")), true);
+        if (lots > 0) chat(p, "§a" + lots + " lot(s) prêt(s)§7 : main vide pour lancer.");
         setChanged();
     }
 
@@ -146,7 +148,13 @@ public class LabBE extends BlockEntity {
             setChanged();
             return;
         }
-        p.displayClientMessage(Component.literal("§7Contient : " + describe() + " — il manque des ingrédients pour un lot (accroupi, main vide : tout reprendre)."), true);
+        p.displayClientMessage(Component.literal("§cIl manque des ingrédients pour un lot."), true);
+        chat(p, "§7Contient : §f" + describe(), "§7Accroupi + main vide : tout reprendre.");
+    }
+
+    /** Messages longs : une phrase courte par ligne dans le chat (la barre d'action déborde de l'écran). */
+    private static void chat(Player p, String... lines) {
+        for (String l : lines) p.sendSystemMessage(Component.literal(l));
     }
 
     private String describe() {
