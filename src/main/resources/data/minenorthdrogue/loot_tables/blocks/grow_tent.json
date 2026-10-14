@@ -6,7 +6,13 @@
    "entries": [
     {
      "type": "minecraft:item",
-     "name": "minenorthdrogue:grow_tent"
+     "name": "minenorthdrogue:grow_tent_long",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 2
+      }
+     ]
     }
    ],
    "conditions": [

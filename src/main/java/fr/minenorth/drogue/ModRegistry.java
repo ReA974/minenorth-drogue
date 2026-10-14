@@ -44,7 +44,6 @@ public final class ModRegistry {
 
     // ---- tente de culture 2 x 2 et lampe UV
     public static final RegistryObject<Block> TENT = BLOCKS.register("grow_tent", TentBlock::new);
-    public static final RegistryObject<Item> GROW_TENT = ITEMS.register("grow_tent", () -> new TentItem(TENT.get(), TentBlock.Layout.S22, new Item.Properties().stacksTo(8)));
     public static final RegistryObject<Item> GROW_TENT_SMALL = ITEMS.register("grow_tent_small", () -> new TentItem(TENT.get(), TentBlock.Layout.S11, new Item.Properties().stacksTo(8)));
     public static final RegistryObject<Item> GROW_TENT_LONG = ITEMS.register("grow_tent_long", () -> new TentItem(TENT.get(), TentBlock.Layout.S12, new Item.Properties().stacksTo(8)));
     public static final RegistryObject<Item> WATERING_CAN = ITEMS.register("watering_can", WateringCanItem::new);

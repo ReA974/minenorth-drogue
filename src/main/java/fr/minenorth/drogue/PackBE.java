@@ -59,11 +59,23 @@ public class PackBE extends BlockEntity {
             p.displayClientMessage(Component.literal("§7Table vidée."), true);
             return;
         }
-        p.displayClientMessage(Component.literal("§7" + status() + " — déposez poudre / cristaux et sachets vides (accroupi, main vide : tout reprendre)."), true);
+        p.displayClientMessage(Component.literal("§7" + status() + " (accroupi, main vide : tout reprendre)"), true);
     }
 
     private String status() {
-        return "Table : " + powder + " poudre, " + crystals + " cristaux, " + bags + " sachets vides";
+        return "Table : " + powder + " poudre, " + crystals + " cristaux, " + bags + " sachets vides" + (output.isEmpty() ? "" : ", " + output.getCount() + " sachet(s) prêt(s)") + " — " + progressText();
+    }
+
+    /** Où en est l'ensachage (ou pourquoi il ne démarre pas). */
+    private String progressText() {
+        Item n = next();
+        if (n != null) {
+            int total = Math.max(1, DrogueConfig.get(DrogueConfig.PACK_SECONDS)) * 20;
+            return "ensachage en cours : " + Math.min(99, progress * 100 / total) + " %";
+        }
+        if (!output.isEmpty() && (powder >= PER_BAG || crystals >= PER_BAG) && bags >= 1) return "récupérez d'abord les sachets prêts (clic à main nue)";
+        if (bags < 1) return "il manque des sachets vides";
+        return "il faut " + PER_BAG + " poudres (ou " + PER_BAG + " cristaux) par sachet";
     }
 
     /** Produit à ensacher maintenant, ou null. */
