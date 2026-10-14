@@ -618,24 +618,6 @@
   {
    "when": {
     "top": "false",
-    "water": "0"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_soil_dry"
-   }
-  },
-  {
-   "when": {
-    "top": "false",
-    "water": "1|2|3"
-   },
-   "apply": {
-    "model": "minenorthdrogue:block/tent_soil_wet"
-   }
-  },
-  {
-   "when": {
-    "top": "false",
     "plant": "cannabis",
     "age": "0"
    },
@@ -751,6 +733,58 @@
    },
    "apply": {
     "model": "minenorthdrogue:block/plant_ephedra_3"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "soil": "false",
+    "plant": "none"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_pot_empty"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "soil": "true",
+    "water": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_soil_dry"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "soil": "false",
+    "plant": "cannabis|coca|ephedra",
+    "water": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_soil_dry"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "soil": "true",
+    "water": "1|2|3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_soil_wet"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "soil": "false",
+    "plant": "cannabis|coca|ephedra",
+    "water": "1|2|3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_soil_wet"
    }
   }
  ]

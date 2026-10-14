@@ -47,6 +47,8 @@ public final class ModRegistry {
     public static final RegistryObject<Item> GROW_TENT_SMALL = ITEMS.register("grow_tent_small", () -> new TentItem(TENT.get(), TentBlock.Layout.S11, new Item.Properties().stacksTo(8)));
     public static final RegistryObject<Item> GROW_TENT_LONG = ITEMS.register("grow_tent_long", () -> new TentItem(TENT.get(), TentBlock.Layout.S12, new Item.Properties().stacksTo(8)));
     public static final RegistryObject<Item> WATERING_CAN = ITEMS.register("watering_can", WateringCanItem::new);
+    public static final RegistryObject<Item> COCA_PASTE = ITEMS.register("coca_paste", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SOIL = ITEMS.register("potting_soil", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> UV_LAMP = ITEMS.register("uv_lamp", () -> new Item(new Item.Properties().stacksTo(8)));
 
     // ---- laboratoire

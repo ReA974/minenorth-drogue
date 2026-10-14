@@ -17,7 +17,7 @@ public final class DrogueConfig {
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> JOINT_EFFECTS, COCAINE_EFFECTS, METH_EFFECTS;
     public static final ForgeConfigSpec.IntValue JOINT_COOLDOWN, COCAINE_COOLDOWN, METH_COOLDOWN;
-    public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, LAB_LOT_MAX, HARVEST_MIN, HARVEST_MAX, COCAINE_LAB_SECONDS, METH_LAB_SECONDS, COCAINE_YIELD, METH_YIELD;
+    public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, LAB_LOT_MAX, HARVEST_MIN, HARVEST_MAX, METH_LAB_SECONDS, METH_YIELD;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -42,13 +42,11 @@ public final class DrogueConfig {
         b.comment("Cocaïne").push("cocaine");
         COCAINE_EFFECTS = b.defineList("effets", List.of("minecraft:speed;60;0", "minecraft:haste;60;0"), o -> o instanceof String);
         COCAINE_COOLDOWN = b.defineInRange("delaiSecondes", 240, 0, 36000);
-        COCAINE_LAB_SECONDS = b.comment("Durée de fabrication au laboratoire (4 feuilles de coca + 1 produit chimique)").defineInRange("laboSecondes", 30, 1, 3600);
-        COCAINE_YIELD = b.comment("Unités de poudre produites par fabrication (3 unités + 1 sachet vide = 1 sachet)").defineInRange("rendement", 6, 1, 64);
         b.pop();
         b.comment("Méthamphétamine").push("meth");
         METH_EFFECTS = b.defineList("effets", List.of("minecraft:speed;45;1", "minecraft:haste;45;1", "minecraft:resistance;45;0"), o -> o instanceof String);
         METH_COOLDOWN = b.defineInRange("delaiSecondes", 360, 0, 36000);
-        METH_LAB_SECONDS = b.comment("Durée de fabrication au laboratoire (3 éphédra + 1 produit chimique + 1 essence)").defineInRange("laboSecondes", 45, 1, 3600);
+        METH_LAB_SECONDS = b.comment("Durée de fabrication au laboratoire (3 éphédra + 1 produit chimique)").defineInRange("laboSecondes", 45, 1, 3600);
         METH_YIELD = b.comment("Unités de cristaux produites par fabrication (3 unités + 1 sachet vide = 1 sachet)").defineInRange("rendement", 6, 1, 64);
         b.pop();
         SPEC = b.build();

@@ -14,9 +14,9 @@ Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : mari
 - **Produit chimique** (`chemical`) : poudre à canon + poudre d'os + fiole.
 - **Joint** : 3 feuilles de cannabis + papier → 2 joints (établi).
 - **Table à rouler** (`roll_table`, 1 bloc, 3 planches de chêne noir + 4 bâtons + 1 papier en établi) : clic droit avec une pile de **feuilles de cannabis** ou de **papier** pour les déposer ; elle roule 2 joints toutes les 4 s (3 feuilles + 1 papier, réglage `secondesParLot`), à récupérer à main nue (accroupi, main vide : tout reprendre). Plateau de roulage, broyeur, paquet de feuilles et machine à rouler en 3D.
+- **Cocaïne (cuisson)** : 4 feuilles de coca + 1 produit chimique en établi (sans forme) = 6 **pâtes de coca** ; la pâte se cuit au four, au fumoir (2× plus vite) ou au feu de camp pour donner de la poudre de cocaïne (plus de passage par le labo).
 - **Laboratoire de chimie** (`lab`, multibloc 2 de large × 1 de profondeur × 2 de haut, face tournée vers le joueur) : clic droit pour y poser les ingrédients un à un ; la fabrication démarre quand la recette est complète, le produit se récupère à main nue (accroupi, main vide : reprendre les ingrédients).
-  - Poudre de cocaïne : 4 feuilles de coca + 1 produit chimique, 30 s, 6 unités.
-  - Cristaux de méthamphétamine : 3 éphédra + 1 produit chimique + 1 **essence** (`minenorth_harvest:gasoline`, du charbon si le mod Récolte est absent), 45 s, 6 unités.
+  - Cristaux de méthamphétamine : 3 éphédra + 1 produit chimique, 45 s, 6 unités.
 - **Table d'ensachage** (`pack_table`, **1 × 2** : 2 blocs côte à côte à droite du joueur, face vers lui ; 4 planches + 4 lingots de fer en établi) : clic droit avec une pile de poudre, de cristaux ou de sachets vides pour les déposer ; elle fait un sachet toutes les 3 s (3 unités + 1 sachet vide), à récupérer à main nue (accroupi, main vide : tout reprendre). Réglage : `secondesParSachet`.
 - **Emballage à la main** (établi, sans table) : sachet vide = 2 papiers + 1 ficelle (4 sachets) ; 3 poudres de cocaïne + 1 sachet vide = **Sachet de cocaïne** ; 3 cristaux de meth + 1 sachet vide = **Sachet de méthamphétamine**. Ce sont les sachets que l'on consomme.
 
@@ -48,9 +48,12 @@ Onglet créatif **Drogue** (icône : joint). Tous les textes sont en français (
 Poses et mouvements : `client/DrugClient.java` ; modèles changeants : prédicats `minenorthdrogue:snort` / `inject` (`ClientSetup`).
 
 ## Mini-jeux, lots du labo, récolte (14/10)
-- **Mini-jeu de timing** (ensachage et roulage) : sur la table, main vide = lancer ; une barre apparaît au-dessus de la barre d'objets avec une **zone verte** et un curseur qui va et vient ; clic droit sur la table pour l'arrêter. Dans la zone = manche réussie. Jusqu'à 5 manches (ensachage) ou 6 (roulage), de plus en plus rapides, zone plus étroite à partir de la 3e.
+- **Mini-jeu de timing** (ensachage et roulage) : sur la table, main vide = lancer ; une barre apparaît au-dessus de la barre d'objets avec une **zone verte** et un curseur qui va et vient ; clic droit sur la table pour l'arrêter. Dans la zone = manche réussie. Jusqu'à 5 manches (ensachage) ou 6 (roulage), curseur lent, un peu plus rapide à chaque manche, zone plus étroite à partir de la 4e.
   - Ensachage : manche réussie = 1 sachet (3 poudres / cristaux + 1 sachet vide) ; ratée = sachet déchiré (on perd le sachet vide et 1 unité). Toutes les manches réussies (3 ou plus) = 1 sachet en bonus.
   - Roulage : réussie = 2 joints (3 feuilles + 1 papier) ; ratée = 1 joint mal roulé. Toutes réussies = 1 joint en bonus.
 - **Table à rouler 1 × 2** (comme la table d'ensachage : 2 blocs côte à côte, face vers le joueur).
 - **Labo : plusieurs lots d'un coup** : on y dépose les ingrédients en plus grande quantité (jusqu'à `lotsMax` lots, 4 par défaut), puis **main vide** pour lancer. Produit multiplié par le nombre de lots, durée +50 % par lot en plus.
 - **Récolte** : une plante mûre sous tente donne `feuillesMin` à `feuillesMax` feuilles (6 à 10 par défaut) ; l'éphédra de plein champ en donne 4 à 8.
+
+- **Terreau** (`potting_soil`, 2 terre + 1 poudre d'os = 2 terreaux) : à poser dans le pot de la tente avant de planter et d'arroser. Pot refait en 3D (soucoupe, rebord, terreau sec/humide avec perlite et étiquette). Récolter vide le pot : il faut remettre du terreau.
+- **Méthamphétamine** : plus d'essence, 3 éphédra + 1 produit chimique au labo.

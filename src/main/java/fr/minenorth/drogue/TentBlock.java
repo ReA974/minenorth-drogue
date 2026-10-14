@@ -63,6 +63,8 @@ public class TentBlock extends Block {
     public static final BooleanProperty LAMP = BooleanProperty.create("lamp");
     /** Tente ouverte (filet transparent, accès aux plantes) ou fermée (toile opaque). */
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
+    /** Terreau dans le pot : il faut en mettre pour planter ; il est consommé à la récolte. */
+    public static final BooleanProperty SOIL = BooleanProperty.create("soil");
     /** Eau de la terre (0 = sèche) : un stade de pousse consomme 1 ; seau d'eau = 3, bouteille d'eau = 1, arrosoir = 3 pour toute la tente. */
     public static final IntegerProperty WATER = IntegerProperty.create("water", 0, 3);
 
@@ -70,11 +72,11 @@ public class TentBlock extends Block {
         super(BlockBehaviour.Properties.of().strength(2.0f).sound(SoundType.WOOL).noOcclusion().randomTicks()
                 .lightLevel(s -> s.getValue(TOP) && s.getValue(LAMP) ? 12 : 0));
         registerDefaultState(stateDefinition.any().setValue(LAYOUT, Layout.S22).setValue(TOP, false).setValue(CORNER, 0).setValue(ALONGX, false)
-                .setValue(PLANT, Plant.NONE).setValue(AGE, 0).setValue(LAMP, false).setValue(OPEN, false).setValue(WATER, 0));
+                .setValue(PLANT, Plant.NONE).setValue(AGE, 0).setValue(LAMP, false).setValue(OPEN, false).setValue(WATER, 0).setValue(SOIL, false));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(LAYOUT, TOP, CORNER, ALONGX, PLANT, AGE, LAMP, OPEN, WATER); }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(LAYOUT, TOP, CORNER, ALONGX, PLANT, AGE, LAMP, OPEN, WATER, SOIL); }
 
     // ------------------------------------------------------------------ géométrie
 
@@ -163,6 +165,19 @@ public class TentBlock extends Block {
         if (!open) { msg(p, "§7Tente fermée : clic droit à main nue sur le haut pour l'ouvrir."); return InteractionResult.CONSUME; }
 
         // arrosoir infini : toute la tente d'un coup
+        // terreau : à mettre dans un pot vide avant de planter
+        if (st.is(ModRegistry.SOIL.get())) {
+            if (s.getValue(PLANT) != Plant.NONE || s.getValue(SOIL)) { msg(p, "§7Ce pot a déjà du terreau."); return InteractionResult.CONSUME; }
+            st.shrink(1);
+            level.setBlock(pos, s.setValue(SOIL, true), 3);
+            level.playSound(null, pos, SoundEvents.GRAVEL_PLACE, SoundSource.BLOCKS, 0.9f, 0.8f);
+            return InteractionResult.CONSUME;
+        }
+        boolean potted = s.getValue(SOIL) || s.getValue(PLANT) != Plant.NONE;
+        if (!potted && (st.is(ModRegistry.WATERING_CAN.get()) || st.is(Items.WATER_BUCKET) || (st.is(Items.POTION) && PotionUtils.getPotion(st) == Potions.WATER))) {
+            msg(p, "§7Pot vide : mettez d'abord du terreau (objet « Terreau »).");
+            return InteractionResult.CONSUME;
+        }
         if (st.is(ModRegistry.WATERING_CAN.get())) {
             int count = 0;
             for (BlockPos c : cells(o, s)) {
@@ -192,9 +207,10 @@ public class TentBlock extends Block {
         }
         Plant plant = s.getValue(PLANT);
         if (plant == Plant.NONE) {
+            if (!s.getValue(SOIL)) { msg(p, "§7Pot vide : mettez d'abord du terreau (objet « Terreau »), puis plantez."); return InteractionResult.CONSUME; }
             Plant want = st.is(ModRegistry.CANNABIS_SEEDS.get()) ? Plant.CANNABIS : st.is(ModRegistry.COCA_SEEDS.get()) ? Plant.COCA
                     : st.is(ModRegistry.EPHEDRA_SEEDS.get()) ? Plant.EPHEDRA : Plant.NONE;
-            if (want == Plant.NONE) { msg(p, "§7Emplacement libre : plantez des graines de cannabis, de coca ou d'éphédra (et arrosez)."); return InteractionResult.CONSUME; }
+            if (want == Plant.NONE) { msg(p, "§7Pot avec terreau : plantez des graines de cannabis, de coca ou d'éphédra (et arrosez)."); return InteractionResult.CONSUME; }
             st.shrink(1);
             level.setBlock(pos, s.setValue(PLANT, want).setValue(AGE, 0), 3);
             level.playSound(null, pos, SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1.0f, 1.0f);
@@ -212,7 +228,7 @@ public class TentBlock extends Block {
         net.minecraft.world.item.Item seed = plant == Plant.CANNABIS ? ModRegistry.CANNABIS_SEEDS.get() : plant == Plant.COCA ? ModRegistry.COCA_SEEDS.get() : ModRegistry.EPHEDRA_SEEDS.get();
         ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(crop, leafCount(level.random)));
         if (level.random.nextInt(2) == 0) ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(seed));
-        level.setBlock(pos, s.setValue(PLANT, Plant.NONE).setValue(AGE, 0), 3);
+        level.setBlock(pos, s.setValue(PLANT, Plant.NONE).setValue(AGE, 0).setValue(SOIL, false).setValue(WATER, 0), 3);
         level.playSound(null, pos, SoundEvents.GRASS_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
         return InteractionResult.CONSUME;
     }

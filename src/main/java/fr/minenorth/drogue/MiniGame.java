@@ -60,9 +60,9 @@ public final class MiniGame {
     }
 
     private static void newRound(Session s, long startAt) {
-        s.half = s.done < 2 ? 2 : 1;                                   // zone plus étroite à partir de la 3e manche
+        s.half = s.done < 3 ? 3 : 2;                                   // zone plus étroite à partir de la 4e manche
         s.zone = s.half + 1 + (int) (Math.abs(startAt * 7919L + s.done * 31L) % (CELLS - 2 * s.half - 2));
-        s.sweep = Math.max(10, 24 - 3 * s.done);                        // ticks pour traverser la barre : de plus en plus vite
+        s.sweep = Math.max(24, 44 - 3 * s.done);                        // ticks pour traverser la barre : lent, un peu plus rapide à chaque manche
         s.roundStart = startAt;
         s.nextAt = 0;
     }

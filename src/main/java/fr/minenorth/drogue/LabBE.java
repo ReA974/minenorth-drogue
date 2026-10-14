@@ -41,16 +41,9 @@ public class LabBE extends BlockEntity {
         }
     }
 
-    /** Essence raffinée du mod Récolte (minenorth_harvest:gasoline) ; sans ce mod, du charbon. */
-    static Item gasoline() {
-        Item it = ForgeRegistries.ITEMS.getValue(new ResourceLocation("minenorth_harvest", "gasoline"));
-        return it == null || it == Items.AIR ? Items.COAL : it;
-    }
-
+    /** Le laboratoire ne fabrique plus que la méthamphétamine (la cocaïne se fait cuire : pâte de coca au four). */
     public static final List<Recipe> RECIPES = List.of(
-            new Recipe("cocaine", List.of(new Need(ModRegistry.COCA_LEAF, 4), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.COCAINE_POWDER,
-                    () -> DrogueConfig.get(DrogueConfig.COCAINE_YIELD), () -> DrogueConfig.get(DrogueConfig.COCAINE_LAB_SECONDS)),
-            new Recipe("meth", List.of(new Need(ModRegistry.EPHEDRA, 3), new Need(ModRegistry.CHEMICAL, 1), new Need(LabBE::gasoline, 1)), ModRegistry.METH_CRYSTALS,
+            new Recipe("meth", List.of(new Need(ModRegistry.EPHEDRA, 3), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.METH_CRYSTALS,
                     () -> DrogueConfig.get(DrogueConfig.METH_YIELD), () -> DrogueConfig.get(DrogueConfig.METH_LAB_SECONDS)));
 
     private final Map<Item, Integer> contents = new LinkedHashMap<>();
@@ -91,7 +84,7 @@ public class LabBE extends BlockEntity {
                 setChanged();
                 p.displayClientMessage(Component.literal("§7Ingrédients repris."), true);
             } else if (contents.isEmpty()) {
-                p.displayClientMessage(Component.literal("§7Laboratoire vide. Un lot : cocaïne = 4 feuilles de coca + produit chimique ; meth = 3 éphédra + produit chimique + essence. Jusqu'à "
+                p.displayClientMessage(Component.literal("§7Laboratoire vide. Un lot de meth = 3 éphédra + 1 produit chimique. Jusqu'à "
                         + lotMax() + " lots d'un coup (ajoutez les ingrédients en plus grande quantité, puis main vide pour lancer)."), true);
             } else {
                 startBatch(p);

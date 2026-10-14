@@ -24,5 +24,7 @@
  "item.minenorthdrogue.roll_table": "Table à rouler",
  "item.minenorthdrogue.grow_tent_small": "Tente de culture 1×1",
  "item.minenorthdrogue.grow_tent_long": "Tente de culture 1×2",
- "item.minenorthdrogue.watering_can": "Arrosoir infini"
+ "item.minenorthdrogue.watering_can": "Arrosoir infini",
+ "item.minenorthdrogue.potting_soil": "Terreau",
+ "item.minenorthdrogue.coca_paste": "Pâte de coca"
 }
