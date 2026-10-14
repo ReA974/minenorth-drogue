@@ -17,7 +17,7 @@ public final class DrogueConfig {
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> JOINT_EFFECTS, COCAINE_EFFECTS, METH_EFFECTS;
     public static final ForgeConfigSpec.IntValue JOINT_COOLDOWN, COCAINE_COOLDOWN, METH_COOLDOWN;
-    public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, LAB_LOT_MAX, HARVEST_MIN, HARVEST_MAX, METH_LAB_SECONDS, METH_YIELD;
+    public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, LAB_LOT_MAX, HARVEST_MIN, HARVEST_MAX, METH_LAB_SECONDS, METH_YIELD, PASTE_LAB_SECONDS, PASTE_YIELD, OVEN_SECONDS, OVEN_MAX;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -27,6 +27,12 @@ public final class DrogueConfig {
         b.pop();
         b.comment("Laboratoire").push("labo");
         LAB_LOT_MAX = b.comment("Nombre maximum de lots fabriqués d'un coup (chaque lot en plus ajoute 50 % de temps)").defineInRange("lotsMax", 4, 1, 16);
+        PASTE_LAB_SECONDS = b.comment("Durée de fabrication de la pâte de coca au laboratoire (4 feuilles de coca + 1 produit chimique)").defineInRange("pateSecondes", 30, 1, 3600);
+        PASTE_YIELD = b.comment("Pâtes de coca produites par fabrication").defineInRange("pateRendement", 6, 1, 64);
+        b.pop();
+        b.comment("Four de cuisson (pâte de coca -> poudre de cocaïne)").push("four");
+        OVEN_SECONDS = b.comment("Durée d'une cuisson (secondes)").defineInRange("secondes", 30, 1, 3600);
+        OVEN_MAX = b.comment("Nombre maximum de pâtes cuites d'un coup").defineInRange("pateMax", 16, 1, 64);
         b.pop();
         b.comment("Table d'ensachage").push("ensachage");
         PACK_SECONDS = b.comment("Secondes pour faire un sachet (3 unités + 1 sachet vide)").defineInRange("secondesParSachet", 3, 1, 600);

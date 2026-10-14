@@ -57,6 +57,12 @@ public final class ModRegistry {
     public static final RegistryObject<BlockEntityType<LabBE>> LAB_BE = BLOCK_ENTITIES.register("lab",
             () -> BlockEntityType.Builder.of(LabBE::new, LAB.get()).build(null));
 
+    // ---- four de cuisson (pâte de coca -> poudre)
+    public static final RegistryObject<Block> OVEN = BLOCKS.register("cooking_oven", OvenBlock::new);
+    public static final RegistryObject<Item> OVEN_ITEM = ITEMS.register("cooking_oven", () -> new net.minecraft.world.item.BlockItem(OVEN.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<OvenBE>> OVEN_BE = BLOCK_ENTITIES.register("cooking_oven",
+            () -> BlockEntityType.Builder.of(OvenBE::new, OVEN.get()).build(null));
+
     /** Objets du mod dans l'onglet créatif commun « MineNorth » (voir SharedTab). */
     public static final net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator TAB_ITEMS =
             (params, out) -> ITEMS.getEntries().forEach(i -> out.accept(i.get()));

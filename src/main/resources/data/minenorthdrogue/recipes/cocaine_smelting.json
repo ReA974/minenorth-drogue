@@ -1,9 +1,0 @@
-{
- "type": "minecraft:smelting",
- "ingredient": {
-  "item": "minenorthdrogue:coca_paste"
- },
- "result": "minenorthdrogue:cocaine_powder",
- "experience": 0.25,
- "cookingtime": 160
-}

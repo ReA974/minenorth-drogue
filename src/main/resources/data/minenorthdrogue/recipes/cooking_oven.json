@@ -1,0 +1,19 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "III",
+  "IFI",
+  "III"
+ ],
+ "key": {
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "F": {
+   "item": "minecraft:blast_furnace"
+  }
+ },
+ "result": {
+  "item": "minenorthdrogue:cooking_oven"
+ }
+}

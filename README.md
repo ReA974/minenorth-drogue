@@ -14,7 +14,7 @@ Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : mari
 - **Produit chimique** (`chemical`) : poudre à canon + poudre d'os + fiole.
 - **Joint** : 3 feuilles de cannabis + papier → 2 joints (établi).
 - **Table à rouler** (`roll_table`, 1 bloc, 3 planches de chêne noir + 4 bâtons + 1 papier en établi) : clic droit avec une pile de **feuilles de cannabis** ou de **papier** pour les déposer ; elle roule 2 joints toutes les 4 s (3 feuilles + 1 papier, réglage `secondesParLot`), à récupérer à main nue (accroupi, main vide : tout reprendre). Plateau de roulage, broyeur, paquet de feuilles et machine à rouler en 3D.
-- **Cocaïne (cuisson)** : 4 feuilles de coca + 1 produit chimique en établi (sans forme) = 6 **pâtes de coca** ; la pâte se cuit au four, au fumoir (2× plus vite) ou au feu de camp pour donner de la poudre de cocaïne (plus de passage par le labo).
+- **Cocaïne** : 4 feuilles de coca + 1 produit chimique **au laboratoire** = 6 **pâtes de coca** ; la pâte se cuit dans le **Four de cuisson** (`cooking_oven`, 1 bloc, 8 lingots de fer + 1 haut fourneau) : pâte déposée, main vide pour lancer, 1 pâte = 1 poudre, 30 s (réglages `[four]`). Aucune recette d'établi ni de four vanilla pour la pâte ou la poudre.
 - **Laboratoire de chimie** (`lab`, multibloc 2 de large × 1 de profondeur × 2 de haut, face tournée vers le joueur) : clic droit pour y poser les ingrédients un à un ; la fabrication démarre quand la recette est complète, le produit se récupère à main nue (accroupi, main vide : reprendre les ingrédients).
   - Cristaux de méthamphétamine : 3 éphédra + 1 produit chimique, 45 s, 6 unités.
 - **Table d'ensachage** (`pack_table`, **1 × 2** : 2 blocs côte à côte à droite du joueur, face vers lui ; 4 planches + 4 lingots de fer en établi) : clic droit avec une pile de poudre, de cristaux ou de sachets vides pour les déposer ; elle fait un sachet toutes les 3 s (3 unités + 1 sachet vide), à récupérer à main nue (accroupi, main vide : tout reprendre). Réglage : `secondesParSachet`.
@@ -57,3 +57,4 @@ Poses et mouvements : `client/DrugClient.java` ; modèles changeants : prédicat
 
 - **Terreau** (`potting_soil`, 2 terre + 1 poudre d'os = 2 terreaux) : à poser dans le pot de la tente avant de planter et d'arroser. Pot refait en 3D (soucoupe, rebord, terreau sec/humide avec perlite et étiquette). Récolter vide le pot : il faut remettre du terreau.
 - **Méthamphétamine** : plus d'essence, 3 éphédra + 1 produit chimique au labo.
+- **Animation du labo** pendant la fabrication : flamme sous le ballon, bulles colorées (bleu pour la meth, beige pour la pâte), fumée du condenseur, bruits de chimie.

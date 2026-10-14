@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "minenorthdrogue:block/cooking_oven"
+  },
+  "facing=east": {
+   "model": "minenorthdrogue:block/cooking_oven",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "minenorthdrogue:block/cooking_oven",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "minenorthdrogue:block/cooking_oven",
+   "y": 270
+  }
+ }
+}

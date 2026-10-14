@@ -1,6 +1,7 @@
 package fr.minenorth.drogue;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -41,8 +42,10 @@ public class LabBE extends BlockEntity {
         }
     }
 
-    /** Le laboratoire ne fabrique plus que la méthamphétamine (la cocaïne se fait cuire : pâte de coca au four). */
+    /** Meth (cristaux) et pâte de coca ; la pâte se cuit ensuite dans le four de cuisson pour donner la poudre de cocaïne. */
     public static final List<Recipe> RECIPES = List.of(
+            new Recipe("paste", List.of(new Need(ModRegistry.COCA_LEAF, 4), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.COCA_PASTE,
+                    () -> DrogueConfig.get(DrogueConfig.PASTE_YIELD), () -> DrogueConfig.get(DrogueConfig.PASTE_LAB_SECONDS)),
             new Recipe("meth", List.of(new Need(ModRegistry.EPHEDRA, 3), new Need(ModRegistry.CHEMICAL, 1)), ModRegistry.METH_CRYSTALS,
                     () -> DrogueConfig.get(DrogueConfig.METH_YIELD), () -> DrogueConfig.get(DrogueConfig.METH_LAB_SECONDS)));
 
@@ -84,7 +87,7 @@ public class LabBE extends BlockEntity {
                 setChanged();
                 p.displayClientMessage(Component.literal("§7Ingrédients repris."), true);
             } else if (contents.isEmpty()) {
-                p.displayClientMessage(Component.literal("§7Laboratoire vide. Un lot de meth = 3 éphédra + 1 produit chimique. Jusqu'à "
+                p.displayClientMessage(Component.literal("§7Laboratoire vide. Meth : 3 éphédra + 1 produit chimique. Pâte de coca : 4 feuilles de coca + 1 produit chimique. Jusqu'à "
                         + lotMax() + " lots d'un coup (ajoutez les ingrédients en plus grande quantité, puis main vide pour lancer)."), true);
             } else {
                 startBatch(p);
@@ -159,8 +162,18 @@ public class LabBE extends BlockEntity {
         Recipe r = byId(be.activeId);
         if (r == null) { be.activeId = ""; return; }
         be.progress++;
-        if (be.progress % 10 == 0) sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 2, 0.15, 0.05, 0.15, 0.01);
-        if (be.progress % 40 == 0) sl.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.5f, 1.0f);
+        Direction f = state.getValue(LabBlock.FACING);
+        Direction right = LabBlock.right(f);
+        double cx = pos.getX() + 0.5 + right.getStepX() * 0.5, cz = pos.getZ() + 0.5 + right.getStepZ() * 0.5;
+        boolean meth = r.id().equals("meth");
+        // bec bunsen sous le ballon + bulles colorées dans le ballon + fumée du condenseur
+        if (be.progress % 4 == 0) sl.sendParticles(ParticleTypes.SMALL_FLAME, cx - right.getStepX() * 0.5, pos.getY() + 0.95, cz - right.getStepZ() * 0.5, 1, 0.05, 0.02, 0.05, 0.002);
+        if (be.progress % 3 == 0) sl.sendParticles(ParticleTypes.BUBBLE_POP, cx, pos.getY() + 1.5, cz, 2, 0.12, 0.1, 0.12, 0.0);
+        if (be.progress % 6 == 0) sl.sendParticles(new net.minecraft.core.particles.DustParticleOptions(meth ? new org.joml.Vector3f(0.35f, 0.8f, 1.0f) : new org.joml.Vector3f(0.85f, 0.75f, 0.5f), 1.0f),
+                cx, pos.getY() + 1.7, cz, 3, 0.12, 0.12, 0.12, 0.0);
+        if (be.progress % 10 == 0) sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, cx, pos.getY() + 2.05, cz, 1, 0.08, 0.05, 0.08, 0.01);
+        if (be.progress % 30 == 0) sl.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.5f, 1.0f);
+        if (be.progress % 50 == 0) sl.playSound(null, pos, SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundSource.BLOCKS, 0.6f, 1.2f);
         if (be.progress >= totalTicks(r, be.activeLots)) {
             be.output = new ItemStack(r.result().get(), Math.max(1, r.yield().get()) * be.activeLots);
             be.activeId = "";

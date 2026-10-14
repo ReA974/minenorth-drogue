@@ -26,5 +26,7 @@
  "item.minenorthdrogue.grow_tent_long": "Tente de culture 1×2",
  "item.minenorthdrogue.watering_can": "Arrosoir infini",
  "item.minenorthdrogue.potting_soil": "Terreau",
- "item.minenorthdrogue.coca_paste": "Pâte de coca"
+ "item.minenorthdrogue.coca_paste": "Pâte de coca",
+ "block.minenorthdrogue.cooking_oven": "Four de cuisson",
+ "item.minenorthdrogue.cooking_oven": "Four de cuisson"
 }
