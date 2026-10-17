@@ -31,14 +31,16 @@ public class LabBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     /** 0 = bas gauche, 1 = bas droite, 2 = haut gauche, 3 = haut droite (vu de face) : part = i + 2 y. */
     public static final IntegerProperty PART = IntegerProperty.create("part", 0, 3);
+    /** 0 = repos ; 1 à 3 = images de l'animation (flamme, bulles, aiguille du manomètre) pendant une fabrication. */
+    public static final IntegerProperty ANIM = IntegerProperty.create("anim", 0, 3);
 
     public LabBlock() {
         super(BlockBehaviour.Properties.of().strength(2.5f, 6.0f).sound(SoundType.METAL).noOcclusion());
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(PART, 0));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(PART, 0).setValue(ANIM, 0));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(FACING, PART); }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(FACING, PART, ANIM); }
 
     /** Vers la droite, vu de face. */
     public static Direction right(Direction facing) { return facing.getCounterClockWise(); }
@@ -48,6 +50,18 @@ public class LabBlock extends BaseEntityBlock {
     public static BlockPos origin(BlockPos pos, BlockState s) {
         int p = s.getValue(PART);
         return pos.relative(right(s.getValue(FACING)), -(p % 2)).below(p / 2);
+    }
+
+    /** Fait passer les 4 cases du labo à l'image d'animation voulue (0 = repos). */
+    public static void setAnim(Level level, BlockPos origin, BlockState originState, int anim) {
+        Direction f = originState.getValue(FACING);
+        for (int i = 0; i < 2; i++) {
+            for (int y = 0; y < 2; y++) {
+                BlockPos p = cell(origin, f, i, y);
+                BlockState st = level.getBlockState(p);
+                if (st.getBlock() instanceof LabBlock && st.getValue(ANIM) != anim) level.setBlock(p, st.setValue(ANIM, anim), 2);
+            }
+        }
     }
 
     @Override @SuppressWarnings("deprecation")

@@ -18,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -166,20 +167,24 @@ public class LabBE extends BlockEntity {
     // ------------------------------------------------------------------ fabrication
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LabBE be) {
-        if (be.activeId.isEmpty() || !(level instanceof ServerLevel sl)) return;
+        if (!(level instanceof ServerLevel sl)) return;
+        if (be.activeId.isEmpty()) {
+            if (state.getValue(LabBlock.ANIM) != 0) LabBlock.setAnim(sl, pos, state, 0);
+            return;
+        }
         Recipe r = byId(be.activeId);
         if (r == null) { be.activeId = ""; return; }
         be.progress++;
+        if (be.progress % 4 == 1) LabBlock.setAnim(sl, pos, state, be.progress / 4 % 3 + 1);
         Direction f = state.getValue(LabBlock.FACING);
         Direction right = LabBlock.right(f);
-        double cx = pos.getX() + 0.5 + right.getStepX() * 0.5, cz = pos.getZ() + 0.5 + right.getStepZ() * 0.5;
         boolean meth = r.id().equals("meth");
-        // bec bunsen sous le ballon + bulles colorées dans le ballon + fumée du condenseur
-        if (be.progress % 4 == 0) sl.sendParticles(ParticleTypes.SMALL_FLAME, cx - right.getStepX() * 0.5, pos.getY() + 0.95, cz - right.getStepZ() * 0.5, 1, 0.05, 0.02, 0.05, 0.002);
-        if (be.progress % 3 == 0) sl.sendParticles(ParticleTypes.BUBBLE_POP, cx, pos.getY() + 1.5, cz, 2, 0.12, 0.1, 0.12, 0.0);
-        if (be.progress % 6 == 0) sl.sendParticles(new net.minecraft.core.particles.DustParticleOptions(meth ? new org.joml.Vector3f(0.35f, 0.8f, 1.0f) : new org.joml.Vector3f(0.85f, 0.75f, 0.5f), 1.0f),
-                cx, pos.getY() + 1.7, cz, 3, 0.12, 0.12, 0.12, 0.0);
-        if (be.progress % 10 == 0) sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, cx, pos.getY() + 2.05, cz, 1, 0.08, 0.05, 0.08, 0.01);
+        // flamme sous le ballon (gauche), bulles colorées dans le ballon, vapeur de la cuve (droite)
+        if (be.progress % 4 == 0) { Vec3 v = spot(pos, f, right, 7.0, 19.8, 9.0); sl.sendParticles(ParticleTypes.SMALL_FLAME, v.x, v.y, v.z, 1, 0.08, 0.02, 0.08, 0.002); }
+        if (be.progress % 3 == 0) { Vec3 v = spot(pos, f, right, 7.0, 23.0, 9.0); sl.sendParticles(ParticleTypes.BUBBLE_POP, v.x, v.y, v.z, 2, 0.12, 0.1, 0.12, 0.0); }
+        if (be.progress % 6 == 0) { Vec3 v = spot(pos, f, right, 7.0, 25.0, 9.0);
+            sl.sendParticles(new net.minecraft.core.particles.DustParticleOptions(meth ? new org.joml.Vector3f(0.35f, 0.8f, 1.0f) : new org.joml.Vector3f(0.85f, 0.75f, 0.5f), 1.0f), v.x, v.y, v.z, 3, 0.12, 0.12, 0.12, 0.0); }
+        if (be.progress % 10 == 0) { Vec3 v = spot(pos, f, right, 27.6, 30.5, 8.4); sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, v.x, v.y, v.z, 1, 0.08, 0.05, 0.08, 0.01); }
         if (be.progress % 30 == 0) sl.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.5f, 1.0f);
         if (be.progress % 50 == 0) sl.playSound(null, pos, SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundSource.BLOCKS, 0.6f, 1.2f);
         if (be.progress >= totalTicks(r, be.activeLots)) {
@@ -189,6 +194,12 @@ public class LabBE extends BlockEntity {
             sl.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.6f, 1.4f);
             be.setChanged();
         }
+    }
+
+    /** Point du laboratoire en coordonnées du modèle (x vers la droite 0 à 32, y 0 à 32, z 0 = fond à 16 = face), converti en position du monde. */
+    private static Vec3 spot(BlockPos o, Direction f, Direction right, double x, double y, double z) {
+        double u = x / 16.0 - 0.5, d = z / 16.0 - 0.5;
+        return new Vec3(o.getX() + 0.5 + right.getStepX() * u + f.getStepX() * d, o.getY() + y / 16.0, o.getZ() + 0.5 + right.getStepZ() * u + f.getStepZ() * d);
     }
 
     public void dropAll(Level level, BlockPos pos) {

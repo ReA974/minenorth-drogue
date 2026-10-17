@@ -52,6 +52,12 @@ public final class MiniGame {
 
     public static boolean active(UUID id) { return SESSIONS.containsKey(id); }
 
+    /** Vrai si un mini-jeu est en cours sur cette table (case d'origine). */
+    public static boolean activeAt(BlockPos table) {
+        for (Session s : SESSIONS.values()) if (s.table.equals(table)) return true;
+        return false;
+    }
+
     public static void start(ServerPlayer p, BlockPos table, int rounds, Handler handler) {
         Session s = new Session(table, rounds, handler);
         SESSIONS.put(p.getUUID(), s);

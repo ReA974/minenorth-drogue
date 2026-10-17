@@ -113,6 +113,7 @@ public class PackBE extends BlockEntity {
                 }
             }
         });
+        if (level != null && level.getBlockState(worldPosition).getBlock() instanceof PackBlock pb) pb.startAnim(level, worldPosition);
         return true;
     }
 
