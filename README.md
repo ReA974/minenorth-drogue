@@ -58,3 +58,8 @@ Poses et mouvements : `client/DrugClient.java` ; modèles changeants : prédicat
 - **Terreau** (`potting_soil`, 2 terre + 1 poudre d'os = 2 terreaux) : à poser dans le pot de la tente avant de planter et d'arroser. Pot refait en 3D (soucoupe, rebord, terreau sec/humide avec perlite et étiquette). Récolter vide le pot : il faut remettre du terreau.
 - **Méthamphétamine** : plus d'essence, 3 éphédra + 1 produit chimique au labo.
 - **Animation du labo** pendant la fabrication : flamme sous le ballon, bulles colorées (bleu pour la meth, beige pour la pâte), fumée du condenseur, bruits de chimie.
+
+## Labo et banc d'ensachage en 3D animée (17/10)
+- **Laboratoire** : nouveaux modèles (meuble, hotte, tuyauterie, manomètre, plaque chauffante, ballon, condenseur, erlenmeyer, cuve inox). Propriété de bloc `anim` (0 à 3, ajoutée à `lab` et `pack_table`, mêmes ids : sauvegardes compatibles) : pendant une fabrication, `LabBE.serverTick` change l'image toutes les 4 ticks (flamme, bulles, goutte, aiguille, voyant, vapeur) ; retour à 0 dès que la fabrication s'arrête.
+- **Table d'ensachage** : nouveaux modèles (balance à fléaux, bocal, coupe de cristaux, soudeuse, tas de sachets). L'animation suit le mini-jeu : `PackBlock.startAnim` puis ticks planifiés tant que `MiniGame.activeAt(table)` ; un tick aléatoire remet au repos une table restée animée après un redémarrage.
+- Texture `labo_set.png` (palette 4 × 4 px + tuiles de motifs). Modèles générés par script (un modèle par partie et par image, dédoublonnés) ; non testé en jeu.
