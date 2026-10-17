@@ -1,6 +1,6 @@
 # MineNorth Drogue
 
-Mod Forge 1.20.1 (`minenorthdrogue`), sans dépendance. Remplace Narcosis : marijuana, cocaïne, méthamphétamine, avec production et lien avec le mod Police.
+Mod Forge 1.20.1 (`minenorthdrogue`), dépend de `minenorthapi` (protection par le Core). Remplace Narcosis : marijuana, cocaïne, méthamphétamine, avec production et lien avec le mod Police.
 
 ## Production
 - **Tentes de culture** (2 blocs de haut) : **1 × 2** (`grow_tent_long`, 2 plantes, dans le sens où regarde le joueur) et **1 × 1** (`grow_tent_small`, 1 plante). La tente 2 × 2 a été retirée (celles déjà posées restent et rendent 2 tentes 1 × 2 à la casse), posées vers le sud-est de la case visée. Cannabis et coca ne poussent que là ; l'éphédra pousse aussi sous tente (en plus du plein champ).
