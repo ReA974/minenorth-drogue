@@ -1,139 +1,167 @@
 {
  "textures": {
-  "particle": "minenorthdrogue:block/leaf_coca_n",
-  "p": "minenorthdrogue:block/palette",
-  "n": "minenorthdrogue:block/leaf_coca_n",
-  "e": "minenorthdrogue:block/leaf_coca_e",
-  "s": "minenorthdrogue:block/leaf_coca_s",
-  "w": "minenorthdrogue:block/leaf_coca_w"
+  "particle": "minenorthdrogue:block/coca_twig_n",
+  "fn": "minenorthdrogue:block/coca_twig_n",
+  "fe": "minenorthdrogue:block/coca_twig_e",
+  "fs": "minenorthdrogue:block/coca_twig_s",
+  "fw": "minenorthdrogue:block/coca_twig_w",
+  "rn": "minenorthdrogue:block/coca_twig_ripe_n",
+  "re": "minenorthdrogue:block/coca_twig_ripe_e",
+  "rs": "minenorthdrogue:block/coca_twig_ripe_s",
+  "rw": "minenorthdrogue:block/coca_twig_ripe_w",
+  "stem": "minenorthdrogue:block/stem_wood",
+  "bush": "minenorthdrogue:block/coca_bush",
+  "bushr": "minenorthdrogue:block/coca_bush_ripe"
  },
- "render_type": "minecraft:cutout",
  "elements": [
   {
    "from": [
-    7.55,
-    6,
-    7.55
+    7.5,
+    6.0,
+    7.5
    ],
    "to": [
-    8.45,
-    9.5,
-    8.45
+    8.5,
+    9.0,
+    8.5
    ],
    "faces": {
     "north": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "south": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "east": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "west": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "up": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "down": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     }
    }
   },
   {
    "from": [
-    6.488,
-    8.2,
-    5.396
+    6.5,
+    8.0,
+    5
    ],
    "to": [
-    9.512,
-    8.2,
+    9.5,
+    8.0,
     8
    ],
-   "faces": {
-    "up": {
-     "texture": "#n"
-    },
-    "down": {
-     "texture": "#n"
-    }
-   },
    "rotation": {
     "origin": [
      8,
-     8.2,
+     8.0,
      8
     ],
     "axis": "x",
     "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fn"
+    },
+    "down": {
+     "texture": "#fn"
+    }
    }
   },
   {
    "from": [
-    6.488,
-    8.2,
-    8
+    8,
+    8.0,
+    6.5
    ],
    "to": [
-    9.512,
-    8.2,
-    10.604
+    11,
+    8.0,
+    9.5
    ],
-   "faces": {
-    "up": {
-     "texture": "#s"
-    },
-    "down": {
-     "texture": "#s"
-    }
-   },
    "rotation": {
     "origin": [
      8,
-     8.2,
+     8.0,
+     8
+    ],
+    "axis": "z",
+    "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fe"
+    },
+    "down": {
+     "texture": "#fe"
+    }
+   }
+  },
+  {
+   "from": [
+    6.5,
+    8.0,
+    8
+   ],
+   "to": [
+    9.5,
+    8.0,
+    11
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     8.0,
      8
     ],
     "axis": "x",
     "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fs"
+    },
+    "down": {
+     "texture": "#fs"
+    }
+   }
+  },
+  {
+   "from": [
+    5,
+    8.0,
+    6.5
+   ],
+   "to": [
+    8,
+    8.0,
+    9.5
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     8.0,
+     8
+    ],
+    "axis": "z",
+    "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fw"
+    },
+    "down": {
+     "texture": "#fw"
+    }
    }
   }
- ]
+ ],
+ "render_type": "minecraft:cutout"
 }

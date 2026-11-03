@@ -1,0 +1,23 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "IBI",
+  "BCB",
+  "IBI"
+ ],
+ "key": {
+  "I": {
+   "item": "minecraft:iron_nugget"
+  },
+  "B": {
+   "item": "minecraft:iron_bars"
+  },
+  "C": {
+   "item": "minecraft:charcoal"
+  }
+ },
+ "result": {
+  "item": "minenorthdrogue:carbon_filter",
+  "count": 1
+ }
+}

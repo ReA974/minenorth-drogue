@@ -1,0 +1,134 @@
+{
+ "textures": {
+  "particle": "minenorthdrogue:block/poppy_leaf_n",
+  "fn": "minenorthdrogue:block/poppy_leaf_n",
+  "fe": "minenorthdrogue:block/poppy_leaf_e",
+  "fs": "minenorthdrogue:block/poppy_leaf_s",
+  "fw": "minenorthdrogue:block/poppy_leaf_w",
+  "young": "minenorthdrogue:block/poppy_bush_young",
+  "flower": "minenorthdrogue:block/poppy_bush_flower",
+  "ripe": "minenorthdrogue:block/poppy_bush_ripe",
+  "pod": "minenorthdrogue:block/poppy_pod",
+  "crown": "minenorthdrogue:block/poppy_crown",
+  "stem": "minenorthdrogue:block/stem_poppy"
+ },
+ "elements": [
+  {
+   "from": [
+    6.8,
+    6.4,
+    5
+   ],
+   "to": [
+    9.2,
+    6.4,
+    8
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "x",
+    "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fn"
+    },
+    "down": {
+     "texture": "#fn"
+    }
+   }
+  },
+  {
+   "from": [
+    8,
+    6.4,
+    6.8
+   ],
+   "to": [
+    11,
+    6.4,
+    9.2
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "z",
+    "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fe"
+    },
+    "down": {
+     "texture": "#fe"
+    }
+   }
+  },
+  {
+   "from": [
+    6.8,
+    6.4,
+    8
+   ],
+   "to": [
+    9.2,
+    6.4,
+    11
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "x",
+    "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fs"
+    },
+    "down": {
+     "texture": "#fs"
+    }
+   }
+  },
+  {
+   "from": [
+    5,
+    6.4,
+    6.8
+   ],
+   "to": [
+    8,
+    6.4,
+    9.2
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "z",
+    "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fw"
+    },
+    "down": {
+     "texture": "#fw"
+    }
+   }
+  }
+ ],
+ "render_type": "minecraft:cutout"
+}

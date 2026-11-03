@@ -96,7 +96,8 @@ public class PackBlock extends BaseEntityBlock {
     @Override @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (hand == InteractionHand.MAIN_HAND && level.getBlockEntity(origin(pos, state)) instanceof PackBE be) be.interact(player);
+        if (hand == InteractionHand.MAIN_HAND && player instanceof net.minecraft.server.level.ServerPlayer sp && level.getBlockEntity(origin(pos, state)) instanceof PackBE be)
+            Stations.open(sp, be.getBlockPos(), "Table d'ensachage", (id, inv, pl) -> new fr.minenorth.drogue.menu.PackMenu(id, inv, be));
         return InteractionResult.CONSUME;
     }
 

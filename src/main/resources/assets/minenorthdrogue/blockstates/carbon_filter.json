@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "minenorthdrogue:block/carbon_filter"
+  },
+  "facing=east": {
+   "model": "minenorthdrogue:block/carbon_filter",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "minenorthdrogue:block/carbon_filter",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "minenorthdrogue:block/carbon_filter",
+   "y": 270
+  }
+ }
+}

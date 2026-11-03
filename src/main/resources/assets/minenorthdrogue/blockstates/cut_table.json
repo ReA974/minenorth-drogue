@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "minenorthdrogue:block/cut_table"
+  },
+  "facing=east": {
+   "model": "minenorthdrogue:block/cut_table",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "minenorthdrogue:block/cut_table",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "minenorthdrogue:block/cut_table",
+   "y": 270
+  }
+ }
+}

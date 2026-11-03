@@ -1,0 +1,316 @@
+{
+ "textures": {
+  "particle": "minenorthdrogue:block/poppy_leaf_n",
+  "fn": "minenorthdrogue:block/poppy_leaf_n",
+  "fe": "minenorthdrogue:block/poppy_leaf_e",
+  "fs": "minenorthdrogue:block/poppy_leaf_s",
+  "fw": "minenorthdrogue:block/poppy_leaf_w",
+  "young": "minenorthdrogue:block/poppy_bush_young",
+  "flower": "minenorthdrogue:block/poppy_bush_flower",
+  "ripe": "minenorthdrogue:block/poppy_bush_ripe",
+  "pod": "minenorthdrogue:block/poppy_pod",
+  "crown": "minenorthdrogue:block/poppy_crown",
+  "stem": "minenorthdrogue:block/stem_poppy"
+ },
+ "elements": [
+  {
+   "from": [
+    5.6,
+    6.4,
+    2
+   ],
+   "to": [
+    10.4,
+    6.4,
+    8
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "x",
+    "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fn"
+    },
+    "down": {
+     "texture": "#fn"
+    }
+   }
+  },
+  {
+   "from": [
+    8,
+    6.4,
+    5.6
+   ],
+   "to": [
+    14,
+    6.4,
+    10.4
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "z",
+    "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fe"
+    },
+    "down": {
+     "texture": "#fe"
+    }
+   }
+  },
+  {
+   "from": [
+    5.6,
+    6.4,
+    8
+   ],
+   "to": [
+    10.4,
+    6.4,
+    14
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "x",
+    "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fs"
+    },
+    "down": {
+     "texture": "#fs"
+    }
+   }
+  },
+  {
+   "from": [
+    2,
+    6.4,
+    5.6
+   ],
+   "to": [
+    8,
+    6.4,
+    10.4
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.4,
+     8
+    ],
+    "axis": "z",
+    "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fw"
+    },
+    "down": {
+     "texture": "#fw"
+    }
+   }
+  },
+  {
+   "from": [
+    1,
+    6.0,
+    8
+   ],
+   "to": [
+    15,
+    26.0,
+    8
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.0,
+     8
+    ],
+    "axis": "y",
+    "angle": 45,
+    "rescale": true
+   },
+   "faces": {
+    "north": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#ripe"
+    },
+    "south": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#ripe"
+    }
+   },
+   "shade": false
+  },
+  {
+   "from": [
+    1,
+    6.0,
+    8
+   ],
+   "to": [
+    15,
+    26.0,
+    8
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     6.0,
+     8
+    ],
+    "axis": "y",
+    "angle": -45,
+    "rescale": true
+   },
+   "faces": {
+    "north": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#ripe"
+    },
+    "south": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#ripe"
+    }
+   },
+   "shade": false
+  },
+  {
+   "from": [
+    7.8,
+    6.0,
+    7.8
+   ],
+   "to": [
+    8.2,
+    22.0,
+    8.2
+   ],
+   "faces": {
+    "north": {
+     "texture": "#stem"
+    },
+    "south": {
+     "texture": "#stem"
+    },
+    "east": {
+     "texture": "#stem"
+    },
+    "west": {
+     "texture": "#stem"
+    },
+    "up": {
+     "texture": "#stem"
+    },
+    "down": {
+     "texture": "#stem"
+    }
+   }
+  },
+  {
+   "from": [
+    6.6,
+    22.0,
+    6.6
+   ],
+   "to": [
+    9.4,
+    25.5,
+    9.4
+   ],
+   "faces": {
+    "north": {
+     "texture": "#pod"
+    },
+    "south": {
+     "texture": "#pod"
+    },
+    "east": {
+     "texture": "#pod"
+    },
+    "west": {
+     "texture": "#pod"
+    },
+    "up": {
+     "texture": "#crown"
+    },
+    "down": {
+     "texture": "#pod"
+    }
+   }
+  },
+  {
+   "from": [
+    7.0,
+    25.5,
+    7.0
+   ],
+   "to": [
+    9.0,
+    26.1,
+    9.0
+   ],
+   "faces": {
+    "north": {
+     "texture": "#crown"
+    },
+    "south": {
+     "texture": "#crown"
+    },
+    "east": {
+     "texture": "#crown"
+    },
+    "west": {
+     "texture": "#crown"
+    },
+    "up": {
+     "texture": "#crown"
+    },
+    "down": {
+     "texture": "#crown"
+    }
+   }
+  }
+ ],
+ "render_type": "minecraft:cutout"
+}

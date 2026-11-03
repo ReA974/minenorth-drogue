@@ -14,62 +14,75 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
 
-/** Contenu du four : pâtes de coca déposées, cuisson en cours (1 pâte = 1 poudre), poudre prête à récupérer à main nue. */
+import java.util.ArrayList;
+import java.util.List;
+
+/** Contenu du four (écran OvenMenu) : pâtes de coca en attente, cuisson en cours (1 pâte = 1 poudre), poudre dans l'emplacement de sortie. */
 public class OvenBE extends BlockEntity {
-    private int paste, cooking, progress, powder;
+    public static final int PASTE = 0, POWDER = 1;
+    /** Données envoyées à l'écran : progression (%), pâtes en cuisson, pâtes maximum. */
+    public static final int DATA = 3;
+
+    private final ItemStackHandler items = newHandler(this::setChanged);
+    private final List<ItemStack> overflow = new ArrayList<>();
+    private int cooking, progress, quality = Quality.DEFAULT;
 
     public OvenBE(BlockPos pos, BlockState state) {
         super(ModRegistry.OVEN_BE.get(), pos, state);
     }
 
-    private static int max() { return Math.max(1, DrogueConfig.get(DrogueConfig.OVEN_MAX)); }
+    public static ItemStackHandler newHandler(Runnable changed) {
+        return new ItemStackHandler(2) {
+            @Override protected void onContentsChanged(int slot) { changed.run(); }
+
+            @Override public boolean isItemValid(int slot, ItemStack st) { return slot == PASTE && st.is(ModRegistry.COCA_PASTE.get()); }
+
+            @Override public int getSlotLimit(int slot) { return slot == PASTE ? Math.min(64, max()) : 64; }
+        };
+    }
+
+    public ItemStackHandler items() { return items; }
+
+    public static int max() { return Math.max(1, DrogueConfig.get(DrogueConfig.OVEN_MAX)); }
 
     private static int totalTicks() { return Math.max(1, DrogueConfig.get(DrogueConfig.OVEN_SECONDS)) * 20; }
 
-    public void interact(Player p) {
-        if (cooking > 0) {
-            p.displayClientMessage(Component.literal("§7Cuisson en cours (" + cooking + " pâte(s))… " + Math.min(99, progress * 100 / totalTicks()) + " %"), true);
+    public boolean busy() { return cooking > 0; }
+
+    /** Poudre obtenue à partir de cette pâte (même qualité, même coupe). */
+    public static ItemStack powderOf(ItemStack paste) { return Quality.from(paste, ModRegistry.COCAINE_POWDER.get(), 1, 0); }
+
+    /** Bouton « Lancer la cuisson » : toutes les pâtes déposées (dans la limite de la place en sortie). */
+    public void start(Player p) {
+        if (busy()) return;
+        int n = Math.min(items.getStackInSlot(PASTE).getCount(), Stations.room(items, POWDER, powderOf(items.getStackInSlot(PASTE))));
+        if (n <= 0) {
+            p.displayClientMessage(Component.literal(items.getStackInSlot(PASTE).isEmpty() ? "§7Déposez d'abord de la pâte de coca." : "§cVidez d'abord la poudre du four."), true);
             return;
         }
-        ItemStack hand = p.getMainHandItem();
-        if (!hand.isEmpty() && hand.getItem() == ModRegistry.COCA_PASTE.get()) {
-            int n = Math.min(hand.getCount(), max() - paste);
-            if (n <= 0) { p.displayClientMessage(Component.literal("§cLe four est plein (" + max() + " pâtes maximum)."), true); return; }
-            paste += n;
-            hand.shrink(n);
-            setChanged();
-            level.playSound(null, worldPosition, SoundEvents.BUNDLE_INSERT, SoundSource.BLOCKS, 0.8f, 1.0f);
-            p.displayClientMessage(Component.literal("§7Four : " + paste + " pâte(s) de coca — main vide pour lancer la cuisson"), true);
-            return;
-        }
-        if (powder > 0) {
-            ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ModRegistry.COCAINE_POWDER.get(), powder));
-            powder = 0;
-            setChanged();
-            p.displayClientMessage(Component.literal("§aPoudre de cocaïne récupérée."), true);
-            return;
-        }
-        if (!hand.isEmpty()) {
-            p.displayClientMessage(Component.literal("§cLe four ne cuit que la pâte de coca (à fabriquer au laboratoire)."), true);
-            return;
-        }
-        if (p.isShiftKeyDown() && paste > 0) {
-            ItemHandlerHelper.giveItemToPlayer(p, new ItemStack(ModRegistry.COCA_PASTE.get(), paste));
-            paste = 0;
-            setChanged();
-            p.displayClientMessage(Component.literal("§7Pâtes reprises."), true);
-        } else if (paste > 0) {
-            cooking = paste;
-            paste = 0;
-            progress = 0;
-            setChanged();
-            level.playSound(null, worldPosition, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.8f, 0.9f);
-            p.displayClientMessage(Component.literal("§aLa cuisson démarre : " + cooking + " pâte(s)."), true);
-        } else {
-            p.displayClientMessage(Component.literal("§7Four vide. Déposez de la pâte de coca (laboratoire : 4 feuilles de coca + 1 produit chimique), puis main vide pour cuire."), true);
-        }
+        quality = Quality.get(items.getStackInSlot(PASTE));
+        items.extractItem(PASTE, n, false);
+        cooking = n;
+        progress = 0;
+        level.playSound(null, worldPosition, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.8f, 0.9f);
+        setChanged();
+    }
+
+    public int data(int i) {
+        return switch (i) {
+            case 0 -> cooking <= 0 ? 0 : Math.min(100, progress * 100 / totalTicks());
+            case 1 -> cooking;
+            case 2 -> max();
+            default -> 0;
+        };
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        Stations.dropOverflow(level, worldPosition, overflow);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, OvenBE be) {
@@ -82,7 +95,7 @@ public class OvenBE extends BlockEntity {
         if (be.progress % 10 == 0) sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.05, 0.05, 0.05, 0.01);
         if (be.progress % 40 == 0) sl.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 0.8f, 1.0f);
         if (be.progress >= totalTicks()) {
-            be.powder += be.cooking;
+            Stations.addOutput(be.items, POWDER, Quality.set(new ItemStack(ModRegistry.COCAINE_POWDER.get()), be.quality), be.cooking);
             be.cooking = 0;
             be.progress = 0;
             sl.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.6f, 1.4f);
@@ -91,27 +104,30 @@ public class OvenBE extends BlockEntity {
     }
 
     public void dropAll(Level level, BlockPos pos) {
-        int pa = paste + cooking;
-        if (pa > 0) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModRegistry.COCA_PASTE.get(), pa));
-        if (powder > 0) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModRegistry.COCAINE_POWDER.get(), powder));
-        paste = cooking = powder = 0;
+        Stations.dropAll(level, pos, items);
+        if (cooking > 0) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), Quality.set(new ItemStack(ModRegistry.COCA_PASTE.get(), cooking), quality));
+        cooking = 0;
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putInt("paste", paste);
+        tag.put("items", items.serializeNBT());
         tag.putInt("cooking", cooking);
         tag.putInt("progress", progress);
-        tag.putInt("powder", powder);
+        tag.putInt("quality", quality);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        paste = tag.getInt("paste");
+        if (tag.contains("items")) items.deserializeNBT(tag.getCompound("items"));
+        else {   // ancienne sauvegarde : compteurs
+            Stations.legacy(items, PASTE, ModRegistry.COCA_PASTE.get(), tag.getInt("paste"), overflow);
+            Stations.legacy(items, POWDER, ModRegistry.COCAINE_POWDER.get(), tag.getInt("powder"), overflow);
+        }
         cooking = tag.getInt("cooking");
         progress = tag.getInt("progress");
-        powder = tag.getInt("powder");
+        quality = tag.contains("quality") ? tag.getInt("quality") : Quality.DEFAULT;
     }
 }

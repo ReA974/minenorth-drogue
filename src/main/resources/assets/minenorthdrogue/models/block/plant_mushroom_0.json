@@ -1,0 +1,262 @@
+{
+ "textures": {
+  "particle": "minenorthdrogue:block/m_shroom_cap",
+  "c": "minenorthdrogue:block/m_shroom_cap",
+  "s": "minenorthdrogue:block/m_shroom_stem",
+  "g": "minenorthdrogue:block/m_shroom_gill"
+ },
+ "elements": [
+  {
+   "from": [
+    7.4,
+    6.0,
+    7.4
+   ],
+   "to": [
+    8.6,
+    6.8,
+    8.6
+   ],
+   "faces": {
+    "north": {
+     "texture": "#s"
+    },
+    "south": {
+     "texture": "#s"
+    },
+    "east": {
+     "texture": "#s"
+    },
+    "west": {
+     "texture": "#s"
+    },
+    "up": {
+     "texture": "#s"
+    },
+    "down": {
+     "texture": "#s"
+    }
+   }
+  },
+  {
+   "from": [
+    7.502,
+    6.8,
+    7.502
+   ],
+   "to": [
+    8.498,
+    7.6,
+    8.498
+   ],
+   "faces": {
+    "north": {
+     "texture": "#g"
+    },
+    "south": {
+     "texture": "#g"
+    },
+    "east": {
+     "texture": "#g"
+    },
+    "west": {
+     "texture": "#g"
+    },
+    "up": {
+     "texture": "#g"
+    },
+    "down": {
+     "texture": "#g"
+    }
+   }
+  },
+  {
+   "from": [
+    7.502,
+    6.8,
+    7.502
+   ],
+   "to": [
+    8.498,
+    7.6,
+    8.498
+   ],
+   "faces": {
+    "north": {
+     "texture": "#g"
+    },
+    "south": {
+     "texture": "#g"
+    },
+    "east": {
+     "texture": "#g"
+    },
+    "west": {
+     "texture": "#g"
+    },
+    "up": {
+     "texture": "#g"
+    },
+    "down": {
+     "texture": "#g"
+    }
+   },
+   "rotation": {
+    "origin": [
+     8,
+     6.8,
+     8
+    ],
+    "axis": "y",
+    "angle": 45
+   }
+  },
+  {
+   "from": [
+    7.577,
+    7.6,
+    7.577
+   ],
+   "to": [
+    8.423,
+    8.4,
+    8.423
+   ],
+   "faces": {
+    "north": {
+     "texture": "#c"
+    },
+    "south": {
+     "texture": "#c"
+    },
+    "east": {
+     "texture": "#c"
+    },
+    "west": {
+     "texture": "#c"
+    },
+    "up": {
+     "texture": "#c"
+    },
+    "down": {
+     "texture": "#c"
+    }
+   }
+  },
+  {
+   "from": [
+    7.577,
+    7.6,
+    7.577
+   ],
+   "to": [
+    8.423,
+    8.4,
+    8.423
+   ],
+   "faces": {
+    "north": {
+     "texture": "#c"
+    },
+    "south": {
+     "texture": "#c"
+    },
+    "east": {
+     "texture": "#c"
+    },
+    "west": {
+     "texture": "#c"
+    },
+    "up": {
+     "texture": "#c"
+    },
+    "down": {
+     "texture": "#c"
+    }
+   },
+   "rotation": {
+    "origin": [
+     8,
+     7.6,
+     8
+    ],
+    "axis": "y",
+    "angle": 45
+   }
+  },
+  {
+   "from": [
+    7.751,
+    8.4,
+    7.751
+   ],
+   "to": [
+    8.249,
+    9.0,
+    8.249
+   ],
+   "faces": {
+    "north": {
+     "texture": "#c"
+    },
+    "south": {
+     "texture": "#c"
+    },
+    "east": {
+     "texture": "#c"
+    },
+    "west": {
+     "texture": "#c"
+    },
+    "up": {
+     "texture": "#c"
+    },
+    "down": {
+     "texture": "#c"
+    }
+   }
+  },
+  {
+   "from": [
+    7.751,
+    8.4,
+    7.751
+   ],
+   "to": [
+    8.249,
+    9.0,
+    8.249
+   ],
+   "faces": {
+    "north": {
+     "texture": "#c"
+    },
+    "south": {
+     "texture": "#c"
+    },
+    "east": {
+     "texture": "#c"
+    },
+    "west": {
+     "texture": "#c"
+    },
+    "up": {
+     "texture": "#c"
+    },
+    "down": {
+     "texture": "#c"
+    }
+   },
+   "rotation": {
+    "origin": [
+     8,
+     8.4,
+     8
+    ],
+    "axis": "y",
+    "angle": 45
+   }
+  }
+ ],
+ "render_type": "minecraft:cutout"
+}

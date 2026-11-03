@@ -1,197 +1,280 @@
 {
  "textures": {
-  "particle": "minenorthdrogue:block/leaf_cannabis_n",
-  "p": "minenorthdrogue:block/palette",
-  "n": "minenorthdrogue:block/leaf_cannabis_n",
-  "e": "minenorthdrogue:block/leaf_cannabis_e",
-  "s": "minenorthdrogue:block/leaf_cannabis_s",
-  "w": "minenorthdrogue:block/leaf_cannabis_w"
+  "particle": "minenorthdrogue:block/cannabis_fan_n",
+  "fn": "minenorthdrogue:block/cannabis_fan_n",
+  "fe": "minenorthdrogue:block/cannabis_fan_e",
+  "fs": "minenorthdrogue:block/cannabis_fan_s",
+  "fw": "minenorthdrogue:block/cannabis_fan_w",
+  "stem": "minenorthdrogue:block/stem_green",
+  "bud": "minenorthdrogue:block/cannabis_bud",
+  "bush": "minenorthdrogue:block/cannabis_bush",
+  "bushy": "minenorthdrogue:block/cannabis_bush_veg"
  },
- "render_type": "minecraft:cutout",
  "elements": [
   {
    "from": [
-    7.55,
-    6,
-    7.55
+    7.6,
+    6.0,
+    7.6
    ],
    "to": [
-    8.45,
-    12,
-    8.45
+    8.4,
+    14.0,
+    8.4
    ],
    "faces": {
     "north": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "south": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "east": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "west": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "up": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
     },
     "down": {
-     "uv": [
-      12.5,
-      8.5,
-      15.5,
-      11.5
-     ],
-     "texture": "#p"
+     "texture": "#stem"
+    }
+   }
+  },
+  {
+   "from": [
+    5.815,
+    8.2,
+    3.4000000000000004
+   ],
+   "to": [
+    10.184999999999999,
+    8.2,
+    8
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     8.2,
+     8
+    ],
+    "axis": "x",
+    "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fn"
+    },
+    "down": {
+     "texture": "#fn"
     }
    }
   },
   {
    "from": [
     8,
-    8.4,
-    5.768
+    8.6,
+    5.815
    ],
    "to": [
-    11.844,
-    8.4,
-    10.232
+    12.6,
+    8.6,
+    10.184999999999999
    ],
-   "faces": {
-    "up": {
-     "texture": "#e"
-    },
-    "down": {
-     "texture": "#e"
-    }
-   },
    "rotation": {
     "origin": [
      8,
-     8.4,
+     8.6,
      8
     ],
     "axis": "z",
     "angle": 22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fe"
+    },
+    "down": {
+     "texture": "#fe"
+    }
    }
   },
   {
    "from": [
-    4.156,
-    8.4,
-    5.768
+    5.815,
+    8.2,
+    8
+   ],
+   "to": [
+    10.184999999999999,
+    8.2,
+    12.6
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     8.2,
+     8
+    ],
+    "axis": "x",
+    "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fs"
+    },
+    "down": {
+     "texture": "#fs"
+    }
+   }
+  },
+  {
+   "from": [
+    3.4000000000000004,
+    8.6,
+    5.815
    ],
    "to": [
     8,
-    8.4,
-    10.232
+    8.6,
+    10.184999999999999
    ],
-   "faces": {
-    "up": {
-     "texture": "#w"
-    },
-    "down": {
-     "texture": "#w"
-    }
-   },
    "rotation": {
     "origin": [
      8,
-     8.4,
+     8.6,
      8
     ],
     "axis": "z",
     "angle": -22.5
+   },
+   "faces": {
+    "up": {
+     "texture": "#fw"
+    },
+    "down": {
+     "texture": "#fw"
+    }
    }
   },
   {
    "from": [
-    6.02,
-    10.6,
-    4.59
+    5.9898,
+    10.95,
+    3.768
    ],
    "to": [
-    9.98,
-    10.6,
+    10.010200000000001,
+    10.95,
     8
    ],
-   "faces": {
-    "up": {
-     "texture": "#n"
-    },
-    "down": {
-     "texture": "#n"
-    }
-   },
    "rotation": {
     "origin": [
      8,
-     10.6,
+     10.95,
      8
     ],
     "axis": "x",
-    "angle": 22.5
+    "angle": 45
+   },
+   "faces": {
+    "up": {
+     "texture": "#fn"
+    },
+    "down": {
+     "texture": "#fn"
+    }
    }
   },
   {
    "from": [
-    6.02,
-    10.6,
+    5.9898,
+    11.35,
     8
    ],
    "to": [
-    9.98,
-    10.6,
-    11.41
+    10.010200000000001,
+    11.35,
+    12.232
    ],
-   "faces": {
-    "up": {
-     "texture": "#s"
-    },
-    "down": {
-     "texture": "#s"
-    }
-   },
    "rotation": {
     "origin": [
      8,
-     10.6,
+     11.35,
      8
     ],
     "axis": "x",
-    "angle": -22.5
+    "angle": -45
+   },
+   "faces": {
+    "up": {
+     "texture": "#fs"
+    },
+    "down": {
+     "texture": "#fs"
+    }
+   }
+  },
+  {
+   "from": [
+    6.8,
+    13.8,
+    5.4
+   ],
+   "to": [
+    9.2,
+    13.8,
+    8
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     13.8,
+     8
+    ],
+    "axis": "x",
+    "angle": 45
+   },
+   "faces": {
+    "up": {
+     "texture": "#fn"
+    },
+    "down": {
+     "texture": "#fn"
+    }
+   }
+  },
+  {
+   "from": [
+    6.8,
+    13.8,
+    8
+   ],
+   "to": [
+    9.2,
+    13.8,
+    10.6
+   ],
+   "rotation": {
+    "origin": [
+     8,
+     13.8,
+     8
+    ],
+    "axis": "x",
+    "angle": -45
+   },
+   "faces": {
+    "up": {
+     "texture": "#fs"
+    },
+    "down": {
+     "texture": "#fs"
+    }
    }
   }
- ]
+ ],
+ "render_type": "minecraft:cutout"
 }

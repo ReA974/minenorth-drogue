@@ -1,9 +1,12 @@
 {
  "parent": "minecraft:block/block",
  "textures": {
-  "particle": "minenorthdrogue:block/palette",
+  "particle": "minenorthdrogue:block/tent_canvas",
   "p": "minenorthdrogue:block/palette",
-  "mesh": "minenorthdrogue:block/tent_mesh"
+  "mesh": "minenorthdrogue:block/tent_mesh",
+  "canvas": "minenorthdrogue:block/tent_canvas",
+  "mylar": "minenorthdrogue:block/tent_mylar",
+  "frame": "minenorthdrogue:block/tent_frame"
  },
  "elements": [
   {

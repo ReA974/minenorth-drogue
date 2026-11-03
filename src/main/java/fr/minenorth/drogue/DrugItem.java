@@ -26,14 +26,15 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * Une dose (joint, cocaïne, méthamphétamine) : on la consomme en maintenant clic droit ; effets positifs de la config, puis délai d'attente
- * avant de pouvoir en reprendre (c'est la limite d'équilibrage). La prise est notée pour le test salivaire du mod Police.
+ * Une dose (joint, cocaïne, méthamphétamine, héroïne, champignons, ecstasy, LSD) : on la consomme en maintenant clic droit ; effets positifs de la
+ * config (durée selon la qualité, petits effets des additifs de coupe), filtre visuel (DrugEffects), puis délai d'attente avant de pouvoir en
+ * reprendre. La prise compte pour la dépendance et le risque d'overdose (Addiction) et est notée pour le test salivaire du mod Police.
  */
 public class DrugItem extends Item {
     private static final String POLICE_KEY = "minenorthpolice_drogues";
 
     /** Type de prise : fumer un joint, sniffer une ligne sur un miroir, se faire une piqûre. Chacun a sa propre animation. */
-    public enum Kind { JOINT, COKE, METH }
+    public enum Kind { JOINT, COKE, METH, HEROIN, SHROOM, PILL, BLOTTER }
 
     private final Kind kind;
     private final int useTicks;
@@ -63,6 +64,26 @@ public class DrugItem extends Item {
     public static DrugItem meth() {
         return new DrugItem(Kind.METH, 44, () -> DrogueConfig.effects(DrogueConfig.METH_EFFECTS), () -> DrogueConfig.get(DrogueConfig.METH_COOLDOWN),
                 "§bVotre corps s'emballe…");
+    }
+
+    public static DrugItem heroin() {
+        return new DrugItem(Kind.HEROIN, 50, () -> DrogueConfig.effects(DrogueConfig.HEROIN_EFFECTS), () -> DrogueConfig.get(DrogueConfig.HEROIN_COOLDOWN),
+                "§6Une chaleur lourde vous envahit…");
+    }
+
+    public static DrugItem mushroom() {
+        return new DrugItem(Kind.SHROOM, 32, () -> DrogueConfig.effects(DrogueConfig.SHROOM_EFFECTS), () -> DrogueConfig.get(DrogueConfig.SHROOM_COOLDOWN),
+                "§dLes couleurs se mettent à respirer…");
+    }
+
+    public static DrugItem ecstasy() {
+        return new DrugItem(Kind.PILL, 24, () -> DrogueConfig.effects(DrogueConfig.ECSTASY_EFFECTS), () -> DrogueConfig.get(DrogueConfig.ECSTASY_COOLDOWN),
+                "§dUne vague d'euphorie vous traverse…");
+    }
+
+    public static DrugItem lsd() {
+        return new DrugItem(Kind.BLOTTER, 30, () -> DrogueConfig.effects(DrogueConfig.LSD_EFFECTS), () -> DrogueConfig.get(DrogueConfig.LSD_COOLDOWN),
+                "§eLe monde commence à onduler…");
     }
 
     @Override public int getUseDuration(ItemStack st) { return useTicks; }
@@ -95,7 +116,13 @@ public class DrugItem extends Item {
                 if (used == 14 || used == 28) level.playSound(null, living.blockPosition(), SoundEvents.FOX_SNIFF, SoundSource.PLAYERS, 0.7f, 1.6f);
                 if (used == 16 || used == 30) sl.sendParticles(ParticleTypes.POOF, mx, my - 0.05, mz, 3, 0.02, 0.02, 0.02, 0.0);
             }
-            case METH -> {
+            case SHROOM, PILL -> {
+                if (used % 8 == 4) level.playSound(null, living.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5f, 1.2f);
+            }
+            case BLOTTER -> {
+                if (used == 10) level.playSound(null, living.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 0.5f, 1.6f);
+            }
+            case METH, HEROIN -> {
                 if (used == 20) level.playSound(null, living.blockPosition(), SoundEvents.BEE_STING, SoundSource.PLAYERS, 0.25f, 1.9f);
                 if (used == 26) level.playSound(null, living.blockPosition(), SoundEvents.SLIME_SQUISH_SMALL, SoundSource.PLAYERS, 0.6f, 1.4f);
             }
@@ -116,15 +143,40 @@ public class DrugItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack st, Level level, LivingEntity entity) {
         if (!level.isClientSide && entity instanceof ServerPlayer p) {
-            for (MobEffectInstance e : effects.get()) p.addEffect(new MobEffectInstance(e));
+            int q = Quality.get(st);
+            double f = Quality.effectFactor(q);
+            for (MobEffectInstance e : effects.get()) p.addEffect(new MobEffectInstance(e.getEffect(), Math.max(20, (int) (e.getDuration() * f)), e.getAmplifier()));
+            for (String cut : Quality.cuts(st)) {
+                switch (cut) {
+                    case "minecraft:sugar" -> p.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 200, 0));
+                    case "minenorthdrogue:paracetamol" -> p.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.REGENERATION, 160, 0));
+                    case "minenorthdrogue:caffeine" -> p.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.DIG_SPEED, 400, 0));
+                    default -> {}
+                }
+            }
+            net.minecraft.world.effect.MobEffect visual = visualOf(kind);
+            if (visual != null && DrogueConfig.visuals()) p.addEffect(new MobEffectInstance(visual, (int) (DrogueConfig.get(DrogueConfig.VISUAL_SECONDS) * 20 * f), 0, false, false, true));
             int cd = cooldownSeconds.get();
             if (cd > 0) p.getCooldowns().addCooldown(this, cd * 20);
             p.displayClientMessage(Component.literal(feeling), true);
             if (level instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, p.getX(), p.getEyeY(), p.getZ(), 6, 0.2, 0.1, 0.2, 0.01);
             markForPolice(p, st);
+            Addiction.dose(p, kind, q);
             if (!p.getAbilities().instabuild) st.shrink(1);
         }
         return st;
+    }
+
+    /** Filtre visuel de la défonce (voir client/DrugVisuals). Cocaïne et meth : pas de filtre (effets physiques seulement). */
+    private static net.minecraft.world.effect.MobEffect visualOf(Kind k) {
+        return switch (k) {
+            case JOINT -> DrugEffects.HIGH.get();
+            case HEROIN -> DrugEffects.NOD.get();
+            case PILL -> DrugEffects.ROLL.get();
+            case BLOTTER -> DrugEffects.TRIP.get();
+            case SHROOM -> DrugEffects.SHROOMS.get();
+            default -> null;
+        };
     }
 
     /** Écrit la prise dans les données du joueur au format lu par le test salivaire du mod Police (objet -> {t: date, n: nom}). */

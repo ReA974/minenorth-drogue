@@ -53,7 +53,8 @@ public class OvenBlock extends BaseEntityBlock {
     @Override @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (hand == InteractionHand.MAIN_HAND && level.getBlockEntity(pos) instanceof OvenBE be) be.interact(player);
+        if (hand == InteractionHand.MAIN_HAND && player instanceof net.minecraft.server.level.ServerPlayer sp && level.getBlockEntity(pos) instanceof OvenBE be)
+            Stations.open(sp, pos, "Four de cuisson", (id, inv, pl) -> new fr.minenorth.drogue.menu.OvenMenu(id, inv, be));
         return InteractionResult.CONSUME;
     }
 

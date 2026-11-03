@@ -1,9 +1,12 @@
 {
  "parent": "minecraft:block/block",
  "textures": {
-  "particle": "minenorthdrogue:block/palette",
+  "particle": "minenorthdrogue:block/tent_canvas",
   "p": "minenorthdrogue:block/palette",
-  "mesh": "minenorthdrogue:block/tent_mesh"
+  "mesh": "minenorthdrogue:block/tent_mesh",
+  "canvas": "minenorthdrogue:block/tent_canvas",
+  "mylar": "minenorthdrogue:block/tent_mylar",
+  "frame": "minenorthdrogue:block/tent_frame"
  },
  "elements": [
   {
@@ -19,58 +22,22 @@
    ],
    "faces": {
     "north": {
-     "uv": [
-      0.5,
-      0.5,
-      3.5,
-      3.5
-     ],
-     "texture": "#p"
+     "texture": "#canvas"
     },
     "south": {
-     "uv": [
-      0.5,
-      0.5,
-      3.5,
-      3.5
-     ],
-     "texture": "#p"
+     "texture": "#canvas"
     },
     "east": {
-     "uv": [
-      0.5,
-      0.5,
-      3.5,
-      3.5
-     ],
-     "texture": "#p"
+     "texture": "#canvas"
     },
     "west": {
-     "uv": [
-      0.5,
-      0.5,
-      3.5,
-      3.5
-     ],
-     "texture": "#p"
+     "texture": "#canvas"
     },
     "up": {
-     "uv": [
-      0.5,
-      0.5,
-      3.5,
-      3.5
-     ],
-     "texture": "#p"
+     "texture": "#canvas"
     },
     "down": {
-     "uv": [
-      0.5,
-      0.5,
-      3.5,
-      3.5
-     ],
-     "texture": "#p"
+     "texture": "#canvas"
     }
    }
   },

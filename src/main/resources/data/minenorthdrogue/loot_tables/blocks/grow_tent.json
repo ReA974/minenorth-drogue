@@ -82,7 +82,49 @@
      "properties": {
       "top": "true",
       "corner": "0",
-      "lamp": "true"
+      "lamp": "true",
+      "soil": "false"
+     }
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minenorthdrogue:led_lamp"
+    }
+   ],
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "minenorthdrogue:grow_tent",
+     "properties": {
+      "top": "true",
+      "corner": "0",
+      "lamp": "true",
+      "soil": "true"
+     }
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minenorthdrogue:drip_kit"
+    }
+   ],
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "minenorthdrogue:grow_tent",
+     "properties": {
+      "top": "true",
+      "corner": "0",
+      "water": "1"
      }
     }
    ]

@@ -21,11 +21,30 @@ public final class ClientSetup {
     }
 
     @SubscribeEvent
+    public static void renderers(net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers e) {
+        e.registerEntityRenderer(Customers.CUSTOMER.get(), fr.minenorth.drogue.client.CustomerRenderer::new);
+        e.registerBlockEntityRenderer(ModRegistry.EXTRACTOR_BE.get(), fr.minenorth.drogue.client.ExtractorRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void models(net.minecraftforge.client.event.ModelEvent.RegisterAdditional e) { e.register(fr.minenorth.drogue.client.ExtractorRenderer.BLADES); }
+
+    @SubscribeEvent
     public static void setup(FMLClientSetupEvent e) {
+        // écrans des machines
+        e.enqueueWork(() -> {
+            net.minecraft.client.gui.screens.MenuScreens.register(fr.minenorth.drogue.menu.ModMenus.LAB.get(), fr.minenorth.drogue.client.LabScreen::new);
+            net.minecraft.client.gui.screens.MenuScreens.register(fr.minenorth.drogue.menu.ModMenus.OVEN.get(), fr.minenorth.drogue.client.OvenScreen::new);
+            net.minecraft.client.gui.screens.MenuScreens.register(fr.minenorth.drogue.menu.ModMenus.PACK.get(), fr.minenorth.drogue.client.PackScreen::new);
+            net.minecraft.client.gui.screens.MenuScreens.register(fr.minenorth.drogue.menu.ModMenus.ROLL.get(), fr.minenorth.drogue.client.RollScreen::new);
+            net.minecraft.client.gui.screens.MenuScreens.register(fr.minenorth.drogue.menu.ModMenus.CUT.get(), fr.minenorth.drogue.client.CutScreen::new);
+            net.minecraft.client.gui.screens.MenuScreens.register(fr.minenorth.drogue.menu.ModMenus.PRESS.get(), fr.minenorth.drogue.client.PressScreen::new);
+        });
         // progression de la prise (0 au repos, 0 à 1 pendant la prise) : choix du modèle « miroir » (cocaïne) ou « seringue » (méthamphétamine)
         e.enqueueWork(() -> {
             ItemProperties.register(ModRegistry.COCAINE.get(), new ResourceLocation(MineNorthDrogue.MOD_ID, "snort"), (stack, level, entity, seed) -> useProgress(stack, entity));
             ItemProperties.register(ModRegistry.METH.get(), new ResourceLocation(MineNorthDrogue.MOD_ID, "inject"), (stack, level, entity, seed) -> useProgress(stack, entity));
+            ItemProperties.register(ModRegistry.HEROIN.get(), new ResourceLocation(MineNorthDrogue.MOD_ID, "inject"), (stack, level, entity, seed) -> useProgress(stack, entity));
         });
         e.enqueueWork(() -> ItemProperties.register(ModRegistry.WATERING_CAN.get(), new ResourceLocation(MineNorthDrogue.MOD_ID, "pour"), (stack, level, entity, seed) -> {
             CompoundTag t = stack.getTag();

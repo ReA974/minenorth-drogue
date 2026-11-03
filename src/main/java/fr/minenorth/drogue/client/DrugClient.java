@@ -43,7 +43,7 @@ public final class DrugClient implements IClientItemExtensions {
 
     @Override
     public HumanoidModel.ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack stack) {
-        if (using(entity, stack) && entity.getUsedItemHand() == hand) return kindOf(stack) == DrugItem.Kind.METH ? INJECT : MOUTH;
+        if (using(entity, stack) && entity.getUsedItemHand() == hand) return kindOf(stack) == DrugItem.Kind.METH || kindOf(stack) == DrugItem.Kind.HEROIN ? INJECT : MOUTH;
         return null;
     }
 
@@ -70,7 +70,7 @@ public final class DrugClient implements IClientItemExtensions {
                 ps.mulPose(Axis.XP.rotationDegrees(-72f * lift));
                 ps.mulPose(Axis.ZP.rotationDegrees(side * 8f * lift * (float) Math.sin(run * Math.PI * 2)));
             }
-            case METH -> {
+            case METH, HEROIN -> {
                 // la seringue part vers l'avant-bras opposé, puis le piston s'enfonce (modèle)
                 float prick = Math.max(0f, Math.min(1f, (used - 12f) / 10f));
                 ps.translate(side * -0.64f * lift, (0.18f - 0.04f * prick) * lift, (0.20f + 0.05f * prick) * lift);

@@ -55,7 +55,8 @@ public class RollBlock extends BaseEntityBlock {
     @Override @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (hand == InteractionHand.MAIN_HAND && level.getBlockEntity(origin(pos, state)) instanceof RollBE be) be.interact(player);
+        if (hand == InteractionHand.MAIN_HAND && player instanceof net.minecraft.server.level.ServerPlayer sp && level.getBlockEntity(origin(pos, state)) instanceof RollBE be)
+            Stations.open(sp, be.getBlockPos(), "Table à rouler", (id, inv, pl) -> new fr.minenorth.drogue.menu.RollMenu(id, inv, be));
         return InteractionResult.CONSUME;
     }
 

@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "minenorthdrogue:block/air_extractor"
+  },
+  "facing=east": {
+   "model": "minenorthdrogue:block/air_extractor",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "minenorthdrogue:block/air_extractor",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "minenorthdrogue:block/air_extractor",
+   "y": 270
+  }
+ }
+}

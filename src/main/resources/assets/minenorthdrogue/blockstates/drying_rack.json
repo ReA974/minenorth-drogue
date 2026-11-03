@@ -1,0 +1,297 @@
+{
+ "multipart": [
+  {
+   "when": {
+    "facing": "north"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_rack"
+   }
+  },
+  {
+   "when": {
+    "facing": "north",
+    "fill": "1",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_fresh"
+   }
+  },
+  {
+   "when": {
+    "facing": "north",
+    "fill": "1",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_dry"
+   }
+  },
+  {
+   "when": {
+    "facing": "north",
+    "fill": "2",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_fresh"
+   }
+  },
+  {
+   "when": {
+    "facing": "north",
+    "fill": "2",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_dry"
+   }
+  },
+  {
+   "when": {
+    "facing": "north",
+    "fill": "3",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_fresh"
+   }
+  },
+  {
+   "when": {
+    "facing": "north",
+    "fill": "3",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_dry"
+   }
+  },
+  {
+   "when": {
+    "facing": "east"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_rack",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "facing": "east",
+    "fill": "1",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_fresh",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "facing": "east",
+    "fill": "1",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_dry",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "facing": "east",
+    "fill": "2",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_fresh",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "facing": "east",
+    "fill": "2",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_dry",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "facing": "east",
+    "fill": "3",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_fresh",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "facing": "east",
+    "fill": "3",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_dry",
+    "y": 90
+   }
+  },
+  {
+   "when": {
+    "facing": "south"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_rack",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "facing": "south",
+    "fill": "1",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_fresh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "facing": "south",
+    "fill": "1",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_dry",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "facing": "south",
+    "fill": "2",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_fresh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "facing": "south",
+    "fill": "2",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_dry",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "facing": "south",
+    "fill": "3",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_fresh",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "facing": "south",
+    "fill": "3",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_dry",
+    "y": 180
+   }
+  },
+  {
+   "when": {
+    "facing": "west"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_rack",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "facing": "west",
+    "fill": "1",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_fresh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "facing": "west",
+    "fill": "1",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_1_dry",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "facing": "west",
+    "fill": "2",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_fresh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "facing": "west",
+    "fill": "2",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_2_dry",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "facing": "west",
+    "fill": "3",
+    "dry": "false"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_fresh",
+    "y": 270
+   }
+  },
+  {
+   "when": {
+    "facing": "west",
+    "fill": "3",
+    "dry": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/drying_bunch_3_dry",
+    "y": 270
+   }
+  }
+ ]
+}

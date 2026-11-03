@@ -80,7 +80,8 @@ public class LabBlock extends BaseEntityBlock {
     @Override @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (hand == InteractionHand.MAIN_HAND && level.getBlockEntity(origin(pos, state)) instanceof LabBE be) be.interact(player);
+        if (hand == InteractionHand.MAIN_HAND && player instanceof net.minecraft.server.level.ServerPlayer sp && level.getBlockEntity(origin(pos, state)) instanceof LabBE be)
+            Stations.open(sp, be.getBlockPos(), "Laboratoire", (id, inv, pl) -> new fr.minenorth.drogue.menu.LabMenu(id, inv, be));
         return InteractionResult.CONSUME;
     }
 
@@ -103,5 +104,12 @@ public class LabBlock extends BaseEntityBlock {
             }
         }
         super.playerWillDestroy(level, pos, state, player);
+    }
+
+    /** Un labo qui tourne sent : volutes au-dessus, sauf filtre à charbon à proximité (voir Odor). */
+    @Override
+    public void animateTick(BlockState s, Level level, BlockPos pos, net.minecraft.util.RandomSource rnd) {
+        if (s.getValue(ANIM) == 0 || s.getValue(PART) != 2 || rnd.nextInt(4) != 0 || Odor.filtered(level, pos)) return;
+        Odor.puff(level, pos.above(), rnd);
     }
 }

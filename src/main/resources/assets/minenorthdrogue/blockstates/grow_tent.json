@@ -25,7 +25,8 @@
     "layout": "s22",
     "top": "true",
     "corner": "0",
-    "lamp": "true"
+    "lamp": "true",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_NW"
@@ -100,7 +101,8 @@
     "layout": "s22",
     "top": "true",
     "corner": "1",
-    "lamp": "true"
+    "lamp": "true",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_N_E"
@@ -131,7 +133,8 @@
     "layout": "s22",
     "top": "true",
     "corner": "2",
-    "lamp": "true"
+    "lamp": "true",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_SW"
@@ -206,7 +209,8 @@
     "layout": "s22",
     "top": "true",
     "corner": "3",
-    "lamp": "true"
+    "lamp": "true",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_S_E"
@@ -281,7 +285,8 @@
     "layout": "s11",
     "top": "true",
     "corner": "0",
-    "lamp": "true"
+    "lamp": "true",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_NWE_S"
@@ -363,7 +368,8 @@
     "top": "true",
     "corner": "0",
     "lamp": "true",
-    "alongx": "false"
+    "alongx": "false",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_NW_E"
@@ -445,7 +451,8 @@
     "top": "true",
     "corner": "1",
     "lamp": "true",
-    "alongx": "false"
+    "alongx": "false",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_SW_E"
@@ -527,7 +534,8 @@
     "top": "true",
     "corner": "0",
     "lamp": "true",
-    "alongx": "true"
+    "alongx": "true",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_NW_S"
@@ -609,7 +617,8 @@
     "top": "true",
     "corner": "1",
     "lamp": "true",
-    "alongx": "true"
+    "alongx": "true",
+    "soil": "false"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_lamp_NE_S"
@@ -759,7 +768,7 @@
    "when": {
     "top": "false",
     "soil": "false",
-    "plant": "cannabis|coca|ephedra",
+    "plant": "cannabis|coca|ephedra|poppy|mushroom",
     "water": "0"
    },
    "apply": {
@@ -780,11 +789,203 @@
    "when": {
     "top": "false",
     "soil": "false",
-    "plant": "cannabis|coca|ephedra",
+    "plant": "cannabis|coca|ephedra|poppy|mushroom",
     "water": "1|2|3"
    },
    "apply": {
     "model": "minenorthdrogue:block/tent_soil_wet"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "poppy",
+    "age": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_poppy_0"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "poppy",
+    "age": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_poppy_1"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "poppy",
+    "age": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_poppy_2"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "poppy",
+    "age": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_poppy_3"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "mushroom",
+    "age": "0"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_mushroom_0"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "mushroom",
+    "age": "1"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_mushroom_1"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "mushroom",
+    "age": "2"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_mushroom_2"
+   }
+  },
+  {
+   "when": {
+    "top": "false",
+    "plant": "mushroom",
+    "age": "3"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/plant_mushroom_3"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "0",
+    "lamp": "true",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_NW_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "1",
+    "lamp": "true",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_N_E_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "2",
+    "lamp": "true",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_SW_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s22",
+    "top": "true",
+    "corner": "3",
+    "lamp": "true",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_S_E_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s11",
+    "top": "true",
+    "corner": "0",
+    "lamp": "true",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_NWE_S_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "lamp": "true",
+    "alongx": "false",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_NW_E_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "lamp": "true",
+    "alongx": "false",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_SW_E_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "0",
+    "lamp": "true",
+    "alongx": "true",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_NW_S_led"
+   }
+  },
+  {
+   "when": {
+    "layout": "s12",
+    "top": "true",
+    "corner": "1",
+    "lamp": "true",
+    "alongx": "true",
+    "soil": "true"
+   },
+   "apply": {
+    "model": "minenorthdrogue:block/tent_lamp_NE_S_led"
    }
   }
  ]
