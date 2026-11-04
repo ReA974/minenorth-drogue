@@ -39,8 +39,9 @@ import java.util.UUID;
  * Revente aux clients, par l'application « Deal » du téléphone MRPhone. Des clients (PNJ) envoient des demandes : produit, quantité, qualité minimum, prix proposé. On en
  * accepte une, un rendez-vous est donné quelque part en ville (60 à 180 blocs) ; le client y apparaît quand on approche. Clic droit sur lui : la
  * marchandise est prise dans l'inventaire et le prix versé sur le compte (EuroBank, source « drogue:vente »), avec un bonus si la qualité dépasse
- * ce qu'il demandait. Un client satisfait devient fidèle (jusqu'à 5) : il commande plus et paie mieux. À chaque deal, un témoin peut prévenir la
- * police. Demandes et rendez-vous en cours sont en mémoire (perdus au redémarrage) ; la fidélité est sauvegardée.
+ * ce qu'il demandait, et la prime de risque si des policiers sont en ligne ([police] dans la config). Un client satisfait devient fidèle (jusqu'à 5) :
+ * il commande plus, paie mieux et, à partir de 3 cœurs, revient plus souvent ; sa fiche (achats, total, dernier achat) est dans l'onglet Clients.
+ * À chaque deal, un témoin peut prévenir la police. Demandes et rendez-vous en cours sont en mémoire (perdus au redémarrage) ; la fidélité est sauvegardée.
  */
 @Mod.EventBusSubscriber(modid = MineNorthDrogue.MOD_ID)
 public final class Customers {
@@ -124,9 +125,25 @@ public final class Customers {
 
     public static int loyalty(MinecraftServer s, UUID player, String name) { return Loyalty.get(s).get(player, name); }
 
+    /** Prime de risque selon la police en ligne (voir [police] dans la config) : x1 sans policier. */
+    public static double policeMultiplier(MinecraftServer s) {
+        return MineNorth.policeMultiplier(s, DrogueConfig.get(DrogueConfig.POLICE_ON_DUTY_ONLY),
+                DrogueConfig.get(DrogueConfig.POLICE_BONUS_PER_OFFICER), DrogueConfig.get(DrogueConfig.POLICE_BONUS_MAX));
+    }
+
+    /** Policiers comptés pour la prime de risque. */
+    public static int policeCount(MinecraftServer s) { return MineNorth.policeOnline(s, DrogueConfig.get(DrogueConfig.POLICE_ON_DUTY_ONLY)); }
+
+    /** « x1,3 » */
+    public static String mult(double m) { return "x" + (Math.abs(m - Math.rint(m)) < 0.005 ? String.valueOf((long) Math.rint(m)) : String.format(java.util.Locale.ROOT, "%.2f", m).replaceAll("0$", "").replace('.', ',')); }
+
     private static Offer newOffer(ServerPlayer p, State s, long now) {
         List<Item> items = DrogueConfig.sellable();
         String name = NAMES[RND.nextInt(NAMES.length)];
+        // bonus de fidélité : les clients fidèles (3 cœurs et plus) reviennent plus souvent (40 % des demandes)
+        List<String> regulars = new ArrayList<>();
+        for (Client c : clients(p.server, p.getUUID())) if (c.level >= 3) regulars.add(c.name);
+        if (!regulars.isEmpty() && RND.nextInt(100) < 40) name = regulars.get(RND.nextInt(regulars.size()));
         int loyal = loyalty(p.server, p.getUUID(), name);
         // chaque client a son produit préféré (selon son nom), mais commande parfois autre chose
         Item item = items.isEmpty() ? ModRegistry.JOINT.get() : RND.nextInt(3) == 0 ? items.get(RND.nextInt(items.size())) : items.get(Math.floorMod(name.hashCode(), items.size()));
@@ -260,12 +277,16 @@ public final class Customers {
         }
         double avg = qualitySum / (double) o.count;
         long bonus = Math.round(o.cents * 0.1 * Math.max(0, avg - o.minQuality) / 100.0) * 100;
-        long total = o.cents + bonus;
+        double mult = policeMultiplier(p.server);
+        long total = Math.round((o.cents + bonus) * mult / 100.0) * 100;   // prime de risque police, arrondie à l'euro
+        long risk = total - o.cents - bonus;
         boolean paid = MineNorth.bank().refund(p.server, p.getUUID(), total, "drogue:vente");
-        Loyalty.get(p.server).bump(p.getUUID(), o.name);
+        Loyalty.get(p.server).sale(p.getUUID(), o.name, total);
         int loyal = loyalty(p.server, p.getUUID(), o.name);
         p.sendSystemMessage(Component.literal("§d§l[Deal] §r§a" + (paid ? "+" + euros(total) + " sur votre compte" : "Payé... mais vous n'avez pas de compte bancaire")
-                + (bonus > 0 ? " §6(dont " + euros(bonus) + " de bonus qualité)" : "") + " §7· fidélité " + "♥".repeat(loyal) + "♡".repeat(LOYALTY_MAX - loyal)));
+                + (bonus > 0 ? " §6(dont " + euros(bonus) + " de bonus qualité)" : "")
+                + (risk > 0 ? " §c(dont " + euros(risk) + " de prime de risque " + mult(mult) + ")" : "")
+                + " §7· fidélité " + "♥".repeat(loyal) + "♡".repeat(LOYALTY_MAX - loyal)));
         p.level().playSound(null, c.blockPosition(), SoundEvents.VILLAGER_YES, SoundSource.NEUTRAL, 0.8f, 1.0f);
         p.serverLevel().sendParticles(ParticleTypes.HAPPY_VILLAGER, c.getX(), c.getY() + 2.0, c.getZ(), 6, 0.3, 0.2, 0.3, 0);
         if (RND.nextInt(100) < DrogueConfig.get(DrogueConfig.CLIENT_POLICE_CHANCE))
@@ -278,17 +299,46 @@ public final class Customers {
 
     // ------------------------------------------------------------------ fidélité (sauvegardée)
 
+    /** Fiche d'un client pour un dealer : niveau de fidélité (0 à 5), nombre d'achats, total dépensé (centimes), dernier achat (ms). */
+    public static final class Client {
+        public final String name;
+        public int level, buys;
+        public long spent, last;
+
+        Client(String name) { this.name = name; }
+    }
+
+    /** Libellé du niveau de fidélité. */
+    public static String rank(int level) {
+        return level >= LOYALTY_MAX ? "Client VIP" : level >= 3 ? "Fidèle" : level >= 1 ? "Habitué" : "Nouveau";
+    }
+
+    /** Clients d'un dealer, les plus fidèles d'abord (niveau, puis achats, puis total dépensé). */
+    public static List<Client> clients(MinecraftServer s, UUID player) {
+        List<Client> l = new ArrayList<>(Loyalty.get(s).data.getOrDefault(player, Map.of()).values());
+        l.sort((a, b) -> a.level != b.level ? Integer.compare(b.level, a.level) : a.buys != b.buys ? Integer.compare(b.buys, a.buys) : Long.compare(b.spent, a.spent));
+        return l;
+    }
+
     static final class Loyalty extends SavedData {
-        private final Map<UUID, Map<String, Integer>> data = new HashMap<>();
+        private final Map<UUID, Map<String, Client>> data = new HashMap<>();
 
         static Loyalty get(MinecraftServer s) {
             return s.overworld().getDataStorage().computeIfAbsent(Loyalty::load, Loyalty::new, "minenorthdrogue_clients");
         }
 
-        int get(UUID p, String name) { return data.getOrDefault(p, Map.of()).getOrDefault(name, 0); }
+        int get(UUID p, String name) {
+            Client c = data.getOrDefault(p, Map.of()).get(name);
+            return c == null ? 0 : c.level;
+        }
 
-        void bump(UUID p, String name) {
-            data.computeIfAbsent(p, k -> new HashMap<>()).merge(name, 1, (a, b) -> Math.min(LOYALTY_MAX, a + b));
+        /** Un achat de plus : la fidélité monte d'un cran (plafonnée), l'historique est mis à jour. */
+        void sale(UUID p, String name, long cents) {
+            Client c = data.computeIfAbsent(p, k -> new HashMap<>()).computeIfAbsent(name, Client::new);
+            c.level = Math.min(LOYALTY_MAX, c.level + 1);
+            c.buys++;
+            c.spent += cents;
+            c.last = System.currentTimeMillis();
             setDirty();
         }
 
@@ -296,9 +346,23 @@ public final class Customers {
             Loyalty l = new Loyalty();
             for (Tag t : tag.getList("players", Tag.TAG_COMPOUND)) {
                 CompoundTag c = (CompoundTag) t;
-                Map<String, Integer> m = new HashMap<>();
-                CompoundTag names = c.getCompound("names");
-                for (String k : names.getAllKeys()) m.put(k, names.getInt(k));
+                Map<String, Client> m = new HashMap<>();
+                CompoundTag names = c.getCompound("names");   // ancien format : nom -> niveau
+                for (String k : names.getAllKeys()) {
+                    Client cl = new Client(k);
+                    cl.level = names.getInt(k);
+                    cl.buys = cl.level;
+                    m.put(k, cl);
+                }
+                for (Tag ct : c.getList("clients", Tag.TAG_COMPOUND)) {
+                    CompoundTag x = (CompoundTag) ct;
+                    Client cl = new Client(x.getString("name"));
+                    cl.level = x.getInt("level");
+                    cl.buys = x.getInt("buys");
+                    cl.spent = x.getLong("spent");
+                    cl.last = x.getLong("last");
+                    m.put(cl.name, cl);
+                }
                 l.data.put(c.getUUID("id"), m);
             }
             return l;
@@ -307,12 +371,20 @@ public final class Customers {
         @Override
         public CompoundTag save(CompoundTag tag) {
             ListTag list = new ListTag();
-            for (Map.Entry<UUID, Map<String, Integer>> e : data.entrySet()) {
+            for (Map.Entry<UUID, Map<String, Client>> e : data.entrySet()) {
                 CompoundTag c = new CompoundTag();
                 c.putUUID("id", e.getKey());
-                CompoundTag names = new CompoundTag();
-                e.getValue().forEach(names::putInt);
-                c.put("names", names);
+                ListTag cl = new ListTag();
+                for (Client x : e.getValue().values()) {
+                    CompoundTag o = new CompoundTag();
+                    o.putString("name", x.name);
+                    o.putInt("level", x.level);
+                    o.putInt("buys", x.buys);
+                    o.putLong("spent", x.spent);
+                    o.putLong("last", x.last);
+                    cl.add(o);
+                }
+                c.put("clients", cl);
                 list.add(c);
             }
             tag.put("players", list);

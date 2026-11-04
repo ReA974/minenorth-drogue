@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 public final class DrogueNet {
     private DrogueNet() {}
 
-    private static final String VERSION = "1";
+    private static final String VERSION = "2";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(MineNorthDrogue.MOD_ID, "main"),
             () -> VERSION, VERSION::equals, VERSION::equals);
 
@@ -49,20 +49,37 @@ public final class DrogueNet {
         }
     }
 
-    /** Serveur -> client : contenu du téléphone. */
-    public record PhoneData(List<OfferView> offers, OfferView active) {
+    /** Fiche d'un client (onglet Clients) : niveau 0-5, achats, total dépensé, il y a combien de secondes le dernier achat. */
+    public record ClientView(String name, int level, int buys, long spent, long agoSeconds) {
+        void write(FriendlyByteBuf b) { b.writeUtf(name); b.writeVarInt(level); b.writeVarInt(buys); b.writeVarLong(spent); b.writeVarLong(agoSeconds); }
+
+        static ClientView read(FriendlyByteBuf b) { return new ClientView(b.readUtf(), b.readVarInt(), b.readVarInt(), b.readVarLong(), b.readVarLong()); }
+    }
+
+    /** Serveur -> client : contenu du téléphone, prime de risque actuelle (multiplicateur, policiers comptés) et clients les plus fidèles. */
+    public record PhoneData(List<OfferView> offers, OfferView active, double multiplier, int police, List<ClientView> clients) {
         void encode(FriendlyByteBuf b) {
             b.writeVarInt(offers.size());
             for (OfferView o : offers) o.write(b);
             b.writeBoolean(active != null);
             if (active != null) active.write(b);
+            b.writeDouble(multiplier);
+            b.writeVarInt(police);
+            b.writeVarInt(clients.size());
+            for (ClientView c : clients) c.write(b);
         }
 
         static PhoneData decode(FriendlyByteBuf b) {
             int n = b.readVarInt();
             List<OfferView> l = new ArrayList<>();
             for (int i = 0; i < n; i++) l.add(OfferView.read(b));
-            return new PhoneData(l, b.readBoolean() ? OfferView.read(b) : null);
+            OfferView a = b.readBoolean() ? OfferView.read(b) : null;
+            double m = b.readDouble();
+            int pol = b.readVarInt();
+            int nc = Math.min(b.readVarInt(), 200);
+            List<ClientView> cl = new ArrayList<>();
+            for (int i = 0; i < nc; i++) cl.add(ClientView.read(b));
+            return new PhoneData(l, a, m, pol, cl);
         }
 
         void handle(Supplier<NetworkEvent.Context> ctx) {
@@ -121,6 +138,13 @@ public final class DrogueNet {
         List<OfferView> l = new ArrayList<>();
         for (Customers.Offer o : Customers.offers(p)) l.add(view(p, o, false));
         Customers.Offer a = Customers.active(p);
-        CHANNEL.send(PacketDistributor.PLAYER.with(() -> p), new PhoneData(l, a == null ? null : view(p, a, true)));
+        List<ClientView> cl = new ArrayList<>();
+        long now = System.currentTimeMillis();
+        for (Customers.Client c : Customers.clients(p.server, p.getUUID())) {
+            if (cl.size() >= 50) break;
+            cl.add(new ClientView(c.name, c.level, c.buys, c.spent, c.last <= 0 ? -1 : Math.max(0, (now - c.last) / 1000)));
+        }
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> p), new PhoneData(l, a == null ? null : view(p, a, true),
+                Customers.policeMultiplier(p.server), Customers.policeCount(p.server), cl));
     }
 }

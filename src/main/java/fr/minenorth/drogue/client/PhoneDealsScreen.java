@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Application « Deal » dessinée DANS le téléphone MRPhone (barre d'état, cadre, retour à l'accueil par la barre du bas ou Échap), aux couleurs
  * MineNorth : rendez-vous en cours en haut (client, marchandise, lieu, temps restant, Annuler), puis les messages des clients (produit, quantité,
- * qualité minimum, prix, fidélité) avec Accepter / ✕. N'affiche que ce que le serveur envoie et ne décide de rien. Coordonnées en unités du
+ * qualité minimum, prix, fidélité) avec Accepter / ✕ ; bandeau de la prime de risque (police en ligne) et onglet « Clients fidèles ». N'affiche que ce que le serveur envoie et ne décide de rien. Coordonnées en unités du
  * téléphone (300 de large), converties par x() / y() / size(). Ne jamais référencer cette classe sans le téléphone : passer par {@link PhoneDeals}.
  */
 public class PhoneDealsScreen extends AbstractZPhoneScreen {
@@ -31,6 +31,7 @@ public class PhoneDealsScreen extends AbstractZPhoneScreen {
     private record Hit(float l, float t, float r, float b, Runnable action) {}
 
     private DrogueNet.PhoneData data;
+    private boolean clientsTab;
     private float scroll, contentBottom, listTop;
     private int ticks;
     private final List<Hit> hits = new ArrayList<>();
@@ -107,54 +108,115 @@ public class PhoneDealsScreen extends AbstractZPhoneScreen {
         drawStatusBar(g);
         drawText(g, "Deal", 22, 56, 20, WHITE, false);
         if (data != null) right(g, data.offers().size() + " message(s)", R, 64, 9, MUTED);
-        float y = 92;
+        float y = 88;
         if (data == null) {
             center(g, "Chargement…", 150, 300, 11, 260, MUTED);
         } else {
-            var a = data.active();
-            if (a != null) {
-                box(g, L, y, R, y + 92, 14, PINK);
-                box(g, L + 3, y, R, y + 92, 14, CARD);
-                icon(g, a.item(), L + 12, y + 10);
-                text(g, "Rendez-vous · " + a.name(), L + 46, y + 10, 11, R - L - 130, WHITE);
-                right(g, Customers.euros(a.cents()), R - 12, y + 10, 11, OK);
-                text(g, a.count() + " × " + itemName(a.item()) + " · min " + Quality.stars(a.minQuality()), L + 46, y + 27, 9, R - L - 60, TEXT);
-                text(g, a.x() + "  " + a.y() + "  " + a.z(), L + 12, y + 50, 11, 160, CYAN);
-                text(g, "reste " + time(a.secondsLeft()), L + 12, y + 70, 9, 120, MUTED);
-                button(g, mx, my, R - 92, y + 62, R - 12, y + 84, "Annuler", 9, RED, () -> send(2, 0));
-                y += 102;
-            }
-            text(g, a == null ? "Messages de clients" : "Messages (un rendez-vous à la fois)", L, y, 9.5f, R - L, MUTED);
-            y += 16;
-            listTop = y;
-            clipT = y;
-            clipB = CB;
-            g.enableScissor(x(3), y(clipT), x(297), y(clipB));
-            float cy = y - scroll;
-            if (data.offers().isEmpty()) text(g, "Pas de nouveau message… Repasse plus tard.", L, cy + 6, 10, R - L, MUTED);
-            for (var o : data.offers()) {
-                box(g, L, cy, R, cy + 70, 14, CYAN);
-                box(g, L + 3, cy, R, cy + 70, 14, CARD);
-                icon(g, o.item(), L + 12, cy + 10);
-                text(g, o.name(), L + 46, cy + 9, 11, 120, WHITE);
-                if (o.loyalty() > 0) right(g, "♥".repeat(o.loyalty()), R - 12, cy + 26, 9, PINK);
-                right(g, Customers.euros(o.cents()), R - 12, cy + 9, 11, OK);
-                text(g, o.count() + " × " + itemName(o.item()), L + 46, cy + 26, 9, R - L - 120, TEXT);
-                text(g, "min " + Quality.stars(o.minQuality()), L + 12, cy + 48, 10, 110, WARN);
-                if (a == null) {
-                    final int id = o.id();
-                    button(g, mx, my, R - 130, cy + 42, R - 50, cy + 62, "Accepter", 9, GREEN, () -> send(0, id));
-                    button(g, mx, my, R - 44, cy + 42, R - 12, cy + 62, "✕", 9, DISABLED, () -> send(1, id));
-                }
-                cy += 78;
-            }
-            contentBottom = cy + scroll;
-            g.disableScissor();
-            clipT = 0;
-            clipB = 1000;
+            // prime de risque : plus il y a de flics, plus ça rapporte
+            boolean hot = data.multiplier() > 1.001;
+            box(g, L, y, R, y + 26, 13, hot ? 0xFF4A2A10 : CARD);
+            text(g, "🚨 Prime de risque " + Customers.mult(data.multiplier()), L + 12, y + 8, 10, 150, hot ? WARN : MUTED);
+            right(g, data.police() == 0 ? "aucun flic en service" : data.police() + " flic" + (data.police() > 1 ? "s" : "") + " en service", R - 12, y + 9, 9, hot ? WARN : MUTED);
+            y += 34;
+            // onglets
+            float mid = (L + R) / 2;
+            tab(g, mx, my, L, y, mid - 3, "Messages", !clientsTab, () -> { clientsTab = false; scroll = 0; });
+            tab(g, mx, my, mid + 3, y, R, "Clients fidèles", clientsTab, () -> { clientsTab = true; scroll = 0; });
+            y += 32;
+            if (clientsTab) drawClients(g, y);
+            else drawMessages(g, mx, my, y);
         }
         drawHomeIndicator(g);
         drawFrame(g);
+    }
+
+    private void tab(GuiGraphics g, int mx, int my, float l, float t, float r, String label, boolean on, Runnable act) {
+        boolean hov = inside(mx, my, l, t, r, t + 24);
+        box(g, l, t, r, t + 24, 12, on ? PINK : hov ? HOVER : CARD);
+        center(g, label, (l + r) / 2, t + 7.5f, 9.5f, r - l - 8, on ? WHITE : TEXT);
+        if (!on) hits.add(new Hit(l, t, r, t + 24, act));
+    }
+
+    private void drawMessages(GuiGraphics g, int mx, int my, float y) {
+        var a = data.active();
+        if (a != null) {
+            box(g, L, y, R, y + 92, 14, PINK);
+            box(g, L + 3, y, R, y + 92, 14, CARD);
+            icon(g, a.item(), L + 12, y + 10);
+            text(g, "Rendez-vous · " + a.name(), L + 46, y + 10, 11, R - L - 130, WHITE);
+            right(g, Customers.euros(a.cents()), R - 12, y + 10, 11, OK);
+            text(g, a.count() + " × " + itemName(a.item()) + " · min " + Quality.stars(a.minQuality()), L + 46, y + 27, 9, R - L - 60, TEXT);
+            text(g, a.x() + "  " + a.y() + "  " + a.z(), L + 12, y + 50, 11, 160, CYAN);
+            text(g, "reste " + time(a.secondsLeft()), L + 12, y + 70, 9, 120, MUTED);
+            button(g, mx, my, R - 92, y + 62, R - 12, y + 84, "Annuler", 9, RED, () -> send(2, 0));
+            y += 102;
+        }
+        text(g, a == null ? "Messages de clients" : "Messages (un rendez-vous à la fois)", L, y, 9.5f, R - L, MUTED);
+        y += 16;
+        listTop = y;
+        clipT = y;
+        clipB = CB;
+        g.enableScissor(x(3), y(clipT), x(297), y(clipB));
+        float cy = y - scroll;
+        if (data.offers().isEmpty()) text(g, "Pas de nouveau message… Repasse plus tard.", L, cy + 6, 10, R - L, MUTED);
+        for (var o : data.offers()) {
+            box(g, L, cy, R, cy + 70, 14, CYAN);
+            box(g, L + 3, cy, R, cy + 70, 14, CARD);
+            icon(g, o.item(), L + 12, cy + 10);
+            text(g, o.name(), L + 46, cy + 9, 11, 120, WHITE);
+            if (o.loyalty() > 0) right(g, "♥".repeat(o.loyalty()), R - 12, cy + 26, 9, PINK);
+            right(g, Customers.euros(o.cents()), R - 12, cy + 9, 11, OK);
+            text(g, o.count() + " × " + itemName(o.item()), L + 46, cy + 26, 9, R - L - 120, TEXT);
+            text(g, "min " + Quality.stars(o.minQuality()), L + 12, cy + 48, 10, 110, WARN);
+            if (a == null) {
+                final int id = o.id();
+                button(g, mx, my, R - 130, cy + 42, R - 50, cy + 62, "Accepter", 9, GREEN, () -> send(0, id));
+                button(g, mx, my, R - 44, cy + 42, R - 12, cy + 62, "✕", 9, DISABLED, () -> send(1, id));
+            }
+            cy += 78;
+        }
+        contentBottom = cy + scroll;
+        g.disableScissor();
+        clipT = 0;
+        clipB = 1000;
+    }
+
+    /** Onglet Clients : les plus fidèles d'abord (le serveur trie), avec achats, total dépensé et dernier achat. */
+    private void drawClients(GuiGraphics g, float y) {
+        text(g, "Tes clients, les plus fidèles d'abord", L, y, 9.5f, R - L, MUTED);
+        y += 16;
+        listTop = y;
+        clipT = y;
+        clipB = CB;
+        g.enableScissor(x(3), y(clipT), x(297), y(clipB));
+        float cy = y - scroll;
+        if (data.clients().isEmpty()) text(g, "Aucun client pour l'instant. Fais ton premier deal !", L, cy + 6, 10, R - L, MUTED);
+        int rankNo = 0;
+        for (var c : data.clients()) {
+            rankNo++;
+            int edge = c.level() >= 5 ? WARN : c.level() >= 3 ? PINK : CYAN;
+            box(g, L, cy, R, cy + 62, 14, edge);
+            box(g, L + 3, cy, R, cy + 62, 14, CARD);
+            text(g, "#" + rankNo, L + 12, cy + 9, 10, 30, MUTED);
+            text(g, c.name(), L + 40, cy + 8, 11, 120, WHITE);
+            right(g, "♥".repeat(c.level()) + "♡".repeat(Math.max(0, 5 - c.level())), R - 12, cy + 9, 9, PINK);
+            text(g, Customers.rank(c.level()), L + 40, cy + 24, 9, 110, edge);
+            right(g, Customers.euros(c.spent()), R - 12, cy + 24, 10, OK);
+            text(g, c.buys() + " achat" + (c.buys() > 1 ? "s" : "") + " · dernier " + ago(c.agoSeconds()), L + 40, cy + 41, 9, R - L - 56, TEXT);
+            cy += 70;
+        }
+        contentBottom = cy + scroll;
+        g.disableScissor();
+        clipT = 0;
+        clipB = 1000;
+    }
+
+    private static String ago(long sec) {
+        if (sec < 0) return "inconnu";
+        if (sec < 60) return "à l'instant";
+        if (sec < 3600) return "il y a " + sec / 60 + " min";
+        if (sec < 86400) return "il y a " + sec / 3600 + " h";
+        return "il y a " + sec / 86400 + " j";
     }
 
     // ------------------------------------------------------------------ souris

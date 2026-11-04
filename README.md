@@ -84,3 +84,10 @@ Poses et mouvements : `client/DrugClient.java` ; modèles changeants : prédicat
 - **Santé** (`Addiction`, `DrugEffects`, `client/DrugVisuals`) : dépendance (0–100, -1/min), manque, overdose (mélange de deux drogues dures en 3 min : une chance sur trois, héroïne 5 étoiles sans accoutumance, dépendance extrême), naloxone (`NaloxoneItem`) ; sans elle, dégâts magiques que le mod Secours transforme en coma. Filtres visuels : shaders post vanilla (phosphor, desaturate, color_convolve, wobble, deconverge, blur).
 - Compilation : `libs/mrphone-0.9.4.jar` (copie du téléphone d'origine, `compileOnly`, non redistribuée) et `../minenorth-api/build/libs`.
 - **Ventilation v2** (`gen_vent.py` du scratchpad) : filtre à charbon cylindrique à 16 faces (tôle perforée, brides, gaine alu) ; extracteur en ventilateur de gaine avec hélice animée (`ExtractorBE` sans données + `client/ExtractorRenderer`, modèle additionnel `block/air_extractor_blades`).
+
+## Prime de risque police et clients fidèles (04/11)
+
+- **Prime de risque** : plus il y a de policiers connectés (en service par défaut), plus chaque vente aux clients rapporte. Multiplicateur = 1 + min(`bonusMax`, policiers × `bonusParPolicier`) / 100, réglable dans `[police]` de `minenorth_drogue.toml` (défaut : +10 % par policier, plafond +100 %, `seulementEnService = true`). Le bandeau en haut de l'appli Deal affiche le multiplicateur actuel et le nombre de policiers comptés ; le message de paiement détaille la prime.
+- **Clients fidèles** : chaque client a une fiche par dealer (niveau de fidélité 0 à 5 : Nouveau, Habitué, Fidèle, Client VIP ; nombre d'achats ; total dépensé ; dernier achat), sauvegardée (`minenorthdrogue_clients`, l'ancien format est repris). Onglet « Clients fidèles » dans l'appli Deal, les plus fidèles d'abord.
+- **Bonus de fidélité** : en plus du prix et des quantités qui montent avec la fidélité, les clients à 3 cœurs et plus reviennent plus souvent (40 % des nouvelles demandes).
+- Le réseau passe en version 2 : client et serveur doivent avoir le même jar.

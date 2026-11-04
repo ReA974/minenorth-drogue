@@ -21,6 +21,8 @@ public final class DrogueConfig {
     public static final ForgeConfigSpec.BooleanValue VISUALS, ADDICTION, OVERDOSE;
     public static final ForgeConfigSpec.IntValue OVERDOSE_SECONDS, WITHDRAWAL_MINUTES, CLIENT_OFFERS, CLIENT_REFRESH_MINUTES, CLIENT_POLICE_CHANCE, CLIENT_DEAL_MINUTES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> CLIENT_PRICES;
+    public static final ForgeConfigSpec.IntValue POLICE_BONUS_PER_OFFICER, POLICE_BONUS_MAX;
+    public static final ForgeConfigSpec.BooleanValue POLICE_ON_DUTY_ONLY;
     public static final ForgeConfigSpec.IntValue PACK_SECONDS, ROLL_SECONDS, LAB_LOT_MAX, HARVEST_MIN, HARVEST_MAX, METH_LAB_SECONDS, METH_YIELD, PASTE_LAB_SECONDS, PASTE_YIELD, OVEN_SECONDS, OVEN_MAX, HEROIN_LAB_SECONDS, HEROIN_YIELD;
 
     static {
@@ -104,6 +106,12 @@ public final class DrogueConfig {
         CLIENT_PRICES = b.comment("Prix de base par unité à 3 étoiles, en euros : objet;prix")
                 .defineList("prix", List.of("minenorthdrogue:joint;35", "minenorthdrogue:cocaine;120", "minenorthdrogue:meth;140", "minenorthdrogue:heroin;160",
                         "minenorthdrogue:magic_mushroom;45", "minenorthdrogue:ecstasy;60", "minenorthdrogue:lsd_blotter;50"), o -> o instanceof String);
+        b.pop();
+        b.comment("Prime de risque : plus il y a de policiers connectés, plus les ventes aux clients rapportent",
+                "Multiplicateur = 1 + min(bonusMax, policiers × bonusParPolicier) / 100 (ex. 10 et 100 : x1 sans flic, x1,3 avec 3 flics, x2 au maximum)").push("police");
+        POLICE_BONUS_PER_OFFICER = b.comment("Bonus (%) par policier connecté").defineInRange("bonusParPolicier", 10, 0, 1000);
+        POLICE_BONUS_MAX = b.comment("Bonus maximum (%)").defineInRange("bonusMax", 100, 0, 10000);
+        POLICE_ON_DUTY_ONLY = b.comment("Ne compter que les policiers en service (sinon tous les policiers connectés)").define("seulementEnService", true);
         b.pop();
         SPEC = b.build();
     }
